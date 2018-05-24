@@ -9,8 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${login == null}">
     <form action="${pageContext.request.contextPath}/login" method="post">
-        <input type="text" name="userName" title="user"/><br>
-        <input type="text" name="userPassword" title="password"/><br>
-        <input type="submit" name="login" title="Login" value="Войти"/>
+        <input type="text" name="userName" title="user" class="form-control"/><br>
+        <input type="text" name="userPassword" title="password" class="form-control"/><br>
+        <input type="submit" name="login" title="Login" value="Войти" class="btn btn-primary"/>
     </form>
 </c:if>

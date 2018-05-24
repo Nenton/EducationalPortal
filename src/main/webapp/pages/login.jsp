@@ -11,13 +11,13 @@
 <%@include file="../containers/head.jsp" %>
 <body>
 
-<div class="wrapper">
+<div class="container">
 
     <%@include file="../containers/header.jsp" %>
 
-    <div class="middle">
-
-        <div class="container">
+    <div class="row">
+        <%@include file="../containers/sidebar.jsp" %>
+        <div class="col-9">
             <main class="content">
                 <%@include file="../containers/errorMessage.jsp" %>
                 <%@include file="../containers/login.jsp" %>
@@ -25,7 +25,6 @@
             </main>
         </div>
 
-        <%@include file="../containers/sidebar.jsp" %>
     </div>
 
 </div>

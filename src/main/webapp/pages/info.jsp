@@ -4,19 +4,18 @@
 <%@include file="../containers/head.jsp" %>
 <body>
 
-<div class="wrapper">
+<div class="container">
 
     <%@include file="../containers/header.jsp" %>
 
-    <div class="middle">
-
-        <div class="container">
+    <div class="row">
+        <%@include file="../containers/sidebar.jsp" %>
+        <div class="col-9">
             <main class="content">
                 <strong>Content:</strong> Страница с информацией
             </main>
         </div><!-- .container-->
 
-        <%@include file="../containers/sidebar.jsp" %>
     </div><!-- .middle-->
 
 </div><!-- .wrapper -->
