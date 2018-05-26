@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<aside class="left-sidebar">
+<div class="col-3">
     <a href="${pageContext.request.contextPath}/">Home</a>
     <br>
     <c:if test="${role != null}">
@@ -34,16 +34,9 @@
     <c:if test="${login != null}">
         <div class="logout">
             <form action="${pageContext.request.contextPath}/login" method="post">
-                <input type="submit" name="exit" title="exit" value="Выход">
+                <input type="submit" name="exit" title="exit" value="Выход" class="btn btn-warning">
             </form>
-                <%--<%=(String) request.getSession().getAttribute("login")%><br>--%>
-                <%--<a href="${pageContext.request.contextPath}/?action=logout">Выйти</a>--%>
         </div>
     </c:if>
     <%@include file="../containers/login.jsp" %>
-
-    <%--<%if (request.getSession().getAttribute("login") != null) {%>--%>
-
-    <%--<%}%>--%>
-</aside>
-<!-- .left-sidebar -->
+</div>

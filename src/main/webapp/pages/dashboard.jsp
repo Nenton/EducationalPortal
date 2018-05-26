@@ -4,19 +4,19 @@
 <%@include file="../containers/head.jsp" %>
 <body>
 
-<div class="wrapper">
+<div class="container">
 
     <%@include file="../containers/header.jsp" %>
 
-    <div class="middle">
-
-        <div class="container">
+    <div class="row">
+        <%@include file="../containers/sidebar.jsp" %>
+        <div class="col-9">
             <main class="content">
                 <%@include file="../containers/tableDashboard.jsp" %>
             </main><!-- .content -->
         </div><!-- .container-->
 
-        <%@include file="../containers/sidebar.jsp" %>
+
     </div><!-- .middle-->
 
 </div><!-- .wrapper -->

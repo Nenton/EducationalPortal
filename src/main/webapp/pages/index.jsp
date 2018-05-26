@@ -4,19 +4,17 @@
 <%@include file="../containers/head.jsp" %>
 <body>
 
-<div class="wrapper">
+<div class="container">
 
     <%@include file="../containers/header.jsp" %>
 
-    <div class="middle">
-
-        <div class="container">
-            <main class="content">
-                <strong>Content:</strong> Вступительная страница. Расказывает что за сайт и зачем он нужен.
-            </main>
-        </div><!-- .container-->
+    <div class="row">
 
         <%@include file="../containers/sidebar.jsp" %>
+        <div class="col-9">
+            <strong>Content:</strong> Вступительная страница. Расказывает что за сайт и зачем он нужен.
+        </div><!-- .container-->
+
     </div><!-- .middle-->
 
 </div><!-- .wrapper -->
