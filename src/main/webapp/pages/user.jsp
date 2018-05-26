@@ -13,7 +13,7 @@
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
             <main class="content">
-                <%@include file="../containers/tableUser.jsp" %>
+
             </main><!-- .content -->
         </div><!-- .container-->
 

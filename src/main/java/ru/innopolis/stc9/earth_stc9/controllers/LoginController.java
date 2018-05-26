@@ -1,9 +1,9 @@
 package ru.innopolis.stc9.earth_stc9.controllers;
 
+import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
 import ru.innopolis.stc9.earth_stc9.services.AuthService;
 import ru.innopolis.stc9.earth_stc9.services.IAuthService;
-import ru.innopolis.stc9.earth_stc9.utils.ConstManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,9 +51,9 @@ public class LoginController extends AbstractController {
                 req.getSession().setAttribute("login", login);
 
                 switch (role.getId()) {
-                    case ConstManager.ADMIN_ROLE_ID:
-                    case ConstManager.STUDENT_ROLE_ID:
-                    case ConstManager.TEACHER_ROLE_ID:
+                    case Roles.ADMIN_ROLE_ID:
+                    case Roles.STUDENT_ROLE_ID:
+                    case Roles.TEACHER_ROLE_ID:
                         resp.sendRedirect("/dashboard");
                         break;
                     default:

@@ -1,5 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.controllers.filters;
 
+import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
 
 import javax.servlet.FilterChain;
@@ -25,10 +26,11 @@ public class AuthFilter extends AbstractFilter {
         boolean access = false;
         if (role != null) {
             switch (role.getId()) {
-                case 1:
-                case 3:
-                case 4:
+                case Roles.ADMIN_ROLE_ID:
+                case Roles.STUDENT_ROLE_ID:
+                case Roles.TEACHER_ROLE_ID:
                     access = true;
+                    break;
                 default:
                     break;
             }

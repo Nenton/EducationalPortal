@@ -1,6 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
-import com.sun.istack.internal.Nullable;
+import org.springframework.stereotype.Component;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManager;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManagerJDBCImpl;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
@@ -11,12 +11,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+@Component
 public class UserDao implements IUserDao {
     private ConnectionManager conManager = ConnectionManagerJDBCImpl.getInstance();
 
-    @Nullable
     @Override
     public User getUserByLogin(String login) throws SQLException {
         if (login == null || login.isEmpty()) {
@@ -35,8 +36,6 @@ public class UserDao implements IUserDao {
         }
     }
 
-
-    @Nullable
     @Override
     public User getUserById(int id) throws SQLException {
         if (id == 0) {
@@ -88,7 +87,7 @@ public class UserDao implements IUserDao {
         }
         try (Connection connection = conManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("update users " +
-                    "set login = ?, password = ?, roles = ?, fullName = ?" +
+                    "set login = ?, password = ?, role = ?, fullName = ?" +
                     "where id = ?");
             setParamsIntoStatement(statement, user);
             statement.setInt(5, user.getId());
@@ -113,11 +112,11 @@ public class UserDao implements IUserDao {
     @Override
     public List<User> getUsers(int roleId) throws SQLException {
         if (roleId == 0) {
-            return null;
+            return Collections.emptyList();
         }
         try (Connection connection = conManager.getConnection()) {
             List<User> result = new ArrayList<>();
-            String sql = "select * from users where users.role = " + roleId + ";";
+            String sql = "select * from users where users.role = " + String.valueOf(roleId) + ";";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

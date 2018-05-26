@@ -1,0 +1,12 @@
+.users-margin {
+    margin-left: 8pt;
+}
+
+.users-table {
+    margin-top: 8pt;
+}
+
+.users-row {
+    display: flex;
+    flex-wrap: wrap;
+}
