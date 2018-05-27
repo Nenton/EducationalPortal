@@ -1,6 +1,7 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
 import com.sun.istack.internal.Nullable;
+import org.springframework.stereotype.Service;
 import ru.innopolis.stc9.earth_stc9.db.dao.IRoleDao;
 import ru.innopolis.stc9.earth_stc9.db.dao.IUserDao;
 import ru.innopolis.stc9.earth_stc9.db.dao.RoleDao;
@@ -11,6 +12,7 @@ import ru.innopolis.stc9.earth_stc9.pojo.User;
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class UsersService implements IUsersService {
     private IUserDao userDao = new UserDao();
     private IRoleDao roleDao = new RoleDao();
