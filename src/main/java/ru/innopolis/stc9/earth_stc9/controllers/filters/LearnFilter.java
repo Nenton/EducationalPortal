@@ -1,6 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.controllers.filters;
 
-import ru.innopolis.stc9.earth_stc9.pojo.Role;
+import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,11 +18,13 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/lessons"})
 public class LearnFilter extends AbstractFilter {
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+            ServletException {
         HttpSession httpSession = ((HttpServletRequest) request).getSession();
-        Role role = (Role) httpSession.getAttribute("role");
+        Integer role = (Integer) httpSession.getAttribute("role");
         Object login = httpSession.getAttribute("login");
-        if (login != null && role != null && (role.getId() == 3 || role.getId() == 4 || role.getId() == 1)) {
+        if (login != null && role != null && (role == Roles.STUDENT_ROLE_ID || role == Roles.TEACHER_ROLE_ID
+                || role == Roles.ADMIN_ROLE_ID)) {
             chain.doFilter(request, response);
         } else {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;

@@ -14,7 +14,7 @@
     <select name="role" class="form-control col-2 users-margin">
         <c:forEach var="role" items="${roles}">
             <option value="${role.id}"
-                    <c:if test="${role.id == user.role.id}">selected</c:if>>${role.role}</option>
+                    <c:if test="${role.id == user.role.id}">selected</c:if>>${role.name}</option>
         </c:forEach>
     </select>
     <input type="submit" name="editUser" value="Сохранить"

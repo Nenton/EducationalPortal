@@ -1,6 +1,5 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
-import com.sun.istack.internal.Nullable;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
 
 import java.sql.SQLException;
@@ -8,21 +7,21 @@ import java.util.List;
 
 public interface IUserDao {
     String COLUMN_ID = "id";
+    String COLUMN_FULL_NAME = "fullName";
     String COLUMN_LOGIN = "login";
     String COLUMN_PASSWORD = "password";
-    String COLUMN_ROLE = "role";
-    String COLUMN_FULL_NAME = "fullName";
+    String COLUMN_ROLE = "role_id";
+    String COLUMN_DATE_REG = "date_reg";
+    String COLUMN_DATE_LAST = "date_last";
 
     /**
      * Get user from DB by user login
      */
-    @Nullable
     User getUserByLogin(String login) throws SQLException;
 
     /**
      * Get user from DB by user id
      */
-    @Nullable
     User getUserById(int id) throws SQLException;
 
     /**

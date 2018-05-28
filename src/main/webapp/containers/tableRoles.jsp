@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${role.id == 1}">
+<c:if test="${role == 1}">
     <form action="${pageContext.request.contextPath}/roles" name="addRole" method="post" class="row">
         <div class="col-3">
             <input type="text" name="nameRole" title="nameRole" value="Название роли" class="form-control">
@@ -21,8 +21,8 @@
     <c:forEach var="roles" items="${roles}">
         <tr>
             <th scope="row">${roles.id}</th>
-            <td>${roles.role}</td>
-            <c:if test="${role.id == 1}">
+            <td>${roles.name}</td>
+            <c:if test="${role == 1}">
                 <td>
                     <form action="${pageContext.request.contextPath}/roles" name="deleteRole" method="post">
                         <input type="submit" title="deleteRole" name="deleteRole" value="Удалить"

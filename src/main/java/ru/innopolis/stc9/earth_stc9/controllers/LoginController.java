@@ -47,7 +47,7 @@ public class LoginController extends AbstractController {
             String password = req.getParameter("userPassword");
             if (authService.checkAuth(login, password)) {
                 Role role = authService.getRoleByUserLogin(login);
-                req.getSession().setAttribute("role", role);
+                req.getSession().setAttribute("role", role.getId());
                 req.getSession().setAttribute("login", login);
 
                 switch (role.getId()) {

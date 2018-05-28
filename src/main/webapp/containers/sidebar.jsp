@@ -20,7 +20,7 @@
         <a href="${pageContext.request.contextPath}/lessons">Lessons</a>
         <br>
     </c:if>
-    <c:if test="${role.id == 1}">
+    <c:if test="${role == 1}">
         <a href="${pageContext.request.contextPath}/users">Users</a>
         <br>
         <a href="${pageContext.request.contextPath}/roles">Roles</a>

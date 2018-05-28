@@ -1,7 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.controllers.filters;
 
 import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
-import ru.innopolis.stc9.earth_stc9.pojo.Role;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,11 +20,11 @@ public class AuthFilter extends AbstractFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession httpSession = ((HttpServletRequest) request).getSession();
-        Role role = (Role) httpSession.getAttribute("role");
-        Object login = httpSession.getAttribute("login");
         boolean access = false;
-        if (role != null) {
-            switch (role.getId()) {
+        Integer roleId = (Integer) httpSession.getAttribute("role");
+        Object login = httpSession.getAttribute("login");
+        if (roleId != null) {
+            switch (roleId) {
                 case Roles.ADMIN_ROLE_ID:
                 case Roles.STUDENT_ROLE_ID:
                 case Roles.TEACHER_ROLE_ID:

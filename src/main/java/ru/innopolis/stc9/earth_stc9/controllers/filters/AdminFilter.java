@@ -1,6 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.controllers.filters;
 
-import ru.innopolis.stc9.earth_stc9.pojo.Role;
+import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,9 +20,9 @@ public class AdminFilter extends AuthFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession httpSession = ((HttpServletRequest) request).getSession();
-        Role role = (Role) httpSession.getAttribute("role");
+        Integer role = (Integer) httpSession.getAttribute("role");
         Object login = httpSession.getAttribute("login");
-        if (login != null && !((String) login).isEmpty() && role != null && role.getRole().equals("admin")) {
+        if (login != null && !((String) login).isEmpty() && role != null && role == Roles.ADMIN_ROLE_ID) {
             chain.doFilter(request, response);
         } else {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
