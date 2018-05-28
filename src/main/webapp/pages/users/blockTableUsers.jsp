@@ -22,8 +22,8 @@
             <td class="col-3">
                 <a href="${pageContext.request.contextPath}/users/${user.id}"> ${user.fullName}</a>
             </td>
-            <td class="col-2">${user.role.role}<br></td>
-            <c:if test="${role.id == 1}">
+            <td class="col-2">${user.role.name}<br></td>
+            <c:if test="${role == 1}">
                 <td class="col users-row">
                     <form action="${pageContext.request.contextPath}/users" name="update" method="get">
                         <input type="submit" name="update" value="Изменить" class="btn btn-warning">

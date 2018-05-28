@@ -17,8 +17,8 @@
             <td class="col-3">
                 <a href="${pageContext.request.contextPath}/users/${teacher.id}"> ${teacher.fullName}</a>
             </td>
-            <td class="col-2">${teacher.role.role}<br></td>
-            <c:if test="${role.id == 1}">
+            <td class="col-2">${teacher.role.name}<br></td>
+            <c:if test="${role == 1}">
                 <td class="col users-row">
                     <form action="${pageContext.request.contextPath}/teachers" name="update" method="get">
                         <input type="submit" name="update" value="Изменить" class="btn btn-warning">

@@ -10,7 +10,7 @@
            class="form-control col users-margin">
     <select name="role" class="form-control col-2 users-margin">
         <c:forEach var="role" items="${roles}">
-            <option value="${role.id}">${role.role}</option>
+            <option value="${role.id}">${role.name}</option>
         </c:forEach>
     </select>
     <input type="submit" title="createUser" name="createUser" value="Создать"

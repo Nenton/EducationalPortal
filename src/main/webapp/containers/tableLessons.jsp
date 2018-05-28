@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${role.id == 1 || role.id == 4}">
+<c:if test="${role == 1 || role == 4}">
     <form action="${pageContext.request.contextPath}/lessons" name="createLesson" method="post" class="row">
         <label>
             <select name="subject" class="form-control">
@@ -10,7 +10,7 @@
                 </c:forEach>
             </select>
         </label>
-        <c:if test="${role.id == 1}">
+        <c:if test="${role == 1}">
             <label>
                 <select name="teacher" class="form-control">
                     <c:forEach var="teacher" items="${teachers}">
@@ -62,7 +62,7 @@
             </td>
             <td>${lesson.mark}</td>
             <td>${lesson.attendance}</td>
-            <c:if test="${role.id == 1 || role.id == 4}">
+            <c:if test="${role == 1 || role == 4}">
                 <td>
                     <form action="${pageContext.request.contextPath}/lessons" name="deleteLesson" method="post">
                         <input type="submit" title="deleteBtn" name="deleteBtn" value="Удалить" class="btn btn-primary">

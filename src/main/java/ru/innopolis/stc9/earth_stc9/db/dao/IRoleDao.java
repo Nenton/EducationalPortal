@@ -1,6 +1,4 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
-
-import com.sun.istack.internal.Nullable;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
 
 import java.sql.SQLException;
@@ -8,7 +6,7 @@ import java.util.List;
 
 public interface IRoleDao {
     String COLUMN_ID = "id";
-    String COLUMN_ROLE = "role";
+    String COLUMN_ROLE = "name";
 
     /**
      * Insert role into DB
@@ -28,7 +26,6 @@ public interface IRoleDao {
     /**
      * Get role from DB by role id
      */
-    @Nullable
     Role getRoleById(int id) throws SQLException;
 
     /**

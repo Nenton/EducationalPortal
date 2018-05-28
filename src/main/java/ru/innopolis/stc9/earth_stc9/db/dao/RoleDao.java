@@ -24,8 +24,8 @@ public class RoleDao implements IRoleDao {
         }
         try (Connection connection = conManager.getConnection()) {
             PreparedStatement statement = null;
-            statement = connection.prepareStatement("insert into roles(role) values (?)");
-            statement.setString(1, role.getRole());
+            statement = connection.prepareStatement("insert into roles(name) values (?)");
+            statement.setString(1, role.getName());
             return statement.execute();
         }
     }
@@ -66,8 +66,8 @@ public class RoleDao implements IRoleDao {
         }
         try (Connection connection = conManager.getConnection()) {
             PreparedStatement statement = null;
-            statement = connection.prepareStatement("update roles set role = ? where id = ?");
-            statement.setString(1, role.getRole());
+            statement = connection.prepareStatement("update roles set name = ? where id = ?");
+            statement.setString(1, role.getName());
             statement.setInt(2, role.getId());
             statement.executeUpdate();
             return true;
@@ -78,7 +78,7 @@ public class RoleDao implements IRoleDao {
     public List<Role> getRoles() throws SQLException {
         List<Role> roles = new ArrayList<>();
         try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select * from public.roles");
+            PreparedStatement statement = connection.prepareStatement("select * from roles");
             ResultSet set = statement.executeQuery();
             while (set.next()) {
                 roles.add(getRoleFromBd(set));
@@ -94,8 +94,8 @@ public class RoleDao implements IRoleDao {
             return null;
         }
         try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select roles.* from roles\n" +
-                    "  inner join users u on u.role = roles.id where u.login = ?");
+            PreparedStatement statement = connection.prepareStatement("select roles.* from roles " +
+                    "  inner join users u on u.role_id = roles.id where u.login = ?");
             statement.setString(1, login);
             ResultSet set = statement.executeQuery();
             if (set.next()) {

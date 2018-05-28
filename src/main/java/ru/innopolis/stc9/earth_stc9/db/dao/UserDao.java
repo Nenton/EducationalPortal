@@ -60,7 +60,7 @@ public class UserDao implements IUserDao {
             return false;
         }
         try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("insert into users(login, password, role, fullName) " +
+            PreparedStatement statement = connection.prepareStatement("insert into users(login, password, role_id, fullName) " +
                     "values (?, ?, ?, ?)");
             setParamsIntoStatement(statement, user);
             return statement.execute();
@@ -87,7 +87,7 @@ public class UserDao implements IUserDao {
         }
         try (Connection connection = conManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("update users " +
-                    "set login = ?, password = ?, role = ?, fullName = ?" +
+                    "set login = ?, password = ?, role_id = ?, fullName = ?" +
                     "where id = ?");
             setParamsIntoStatement(statement, user);
             statement.setInt(5, user.getId());
@@ -116,7 +116,7 @@ public class UserDao implements IUserDao {
         }
         try (Connection connection = conManager.getConnection()) {
             List<User> result = new ArrayList<>();
-            String sql = "select * from users where users.role = " + String.valueOf(roleId) + ";";
+            String sql = "select * from users where users.role_id = " + String.valueOf(roleId) + ";";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

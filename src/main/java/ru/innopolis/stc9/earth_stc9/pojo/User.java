@@ -2,10 +2,10 @@ package ru.innopolis.stc9.earth_stc9.pojo;
 
 public class User {
     private int id;
+    private String fullName;
     private String login;
     private String passwordHash;
     private Role role;
-    private String fullName;
 
     public User(int id, String login, String passwordHash, Role role, String fullName) {
         this.id = id;
