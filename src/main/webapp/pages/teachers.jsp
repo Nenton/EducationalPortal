@@ -9,13 +9,10 @@
     <div class="row">
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
-            <c:if test="${role.id == 1 && create != null}">
-                <jsp:include page="../pages/users/blockAdd.jsp"/>
-            </c:if>
-            <c:if test="${role.id == 1 && update != null}">
-                <jsp:include page="../pages/users/blockEdit.jsp"/>
-            </c:if>
-            <jsp:include page="../pages/users/blockTableUsers.jsp"/>
+            <main class="content">
+                <jsp:include page="../pages/users/blockAddTeacher.jsp"/>
+                <jsp:include page="../pages/users/blockTableTeachers.jsp"/>
+            </main>
         </div>
     </div>
 </div>

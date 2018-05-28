@@ -22,6 +22,14 @@ public class User {
         this.fullName = name;
     }
 
+    public User(int id, String login, String passwordHash, int roleId, String fullName) {
+        this.id = id;
+        this.login = login;
+        this.passwordHash = passwordHash;
+        this.role = new Role(roleId);
+        this.fullName = fullName;
+    }
+
     public int getId() {
         return id;
     }

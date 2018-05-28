@@ -1,25 +1,20 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
-import com.sun.istack.internal.Nullable;
-import org.apache.log4j.Logger;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
 
 import java.util.List;
 
 public interface IUsersService {
-    Logger logger = Logger.getLogger(IUsersService.class);
 
     /**
      * Get user entity by user id
      */
-    @Nullable
     User getUserById(int id);
 
     /**
      * Get user entity by user login
      */
-    @Nullable
     User getUserByLogin(String login);
 
     /**
@@ -35,18 +30,20 @@ public interface IUsersService {
     /**
      * Get all user
      */
-    @Nullable
     List<User> getUsers();
 
     /**
      * Get users with choose role id
      */
-    @Nullable
     List<User> getUsers(int roleId);
 
     /**
      * Get all roles
      */
-    @Nullable
     List<Role> getRoles();
+
+    /**
+     * Update user
+     */
+    boolean updateUser(User user);
 }
