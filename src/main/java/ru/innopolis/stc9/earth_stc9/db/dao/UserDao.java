@@ -87,7 +87,7 @@ public class UserDao implements IUserDao {
         }
         try (Connection connection = conManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("update users " +
-                    "set login = ?, password = ?, roles = ?, fullName = ?" +
+                    "set login = ?, password = ?, role_id = ?, fullName = ?" +
                     "where id = ?");
             setParamsIntoStatement(statement, user);
             statement.setInt(5, user.getId());
