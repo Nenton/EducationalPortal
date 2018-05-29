@@ -1,6 +1,8 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
 import com.sun.istack.internal.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.innopolis.stc9.earth_stc9.db.dao.IRoleDao;
 import ru.innopolis.stc9.earth_stc9.db.dao.RoleDao;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
@@ -8,11 +10,12 @@ import ru.innopolis.stc9.earth_stc9.pojo.Role;
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class RoleService implements IRoleService {
+    @Autowired
     private IRoleDao roleDao = new RoleDao();
 
     @Override
-    @Nullable
     public List<Role> getRoles() {
         try {
             return roleDao.getRoles();
@@ -23,7 +26,6 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    @Nullable
     public boolean createRole(Role role) {
         if (role == null) {
             return false;
@@ -37,7 +39,6 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    @Nullable
     public boolean deleteRole(int id) {
         if (id == 0) {
             return false;
