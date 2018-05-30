@@ -35,9 +35,9 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public boolean deleteGroup(Group group){
+    public boolean deleteGroup(int id){
         try {
-            return groupDao.deleteGroup(group);
+            return groupDao.deleteGroup(id);
         } catch (SQLException e) {
             logger.warn("Ошибка удаления группы", e);
             return false;

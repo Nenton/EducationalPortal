@@ -16,13 +16,9 @@
             <td class="col-4">${group.groupDesc}</td>
             <c:if test="${role == 1}">
                 <td class="col-6 users-row">
-                    <form action="${pageContext.request.contextPath}/groups" name="update" method="get">
-                        <input type="submit" name="update" value="Изменить" class="btn btn-warning">
+                    <form action="${pageContext.request.contextPath}/groups/delete" name="delete" class="users-margin" method="post">
                         <input hidden name="groupId" value="${group.groupId}">
-                    </form>
-                    <form action="${pageContext.request.contextPath}/groups" name="delete" class="users-margin" method="post">
                         <input type="submit" name="delete" value="Удалить" class="btn btn-primary">
-                        <input hidden name="groupId" value="${group.groupId}">
                     </form>
                 </td>
             </c:if>

@@ -1,5 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
+import com.sun.istack.internal.Nullable;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManager;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManagerJDBCImpl;
 import ru.innopolis.stc9.earth_stc9.pojo.Group;
@@ -49,13 +50,13 @@ public class GroupDao implements IGroupDao {
     }
 
     @Override
-    public boolean deleteGroup(Group group) throws SQLException {
-        if (group == null) {
+    public boolean deleteGroup(int id) throws SQLException {
+        if (id == 0) {
             return false;
         }
         try (Connection connection = conManager.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM groups WHERE id = ?")) {
-                statement.setInt(1, group.getGroupId());
+                statement.setInt(1, id);
                 return statement.execute();
             }
         }
