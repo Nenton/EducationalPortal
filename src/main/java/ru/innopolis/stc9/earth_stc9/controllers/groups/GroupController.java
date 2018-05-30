@@ -1,5 +1,6 @@
-package ru.innopolis.stc9.earth_stc9.controllers;
+package ru.innopolis.stc9.earth_stc9.controllers.groups;
 
+import ru.innopolis.stc9.earth_stc9.controllers.AbstractController;
 import ru.innopolis.stc9.earth_stc9.pojo.Group;
 import ru.innopolis.stc9.earth_stc9.services.GroupService;
 import ru.innopolis.stc9.earth_stc9.services.IGroupService;
@@ -35,8 +36,6 @@ public class GroupController extends AbstractController {
 
         if (!req.getParameter("nameGroup").equals("") && !req.getParameter("descriptionGroup").equals("")) {
             logger.info("1st If condition of Method \"doPost\" from GroupController done " + this.getClass().getName());
-            logger.info(req.getParameter("nameGroup"));
-            logger.info(req.getParameter("descriptionGroup"));
             service.createGroup(new Group(0, req.getParameter("nameGroup"), req.getParameter("descriptionGroup")));
         }
         doGet(req, resp);

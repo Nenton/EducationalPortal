@@ -16,7 +16,7 @@ public interface IGroupDao {
 
     boolean addGroup(Group group) throws SQLException;
     boolean updateGroup(Group group) throws SQLException;
-    boolean deleteGroup(Group group) throws SQLException;
+    boolean deleteGroup(int id) throws SQLException;
     Group getGroupById(int id) throws SQLException;
     List<Group> getGroups() throws SQLException;
 }
