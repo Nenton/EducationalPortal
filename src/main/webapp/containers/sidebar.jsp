@@ -19,6 +19,8 @@
         <br>
         <a href="${pageContext.request.contextPath}/lessons">Lessons</a>
         <br>
+        <a href="${pageContext.request.contextPath}/studentgroup">Studentgroup</a>
+        <br>
     </c:if>
     <c:if test="${role == 1}">
         <a href="${pageContext.request.contextPath}/users">Users</a>
