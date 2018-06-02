@@ -18,6 +18,11 @@
         <url-pattern>/groups</url-pattern>
         <url-pattern>/groups/create</url-pattern>
         <url-pattern>/groups/delete</url-pattern>
+        <url-pattern>/studentgroup</url-pattern>
+        <url-pattern>/studentgroup/addstudentgroup</url-pattern>
+        <url-pattern>/studentgroup/getstudentgroup</url-pattern>
+        <url-pattern>/studentgroup/delete</url-pattern>
+        <url-pattern>/studentgroup/add</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
