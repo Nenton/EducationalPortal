@@ -7,6 +7,7 @@ import ru.innopolis.stc9.earth_stc9.db.dao.IGroupDao;
 import ru.innopolis.stc9.earth_stc9.pojo.Group;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,7 +67,7 @@ public class GroupService implements IGroupService {
             return groupDao.getGroups();
         } catch (SQLException e) {
             logger.warn("Ошибка получения списка групп", e);
-            return null;
+            return new ArrayList<>();
         }
     }
 }
