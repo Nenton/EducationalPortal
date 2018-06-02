@@ -1,6 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
-import com.sun.istack.internal.Nullable;
+import org.springframework.stereotype.Component;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManager;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManagerJDBCImpl;
 import ru.innopolis.stc9.earth_stc9.pojo.Group;
@@ -16,6 +16,7 @@ import java.util.List;
  * @author Aleksandr Tikhonov - created 29.05.2018
  */
 
+@Component
 public class GroupDao implements IGroupDao {
     private ConnectionManager conManager = ConnectionManagerJDBCImpl.getInstance();
 

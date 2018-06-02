@@ -15,6 +15,9 @@
         <url-pattern>/teachers</url-pattern>
         <url-pattern>/students</url-pattern>
         <url-pattern>/registration</url-pattern>
+        <url-pattern>/groups</url-pattern>
+        <url-pattern>/groups/create</url-pattern>
+        <url-pattern>/groups/delete</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

@@ -2,7 +2,6 @@ package ru.innopolis.stc9.earth_stc9.services;
 
 import ru.innopolis.stc9.earth_stc9.pojo.Group;
 
-import org.apache.log4j.Logger;
 import java.util.List;
 
 /**
@@ -10,8 +9,6 @@ import java.util.List;
  */
 
 public interface IGroupService {
-    Logger logger = Logger.getLogger(IGroupService.class);
-
     boolean createGroup(Group group);
     boolean updateGroup(Group group);
     boolean deleteGroup(int id);

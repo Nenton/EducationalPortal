@@ -19,6 +19,7 @@ import java.io.IOException;
 public class AuthFilter extends AbstractFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        logger.info("Method \"doFilter\" from AuthFilter has done");
         HttpSession httpSession = ((HttpServletRequest) request).getSession();
         boolean access = false;
         Integer roleId = (Integer) httpSession.getAttribute("role");

@@ -1,6 +1,8 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
-import ru.innopolis.stc9.earth_stc9.db.dao.GroupDao;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.innopolis.stc9.earth_stc9.db.dao.IGroupDao;
 import ru.innopolis.stc9.earth_stc9.pojo.Group;
 
@@ -11,8 +13,12 @@ import java.util.List;
  * @author Aleksandr Tikhonov - created 29.05.2018
  */
 
+@Service
 public class GroupService implements IGroupService {
-    private IGroupDao groupDao = new GroupDao();
+    private static final Logger logger = Logger.getLogger(GroupService.class);
+
+    @Autowired
+    private IGroupDao groupDao;
 
     @Override
     public boolean createGroup(Group group){
