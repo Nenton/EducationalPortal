@@ -15,10 +15,11 @@ import java.io.IOException;
 /**
  * Filter for users. Access is granted only registered users
  */
-@WebFilter(urlPatterns = {"/teachers", "/students", "/lessons", "/users", "/roles"})
+@WebFilter(urlPatterns = {"/teachers", "/students", "/lessons", "/users", "/roles", "/groups"})
 public class AuthFilter extends AbstractFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        logger.info("Method \"doFilter\" from AuthFilter has done");
         HttpSession httpSession = ((HttpServletRequest) request).getSession();
         boolean access = false;
         Integer roleId = (Integer) httpSession.getAttribute("role");

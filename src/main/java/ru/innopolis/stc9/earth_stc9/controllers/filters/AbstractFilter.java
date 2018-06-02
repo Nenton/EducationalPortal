@@ -6,7 +6,7 @@ import javax.servlet.Filter;
 import javax.servlet.FilterConfig;
 
 public abstract class AbstractFilter implements Filter {
-    private static final Logger logger = Logger.getLogger(AdminFilter.class);
+    protected static final Logger logger = Logger.getLogger(AbstractFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) {

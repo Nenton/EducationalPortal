@@ -11,26 +11,19 @@
     <a href="${pageContext.request.contextPath}/">Home</a>
     <br>
     <c:if test="${role != null}">
-        <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
-        <br>
-        <a href="${pageContext.request.contextPath}/teachers">Teachers</a>
-        <br>
-        <a href="${pageContext.request.contextPath}/students">Students</a>
-        <br>
-        <a href="${pageContext.request.contextPath}/lessons">Lessons</a>
-        <br>
-        <a href="${pageContext.request.contextPath}/studentgroup">Studentgroup</a>
-        <br>
+        <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a><br />
+        <a href="${pageContext.request.contextPath}/teachers">Teachers</a><br />
+        <a href="${pageContext.request.contextPath}/students">Students</a><br />
+        <a href="${pageContext.request.contextPath}/lessons">Lessons</a><br />
+        <a href="${pageContext.request.contextPath}/studentgroup">Studentgroup</a><br />
     </c:if>
     <c:if test="${role == 1}">
-        <a href="${pageContext.request.contextPath}/users">Users</a>
-        <br>
-        <a href="${pageContext.request.contextPath}/roles">Roles</a>
-        <br>
+        <a href="${pageContext.request.contextPath}/users">Users</a><br />
+        <a href="${pageContext.request.contextPath}/groups">Groups</a><br />
+        <a href="${pageContext.request.contextPath}/roles">Roles</a><br />
     </c:if>
 
-    <a href="${pageContext.request.contextPath}/info">Information</a>
-    <br>
+    <a href="${pageContext.request.contextPath}/info">Information</a><br />
 
     <br><br>
     <c:if test="${login != null}">
