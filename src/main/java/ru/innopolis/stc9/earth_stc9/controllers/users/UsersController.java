@@ -54,8 +54,8 @@ public class UsersController {
             User user = new User(nameUser, loginUser, passwordUser, Integer.parseInt(role));
             service.createUser(user);
         } else if (editUser != null) {
-            //  User user = new User(Integer.parseInt(userId), loginUser, passwordUser, Integer.parseInt(role), nameUser);
-            //  service.updateUser(user);
+            User user = new User(Integer.parseInt(userId), loginUser, passwordUser, Integer.parseInt(role), nameUser);
+            service.updateUser(user);
         } else if (delete != null) {
             int idUser = Integer.parseInt(userId);
             service.deleteUserById(idUser);
