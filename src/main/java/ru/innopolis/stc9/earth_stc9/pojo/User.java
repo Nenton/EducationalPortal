@@ -19,6 +19,7 @@ public class User {
         this.fullName = fullName;
     }
 
+
     public User(String name, String login, String password, int roleId) {
         this.login = login;
         this.passwordHash = password;
@@ -26,7 +27,17 @@ public class User {
         this.fullName = name;
     }
 
+    public User(int id, String login, String passwordHash, int roleId, String fullName) {
+        this.id = id;
+        this.login = login;
+        this.passwordHash = passwordHash;
+        this.role = new Role(roleId);
+        this.fullName = fullName;
+    }
 
+    /*
+     ** User for studentgroup query
+     */
     public User(int id, String fullName, int groupIdGS, String groupsName, String groupsDesc) {
         this.id = id;
         this.fullName = fullName;
