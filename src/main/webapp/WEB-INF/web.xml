@@ -12,6 +12,12 @@
     <servlet-mapping>
         <servlet-name>main</servlet-name>
         <url-pattern>/users</url-pattern>
+        <url-pattern>/user</url-pattern>
+        <url-pattern>/info</url-pattern>
+        <url-pattern>/dashboard</url-pattern>
+        <url-pattern>/roles</url-pattern>
+        <url-pattern>/roleAdd</url-pattern>
+        <url-pattern>/roleDelete</url-pattern>
         <url-pattern>/teachers</url-pattern>
         <url-pattern>/students</url-pattern>
         <url-pattern>/registration</url-pattern>

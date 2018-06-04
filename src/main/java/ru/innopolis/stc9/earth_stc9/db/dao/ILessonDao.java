@@ -1,6 +1,5 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
-import com.sun.istack.internal.Nullable;
 import ru.innopolis.stc9.earth_stc9.pojo.Lesson;
 
 import java.sql.SQLException;
@@ -27,7 +26,6 @@ public interface ILessonDao {
     /**
      * Get lesson from DB by lesson id
      */
-    @Nullable
     Lesson getLessonById(int id) throws SQLException;
 
     /**

@@ -1,6 +1,5 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
-import com.sun.istack.internal.Nullable;
 import ru.innopolis.stc9.earth_stc9.pojo.Subject;
 
 import java.sql.SQLException;
@@ -23,7 +22,6 @@ public interface ISubjectDao {
     /**
      * Get subject by id
      */
-    @Nullable
     Subject getSubjectById(int id) throws SQLException;
 
     /**

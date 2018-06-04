@@ -17,6 +17,5 @@ public class HomeController extends AbstractController {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         req.getRequestDispatcher("/pages/index.jsp").forward(req, resp);
-        String pathInfo = req.getPathInfo();
     }
 }

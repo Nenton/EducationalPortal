@@ -1,6 +1,5 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
-import com.sun.istack.internal.Nullable;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManager;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManagerJDBCImpl;
 import ru.innopolis.stc9.earth_stc9.pojo.Subject;
@@ -20,9 +19,9 @@ public class SubjectDao implements ISubjectDao {
         if (subject == null) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "insert into subjects(subject_name) values (?)");
+        String sql = "insert into subjects(subject_name) values (?)";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, subject.getName());
             return statement.execute();
         }
@@ -33,35 +32,48 @@ public class SubjectDao implements ISubjectDao {
         if (subject == null) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("delete from subjects where id = ?");
+        String sql = "delete from subjects where id = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, subject.getId());
             return statement.execute();
         }
     }
 
     @Override
-    @Nullable
     public Subject getSubjectById(int id) throws SQLException {
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM subjects WHERE id=?");
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return getSubjectFromDb(resultSet);
-            }
-            return null;
+        String sql = "SELECT * FROM subjects WHERE id=?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            return getSubjectFromResultSet(statement);
         }
+    }
+
+    private Subject getSubjectFromResultSet(PreparedStatement statement) throws SQLException {
+        try (ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return getSubjectFromResultSet(resultSet);
+            }
+        }
+        return null;
     }
 
     @Override
     public List<Subject> getSubjects() throws SQLException {
-        try (Connection connection = conManager.getConnection()) {
-            List<Subject> subjects = new ArrayList<>();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM subjects");
-            ResultSet resultSet = preparedStatement.executeQuery();
+        String sql = "SELECT * FROM subjects";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            return getSubjectsFromResultSet(statement);
+        }
+    }
+
+    private List<Subject> getSubjectsFromResultSet(PreparedStatement statement) throws SQLException {
+        List<Subject> subjects = new ArrayList<>();
+
+        try (ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
-                subjects.add(getSubjectFromDb(resultSet));
+                subjects.add(getSubjectFromResultSet(resultSet));
             }
             return subjects;
         }
@@ -72,9 +84,9 @@ public class SubjectDao implements ISubjectDao {
         if (subject == null) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = null;
-            statement = connection.prepareStatement("update subjects set subject_name = ? where id = ?");
+        String sql = "update subjects set subject_name = ? where id = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, subject.getName());
             statement.setInt(2, subject.getId());
             statement.executeUpdate();
@@ -85,7 +97,7 @@ public class SubjectDao implements ISubjectDao {
     /**
      * Get subject from DB
      */
-    private Subject getSubjectFromDb(ResultSet set) throws SQLException {
+    private Subject getSubjectFromResultSet(ResultSet set) throws SQLException {
         return new Subject(set.getInt(COLUMN_ID),
                 set.getString(COLUMN_SUBJECT_NAME));
     }
