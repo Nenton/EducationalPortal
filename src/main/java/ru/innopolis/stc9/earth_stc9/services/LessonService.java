@@ -1,8 +1,14 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.innopolis.stc9.earth_stc9.db.dao.*;
+import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
+import ru.innopolis.stc9.earth_stc9.db.dao.IGroupDao;
+import ru.innopolis.stc9.earth_stc9.db.dao.ILessonDao;
+import ru.innopolis.stc9.earth_stc9.db.dao.ISubjectDao;
+import ru.innopolis.stc9.earth_stc9.db.dao.IUserDao;
+import ru.innopolis.stc9.earth_stc9.pojo.Group;
 import ru.innopolis.stc9.earth_stc9.pojo.Lesson;
 import ru.innopolis.stc9.earth_stc9.pojo.Subject;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
@@ -14,9 +20,14 @@ import java.util.List;
 @Service
 public class LessonService implements ILessonService {
     private static Logger logger = Logger.getLogger(LessonService.class);
-    private ILessonDao lessonDao = new LessonDao();
-    private ISubjectDao subjectDao = new SubjectDao();
-    private IUserDao userDao = new UserDao();
+    @Autowired
+    private ILessonDao lessonDao;
+    @Autowired
+    private ISubjectDao subjectDao;
+    @Autowired
+    private IUserDao userDao;
+    @Autowired
+    private IGroupDao groupDao;
 
     @Override
     public User getUserByLogin(String login) {
@@ -44,7 +55,7 @@ public class LessonService implements ILessonService {
     @Override
     public List<User> getStudents() {
         try {
-            return userDao.getUsers(3);
+            return userDao.getUsers(Roles.STUDENT_ROLE_ID);
         } catch (SQLException e) {
             logger.warn("Ошибка получения студентов", e);
         }
@@ -54,7 +65,7 @@ public class LessonService implements ILessonService {
     @Override
     public List<User> getTeachers() {
         try {
-            return userDao.getUsers(4);
+            return userDao.getUsers(Roles.TEACHER_ROLE_ID);
         } catch (SQLException e) {
             logger.warn("Ошибка получения учителей", e);
         }
@@ -137,6 +148,16 @@ public class LessonService implements ILessonService {
             logger.warn("Ошибка удаления занятия с id - " + idLesson, e);
         }
         return false;
+    }
+
+    @Override
+    public List<Group> getGroups() {
+        try {
+            return groupDao.getGroups();
+        } catch (SQLException e) {
+            logger.warn("Ошибка получения списка групп", e);
+        }
+        return Collections.emptyList();
     }
 
     public void setLessonDao(ILessonDao lessonDao) {

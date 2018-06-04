@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface ILessonDao {
     String COLUMN_ID = "id";
-    String COLUMN_SUBJECT = "subject";
-    String COLUMN_TEACHER = "teacher";
-    String COLUMN_STUDENT = "student";
-    String COLUMN_MARK = "mark";
-    String COLUMN_ATTENDANCE = "attendance";
+    String COLUMN_THEME = "theme";
+    String COLUMN_LESS_DATE = "less_date";
+    String COLUMN_SUBJECT = "subject_id";
+    String COLUMN_TEACHER = "teacher_id";
+    String COLUMN_GROUP = "group_id";
 
     /**
      * Insert lesson into DB

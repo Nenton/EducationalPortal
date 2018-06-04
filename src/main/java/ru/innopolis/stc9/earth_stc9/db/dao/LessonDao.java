@@ -1,7 +1,9 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
+import org.springframework.stereotype.Component;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManager;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManagerJDBCImpl;
+import ru.innopolis.stc9.earth_stc9.pojo.Group;
 import ru.innopolis.stc9.earth_stc9.pojo.Lesson;
 import ru.innopolis.stc9.earth_stc9.pojo.Subject;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
@@ -12,11 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Dao class for Lesson entity
  */
+@Component
 public class LessonDao implements ILessonDao {
 
     private ConnectionManager conManager = ConnectionManagerJDBCImpl.getInstance();
@@ -28,7 +32,7 @@ public class LessonDao implements ILessonDao {
         }
         try (Connection connection = conManager.getConnection()) {
             PreparedStatement statement = null;
-            statement = connection.prepareStatement("insert into lessons(subject, student, teacher, mark, attendance)" +
+            statement = connection.prepareStatement("insert into lessons(theme, less_date, subject_id, teacher_id, group_id)" +
                     " values (?, ?, ?, ?, ?)");
             setParamsIntoStatement(statement, lesson);
             return statement.execute();
@@ -101,7 +105,7 @@ public class LessonDao implements ILessonDao {
             return Collections.emptyList();
         }
         String sql = "select lessons.* from lessons\n" +
-                "where lessons.teacher = ? order by lessons.id desc limit ?";
+                "where lessons.teacher_id = ? order by lessons.id desc limit ?";
         return getLessonsFromDb(sql, id, count);
     }
 
@@ -145,24 +149,24 @@ public class LessonDao implements ILessonDao {
         List<Lesson> lessons = new ArrayList<>();
         while (resultSet.next()) {
             int idLesson = resultSet.getInt(COLUMN_ID);
-            int idStudent = resultSet.getInt(COLUMN_STUDENT);
+            String theme = resultSet.getString(COLUMN_THEME);
+            Date date = resultSet.getDate(COLUMN_LESS_DATE);
             int idTeacher = resultSet.getInt(COLUMN_TEACHER);
             int idSubject = resultSet.getInt(COLUMN_SUBJECT);
-            int mark = resultSet.getInt(COLUMN_MARK);
-            boolean attendance = resultSet.getBoolean(COLUMN_ATTENDANCE);
+            int idGroup = resultSet.getInt(COLUMN_GROUP);
 
             IUserDao userDao = new UserDao();
             ISubjectDao subjectDao = new SubjectDao();
-            User student = userDao.getUserById(idStudent);
+            IGroupDao groupDao = new GroupDao();
             User teacher = userDao.getUserById(idTeacher);
             Subject subject = subjectDao.getSubjectById(idSubject);
+            Group group = groupDao.getGroupById(idGroup);
 
             lessons.add(new Lesson(idLesson,
-                    subject, subject.getId(),
-                    student, student.getId(),
-                    teacher, teacher.getId(),
-                    mark,
-                    attendance));
+                    theme, date,
+                    subject, idSubject,
+                    teacher, idTeacher,
+                    group, idGroup));
         }
         return lessons;
     }
@@ -174,11 +178,11 @@ public class LessonDao implements ILessonDao {
         if (statement == null || lesson == null) {
             return;
         }
-        statement.setInt(1, lesson.getSubjectId());
-        statement.setInt(2, lesson.getStudentId());
-        statement.setInt(3, lesson.getTeacherId());
-        statement.setInt(4, lesson.getMark());
-        statement.setBoolean(5, lesson.isAttendance());
+        statement.setString(1, lesson.getTheme());
+        statement.setDate(2, new java.sql.Date(lesson.getDate().getTime()));
+        statement.setInt(3, lesson.getSubjectId());
+        statement.setInt(4, lesson.getTeacherId());
+        statement.setInt(5, lesson.getGroupId());
     }
 
     /**
@@ -187,11 +191,11 @@ public class LessonDao implements ILessonDao {
     private Lesson getLessonFromDb(ResultSet set) throws SQLException {
         return new Lesson(
                 set.getInt(COLUMN_ID),
+                set.getString(COLUMN_THEME),
+                set.getDate(COLUMN_LESS_DATE),
                 set.getInt(COLUMN_SUBJECT),
-                set.getInt(COLUMN_STUDENT),
                 set.getInt(COLUMN_TEACHER),
-                set.getInt(COLUMN_MARK),
-                set.getBoolean(COLUMN_ATTENDANCE)
+                set.getInt(COLUMN_GROUP)
         );
     }
 }

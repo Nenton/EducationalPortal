@@ -1,5 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
 
+import org.springframework.stereotype.Component;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManager;
 import ru.innopolis.stc9.earth_stc9.db.connection.ConnectionManagerJDBCImpl;
 import ru.innopolis.stc9.earth_stc9.pojo.Subject;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SubjectDao implements ISubjectDao {
     private ConnectionManager conManager = ConnectionManagerJDBCImpl.getInstance();
 

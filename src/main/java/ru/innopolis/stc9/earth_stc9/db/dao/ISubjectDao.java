@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ISubjectDao {
     String COLUMN_ID = "id";
-    String COLUMN_SUBJECT_NAME = "subject_name";
+    String COLUMN_SUBJECT_NAME = "name";
 
     /**
      * Insert subject into DB

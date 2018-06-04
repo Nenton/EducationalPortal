@@ -1,5 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
+import ru.innopolis.stc9.earth_stc9.pojo.Group;
 import ru.innopolis.stc9.earth_stc9.pojo.Lesson;
 import ru.innopolis.stc9.earth_stc9.pojo.Subject;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
@@ -57,4 +58,9 @@ public interface ILessonService {
      * Delete lesson entity
      */
     boolean deleteLessonById(int idLesson);
+
+    /**
+     * Get all created groups
+     */
+    List<Group> getGroups();
 }
