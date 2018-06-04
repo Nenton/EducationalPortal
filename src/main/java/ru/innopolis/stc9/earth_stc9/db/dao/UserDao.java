@@ -23,10 +23,11 @@ public class UserDao implements IUserDao {
         if (login == null || login.isEmpty()) {
             return null;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE login=?");
-            preparedStatement.setString(1, login);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        String sql = "SELECT * FROM users WHERE login=?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            statement.setString(1, login);
             if (resultSet.next()) {
                 IRoleDao roleDao = new RoleDao();
                 Role role = roleDao.getRoleById(resultSet.getInt(COLUMN_ROLE));
@@ -41,10 +42,11 @@ public class UserDao implements IUserDao {
         if (id == 0) {
             return null;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE id=?");
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        String sql = "SELECT * FROM users WHERE id=?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            statement.setInt(1, id);
             if (resultSet.next()) {
                 IRoleDao roleDao = new RoleDao();
                 Role role = roleDao.getRoleById(resultSet.getInt(COLUMN_ROLE));
@@ -59,9 +61,9 @@ public class UserDao implements IUserDao {
         if (user == null) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("insert into users(login, password, role_id, fullName) " +
-                    "values (?, ?, ?, ?)");
+        String sql = "insert into users(login, password, role_id, fullName) values (?, ?, ?, ?)";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             setParamsIntoStatement(statement, user);
             return statement.execute();
         }
@@ -73,8 +75,9 @@ public class UserDao implements IUserDao {
         if (user == null) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("delete from users where id = ?");
+        String sql = "delete from users where id = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, user.getId());
             return statement.execute();
         }
@@ -85,10 +88,9 @@ public class UserDao implements IUserDao {
         if (user == null) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("update users " +
-                    "set login = ?, password = ?, role_id = ?, fullName = ?" +
-                    "where id = ?");
+        String sql = "update users set login = ?, password = ?, role_id = ?, fullName = ? where id = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             setParamsIntoStatement(statement, user);
             statement.setInt(5, user.getId());
             statement.executeUpdate();
@@ -102,8 +104,9 @@ public class UserDao implements IUserDao {
         if (idUser == 0) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("delete from users where id = ?");
+        String sql = "delete from users where id = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, idUser);
             return statement.execute();
         }
@@ -114,26 +117,21 @@ public class UserDao implements IUserDao {
         if (roleId == 0) {
             return Collections.emptyList();
         }
-        try (Connection connection = conManager.getConnection()) {
-            List<User> result = new ArrayList<>();
-            String sql = "select * from users where users.role_id = " + String.valueOf(roleId) + ";";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                IRoleDao roleDao = new RoleDao();
-                Role role = roleDao.getRoleById(resultSet.getInt(COLUMN_ROLE));
-                result.add(getUserFromDb(resultSet, role));
-            }
-            return result;
-        }
+        String sql = "select * from users where users.role_id = " + roleId + ";";
+        return getUserFromDb(sql);
     }
 
     @Override
     public List<User> getUsers() throws SQLException {
-        try (Connection connection = conManager.getConnection()) {
+        String sql = "select * from users;";
+        return getUserFromDb(sql);
+    }
+
+    private List<User> getUserFromDb(String sql) throws SQLException {
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
             List<User> result = new ArrayList<>();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from users;");
-            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 IRoleDao roleDao = new RoleDao();
                 Role role = roleDao.getRoleById(resultSet.getInt(COLUMN_ROLE));

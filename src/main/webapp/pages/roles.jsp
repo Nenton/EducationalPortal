@@ -12,7 +12,14 @@
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
             <main class="content">
-                <%@include file="../containers/tableRoles.jsp" %>
+                <c:if test="${message != null}">
+                    <%@include file="../containers/message.jsp" %>
+                </c:if>
+                <c:if test="${role == 1}">
+                    <%@include file="../pages/roles/blockAddRole.jsp" %>
+                </c:if>
+
+                <%@include file="../pages/roles/blockTableRoles.jsp" %>
             </main><!-- .content -->
         </div><!-- .container-->
 

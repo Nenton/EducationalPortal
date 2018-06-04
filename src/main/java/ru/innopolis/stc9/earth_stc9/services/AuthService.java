@@ -1,6 +1,5 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
-import com.sun.istack.internal.Nullable;
 import ru.innopolis.stc9.earth_stc9.db.dao.IRoleDao;
 import ru.innopolis.stc9.earth_stc9.db.dao.IUserDao;
 import ru.innopolis.stc9.earth_stc9.db.dao.RoleDao;
@@ -29,7 +28,6 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    @Nullable
     public Role getRoleByUserLogin(String login) {
         if (login == null || login.isEmpty()) {
             return null;
