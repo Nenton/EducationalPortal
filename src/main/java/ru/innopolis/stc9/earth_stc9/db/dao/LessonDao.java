@@ -113,8 +113,9 @@ public class LessonDao implements ILessonDao {
         if (id == 0 || count == 0) {
             return Collections.emptyList();
         }
-        String sql = "select lessons.*\n" +
-                "from lessons where lessons.student = ? order by lessons.id desc limit ?";
+        String sql = "select lessons.* from lessons\n" +
+                "  inner join group_students g on g.group_id = lessons.group_id\n" +
+                "where g.student_id = ? order by lessons.id desc limit ?";
         return getLessonsFromDb(sql, id, count);
     }
 
