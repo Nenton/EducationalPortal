@@ -22,9 +22,9 @@ public class RoleDao implements IRoleDao {
         if (role == null) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = null;
-            statement = connection.prepareStatement("insert into roles(name) values (?)");
+        String sql = "insert into roles(name) values (?)";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, role.getName());
             return statement.execute();
         }
@@ -37,9 +37,9 @@ public class RoleDao implements IRoleDao {
 
     @Override
     public boolean deleteRole(int id) throws SQLException {
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = null;
-            statement = connection.prepareStatement("delete from roles where id = ?");
+        String sql = "delete from roles where id = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             return statement.execute();
         }
@@ -47,15 +47,11 @@ public class RoleDao implements IRoleDao {
 
     @Override
     public Role getRoleById(int id) throws SQLException {
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = null;
-            statement = connection.prepareStatement("select * from roles where id = ?");
+        String sql = "select * from roles where id = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
-            ResultSet set = statement.executeQuery();
-            if (set.next()) {
-                return getRoleFromBd(set);
-            }
-            return null;
+            return getRoleFromResultSet(statement);
         }
     }
 
@@ -64,9 +60,9 @@ public class RoleDao implements IRoleDao {
         if (role == null) {
             return false;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = null;
-            statement = connection.prepareStatement("update roles set name = ? where id = ?");
+        String sql = "update roles set name = ? where id = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, role.getName());
             statement.setInt(2, role.getId());
             statement.executeUpdate();
@@ -76,15 +72,21 @@ public class RoleDao implements IRoleDao {
 
     @Override
     public List<Role> getRoles() throws SQLException {
+        String sql = "select * from roles";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            return getRolesFromResultSet(statement);
+        }
+    }
+
+    private List<Role> getRolesFromResultSet(PreparedStatement statement) throws SQLException {
         List<Role> roles = new ArrayList<>();
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select * from roles");
-            ResultSet set = statement.executeQuery();
+        try (ResultSet set = statement.executeQuery()) {
             while (set.next()) {
                 roles.add(getRoleFromBd(set));
             }
-            return roles;
         }
+        return roles;
     }
 
 
@@ -93,16 +95,22 @@ public class RoleDao implements IRoleDao {
         if (login == null || login.isEmpty()) {
             return null;
         }
-        try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select roles.* from roles " +
-                    "  inner join users u on u.role_id = roles.id where u.login = ?");
+        String sql = "select roles.* from roles " +
+                "  inner join users u on u.role_id = roles.id where u.login = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, login);
-            ResultSet set = statement.executeQuery();
+            return getRoleFromResultSet(statement);
+        }
+    }
+
+    private Role getRoleFromResultSet(PreparedStatement statement) throws SQLException {
+        try (ResultSet set = statement.executeQuery()) {
             if (set.next()) {
                 return getRoleFromBd(set);
             }
-            return null;
         }
+        return null;
     }
 
     /**

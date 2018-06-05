@@ -1,28 +1,31 @@
 package ru.innopolis.stc9.earth_stc9.controllers;
 
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 import ru.innopolis.stc9.earth_stc9.pojo.Lesson;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
 import ru.innopolis.stc9.earth_stc9.services.ILessonService;
-import ru.innopolis.stc9.earth_stc9.services.LessonService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 /**
  * Controller for all need compressed information for user
  */
-@WebServlet(urlPatterns = {"/dashboard"})
-public class DashboardController extends AbstractController {
-    private ILessonService service = new LessonService();
+@Controller
+public class DashboardController {
+    private static final Logger logger = Logger.getLogger(DashboardController.class);
+    @Autowired
+    private ILessonService service;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String doGet(HttpServletRequest req, Model model) {
         logger.info("doGet" + this.getClass().getName());
         String login = ((String) req.getSession().getAttribute("login"));
         List<Lesson> lessons = null;
@@ -39,13 +42,12 @@ public class DashboardController extends AbstractController {
                     lessons = service.getLessonsLast(10);
                     break;
                 default:
-                    resp.sendRedirect("/login?errorMsg=noAccess");
-                    break;
+                    return "redirect:" + "/login?errorMsg=noAccess";
             }
         }
         if (lessons != null) {
-            req.setAttribute("lessons", lessons);
+            model.addAttribute("lessons", lessons);
         }
-        req.getRequestDispatcher("/pages/dashboard.jsp").forward(req, resp);
+        return "dashboard";
     }
 }
