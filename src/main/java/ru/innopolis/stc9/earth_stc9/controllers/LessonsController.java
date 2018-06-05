@@ -1,106 +1,105 @@
 package ru.innopolis.stc9.earth_stc9.controllers;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
+import ru.innopolis.stc9.earth_stc9.pojo.Group;
 import ru.innopolis.stc9.earth_stc9.pojo.Lesson;
 import ru.innopolis.stc9.earth_stc9.pojo.Subject;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
 import ru.innopolis.stc9.earth_stc9.services.ILessonService;
-import ru.innopolis.stc9.earth_stc9.services.LessonService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Controller for show lessons for student or teacher
  */
-@WebServlet(urlPatterns = {"/lessons"})
-public class LessonsController extends AbstractController {
-    private ILessonService service = new LessonService();
+@Controller
+public class LessonsController {
+    private static final Logger logger = Logger.getLogger(LessonsController.class);
+    @Autowired
+    private ILessonService serviceLesson;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.info("doGet" + this.getClass().getName());
+    @RequestMapping(value = "/lessons", method = RequestMethod.GET)
+    public String doGet(HttpServletRequest req, Model model) {
         String login = ((String) req.getSession().getAttribute("login"));
-        setFields(req, login);
-        req.getRequestDispatcher("/pages/lessons.jsp").forward(req, resp);
+        setLessons(login, model);
+        setFields(model);
+        return "lessons";
     }
 
-    private void setFields(HttpServletRequest req, String login) {
+    private void setLessons(String login, Model model) {
         List<Lesson> lessons = null;
         if (login != null && !login.isEmpty()) {
-            User userByLogin = service.getUserByLogin(login);
+            User userByLogin = serviceLesson.getUserByLogin(login);
             switch (userByLogin.getRole().getId()) {
-                case 1:
-                    lessons = service.getLessonsLast(100);
+                case Roles.ADMIN_ROLE_ID:
+                    lessons = serviceLesson.getLessonsLast(100);
                     break;
-                case 3:
-                    lessons = service.getLessonsByStudentId(userByLogin.getId(), 100);
+                case Roles.STUDENT_ROLE_ID:
+                    lessons = serviceLesson.getLessonsByStudentId(userByLogin.getId(), 100);
                     break;
-                case 4:
-                    lessons = service.getLessonsByTeacherId(userByLogin.getId(), 100);
+                case Roles.TEACHER_ROLE_ID:
+                    lessons = serviceLesson.getLessonsByTeacherId(userByLogin.getId(), 100);
                     break;
                 default:
                     break;
             }
         }
-        List<Integer> marks = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            marks.add(i);
-        }
-        List<User> teachers = service.getTeachers();
-        List<User> students = service.getStudents();
-        List<Subject> subjects = service.getSubjects();
-        req.setAttribute("marks", marks);
-        req.setAttribute("subjects", subjects);
-        req.setAttribute("students", students);
-        req.setAttribute("teachers", teachers);
-        req.setAttribute("lessons", lessons);
+        model.addAttribute("lessons", lessons);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        logger.info("doPost" + this.getClass().getName());
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
+    private void setFields(Model model) {
+
+        List<User> teachers = serviceLesson.getTeachers();
+        List<Subject> subjects = serviceLesson.getSubjects();
+        List<Group> groups = serviceLesson.getGroups();
+
+        model.addAttribute("subjects", subjects);
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("groups", groups);
+    }
+
+    @RequestMapping(value = "/lessonAdd", method = RequestMethod.POST)
+    public String addLesson(HttpServletRequest req, Model model,
+                            @RequestAttribute String subject, @RequestAttribute String teacher,
+                            @RequestAttribute String theme, @RequestAttribute String group) {
         try {
-            if (req.getParameter("deleteBtn") != null) {
-                deleteLesson(req);
-                doGet(req, resp);
-            }
-            if (req.getParameter("createLesson") != null) {
-                createLesson(req);
-                doGet(req, resp);
-            }
+            Lesson lesson = null;
+            int subjectId = Integer.parseInt(subject);
+            int groupId = Integer.parseInt(group);
 
+            if (teacher == null || teacher.isEmpty()) {
+                String login = (String) req.getSession().getAttribute("login");
+                User userByLogin = serviceLesson.getUserByLogin(login);
+                lesson = new Lesson(theme, new Date(), subjectId, userByLogin.getId(), groupId);
+            } else {
+                int teacherId = Integer.parseInt(teacher);
+                lesson = new Lesson(theme, new Date(), subjectId, teacherId, groupId);
+            }
+            serviceLesson.createLesson(lesson);
         } catch (Exception e) {
-            logger.warn(e);
+            logger.warn("Add lesson", e);
         }
+        return doGet(req, model);
     }
 
-    private void createLesson(HttpServletRequest req) {
-        Lesson lesson = null;
-        int subject = Integer.parseInt(req.getParameter("subject"));
-        int student = Integer.parseInt(req.getParameter("student"));
-        int mark = Integer.parseInt(req.getParameter("mark"));
-        String[] selected = req.getParameterValues("attendance");
-        if (req.getParameter("teacher") == null) {
-            String login = (String) req.getSession().getAttribute("login");
-            User userByLogin = service.getUserByLogin(login);
-            lesson = new Lesson(subject, student, userByLogin.getId(), mark, selected != null && selected.length != 0);
-        } else {
-            int teacher = Integer.parseInt(req.getParameter("teacher"));
-            lesson = new Lesson(subject, student, teacher, mark, selected != null && selected.length != 0);
+    @RequestMapping(value = "/lessonDelete", method = RequestMethod.POST)
+    public String deleteLesson(HttpServletRequest req, Model model, @RequestAttribute String lessonId) {
+        try {
+            int idLesson = Integer.parseInt(lessonId);
+            serviceLesson.deleteLessonById(idLesson);
+        } catch (Exception e) {
+            logger.warn("Delete lesson", e);
         }
-        service.createLesson(lesson);
+        return doGet(req, model);
     }
 
-    private void deleteLesson(HttpServletRequest req) {
-        int idLesson = Integer.parseInt(req.getParameter("lessonId"));
-        service.deleteLessonById(idLesson);
-
-    }
 }

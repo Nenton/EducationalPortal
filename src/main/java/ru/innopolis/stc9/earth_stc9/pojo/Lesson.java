@@ -1,46 +1,47 @@
 package ru.innopolis.stc9.earth_stc9.pojo;
 
+import java.util.Date;
+
 public class Lesson {
     private int id;
-
+    private String theme;
+    private Date date;
     private Subject subject;
     private int subjectId;
-    private User student;
-    private int studentId;
     private User teacher;
     private int teacherId;
-    private int mark;
+    private Group group;
+    private int groupId;
 
-    private boolean attendance;
 
-    public Lesson(int id, Subject subject, int subjectId, User student, int studentId,
-                  User teacher, int teacherId, int mark, boolean attendance) {
+    public Lesson(int id, String theme, Date date, Subject subject, int subjectId, User teacher, int teacherId,
+                  Group group, int groupId) {
         this.id = id;
+        this.theme = theme;
+        this.date = date;
         this.subject = subject;
         this.subjectId = subjectId;
-        this.student = student;
-        this.studentId = studentId;
         this.teacher = teacher;
         this.teacherId = teacherId;
-        this.mark = mark;
-        this.attendance = attendance;
+        this.group = group;
+        this.groupId = groupId;
     }
 
-    public Lesson(int id, int subjectId, int studentId, int teacherId, int mark, boolean attendance) {
+    public Lesson(int id, String theme, Date date, int subjectId, int teacherId, int groupId) {
         this.id = id;
+        this.theme = theme;
+        this.date = date;
         this.subjectId = subjectId;
-        this.studentId = studentId;
         this.teacherId = teacherId;
-        this.mark = mark;
-        this.attendance = attendance;
+        this.groupId = groupId;
     }
 
-    public Lesson(int subjectId, int studentId, int teacherId, int mark, boolean attendance) {
+    public Lesson(String theme, Date date, int subjectId, int teacherId, int groupId) {
+        this.theme = theme;
+        this.date = date;
         this.subjectId = subjectId;
-        this.studentId = studentId;
         this.teacherId = teacherId;
-        this.mark = mark;
-        this.attendance = attendance;
+        this.groupId = groupId;
     }
 
     public int getId() {
@@ -55,14 +56,6 @@ public class Lesson {
         return subjectId;
     }
 
-    public User getStudent() {
-        return student;
-    }
-
-    public int getStudentId() {
-        return studentId;
-    }
-
     public User getTeacher() {
         return teacher;
     }
@@ -71,11 +64,19 @@ public class Lesson {
         return teacherId;
     }
 
-    public int getMark() {
-        return mark;
+    public String getTheme() {
+        return theme;
     }
 
-    public boolean isAttendance() {
-        return attendance;
+    public Date getDate() {
+        return date;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public int getGroupId() {
+        return groupId;
     }
 }

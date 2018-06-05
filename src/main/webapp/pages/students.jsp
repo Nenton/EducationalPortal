@@ -17,5 +17,6 @@
     </div>
 </div>
 <%@include file="../containers/footer.jsp" %>
+
 </body>
 </html>

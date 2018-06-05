@@ -1,21 +1,21 @@
 package ru.innopolis.stc9.earth_stc9.controllers;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Controller for show information non registered users
  */
-@WebServlet(urlPatterns = {"/info"})
-public class InfoController extends AbstractController {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+@Controller
+public class InfoController {
+    private static final Logger logger = Logger.getLogger(InfoController.class);
+
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    private String doGet(Model model) {
         logger.info("doGet" + this.getClass().getName());
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-        req.getRequestDispatcher("/pages/info.jsp").forward(req, resp);
+        return "info";
     }
 }

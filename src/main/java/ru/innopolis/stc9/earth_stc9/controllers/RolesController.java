@@ -1,56 +1,57 @@
 package ru.innopolis.stc9.earth_stc9.controllers;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
 import ru.innopolis.stc9.earth_stc9.services.IRoleService;
-import ru.innopolis.stc9.earth_stc9.services.RoleService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 /**
  * Controller for show roles
  */
-@WebServlet("/roles")
-public class RolesController extends AbstractController {
-    private IRoleService service = new RoleService();
+@Controller
+public class RolesController {
+    private static final Logger logger = Logger.getLogger(RolesController.class);
+    @Autowired
+    private IRoleService service;
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @RequestMapping(value = "/roles", method = RequestMethod.GET)
+    public String doGet(@RequestAttribute String message, Model model) {
         logger.info("doGet" + this.getClass().getName());
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
         List<Role> roles = service.getRoles();
-        req.setAttribute("roles", roles);
-        req.getRequestDispatcher("/pages/roles.jsp").forward(req, resp);
+        model.addAttribute("roles", roles);
+        if (message != null && !message.isEmpty()) {
+            model.addAttribute("message", message);
+        }
+        return "roles";
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @RequestMapping(value = "/roleAdd", method = RequestMethod.POST)
+    public String doPostAddRole(@RequestAttribute String nameRole, Model model) {
         logger.info("doPost" + this.getClass().getName());
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-
-        try {
-            if (req.getParameter("deleteRole") != null) {
-                int roleId = Integer.parseInt(req.getParameter("roleId"));
-                service.deleteRole(roleId);
-                doGet(req, resp);
-            }
-            if (req.getParameter("addRole") != null) {
-
-                String roleName = req.getParameter("nameRole");
-                Role role = new Role(roleName);
-
-                service.createRole(role);
-                doGet(req, resp);
-            }
-
-        } catch (Exception e) {
-            logger.warn(e);
+        if (nameRole.isEmpty()) {
+            return doGet("Передано пустое имя", model);
+        } else {
+            Role role = new Role(nameRole);
+            service.createRole(role);
+            return doGet("", model);
         }
+    }
+
+    @RequestMapping(value = "/roleDelete", method = RequestMethod.POST)
+    public String doPostDeleteole(@RequestAttribute String roleId, Model model) {
+        logger.info("doPost" + this.getClass().getName());
+        try {
+            service.deleteRole(Integer.parseInt(roleId));
+        } catch (ClassCastException e) {
+            logger.warn("В запрос вместо id передано что-то другое", e);
+        }
+        return doGet("", model);
     }
 }
