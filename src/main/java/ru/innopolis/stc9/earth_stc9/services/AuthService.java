@@ -1,5 +1,7 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.innopolis.stc9.earth_stc9.db.dao.IRoleDao;
 import ru.innopolis.stc9.earth_stc9.db.dao.IUserDao;
 import ru.innopolis.stc9.earth_stc9.db.dao.RoleDao;
@@ -9,8 +11,11 @@ import ru.innopolis.stc9.earth_stc9.pojo.User;
 
 import java.sql.SQLException;
 
+@Service
 public class AuthService implements IAuthService {
+    @Autowired
     private IUserDao userDao = new UserDao();
+    @Autowired
     private IRoleDao roleDao = new RoleDao();
 
     @Override

@@ -1,69 +1,74 @@
 package ru.innopolis.stc9.earth_stc9.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
 import ru.innopolis.stc9.earth_stc9.services.AuthService;
 import ru.innopolis.stc9.earth_stc9.services.IAuthService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.HttpSession;
 
 /**
  * Controller for login operations
  */
-@WebServlet("/login")
+@Controller
 public class LoginController extends AbstractController {
-
+    @Autowired
     private IAuthService authService = new AuthService();
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.info("doGet" + this.getClass().getName());
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-        String errorMsg = req.getParameter("errorMsg");
-        if (errorMsg != null && errorMsg.equals("noAccess")) {
-            req.setAttribute("message", "У Вас нет доступа к этой странице.");
-        }
-
-        if (errorMsg != null && errorMsg.equals("authErr")) {
-            req.setAttribute("errorMsg", "String");
-        }
-        req.getRequestDispatcher("/pages/login.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        logger.info("doPost" + this.getClass().getName());
-        String action = req.getParameter("exit");
-        if (action != null) {
-            req.getSession().invalidate();
-            resp.sendRedirect("/");
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String doGet(HttpSession httpSession, Model model, @RequestAttribute(name = "exit") String exit, @RequestAttribute(name = "login") String login, @RequestAttribute(name = "password") String password) {
+        if (exit != null) {
+            httpSession.invalidate();
+            return "index";
         } else {
-            String login = req.getParameter("userName");
-            String password = req.getParameter("userPassword");
             if (authService.checkAuth(login, password)) {
+                model.addAttribute("login", login);
+                httpSession.setAttribute("login", login);
                 Role role = authService.getRoleByUserLogin(login);
-                req.getSession().setAttribute("role", role.getId());
-                req.getSession().setAttribute("login", login);
-
                 switch (role.getId()) {
                     case Roles.ADMIN_ROLE_ID:
+                        model.addAttribute("role", Integer.toString(Roles.ADMIN_ROLE_ID));
+                        httpSession.setAttribute("role", Roles.ADMIN_ROLE_ID);
+                        return "dashboard";
                     case Roles.STUDENT_ROLE_ID:
+                        model.addAttribute("role", Integer.toString(Roles.STUDENT_ROLE_ID));
+                        httpSession.setAttribute("role", Roles.STUDENT_ROLE_ID);
+                        return "dashboard";
                     case Roles.TEACHER_ROLE_ID:
-                        resp.sendRedirect("/dashboard");
-                        break;
+                        model.addAttribute("role", Integer.toString(Roles.TEACHER_ROLE_ID));
+                        httpSession.setAttribute("role", Roles.TEACHER_ROLE_ID);
+                        return "dashboard";
                     default:
-                        resp.sendRedirect(req.getContextPath() + "/login?errorMsg=roleNull");
-                        break;
+                        model.addAttribute("errorMsg", "roleNull");
+                        return "login";
                 }
-
             } else {
-                resp.sendRedirect(req.getContextPath() + "/login?errorMsg=authErr");
+                model.addAttribute("errorMsg", "authErr");
+                return "login";
             }
         }
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String getPage(Model model, @RequestAttribute (name = "errorMsg") String errorMsg) {
+        if (errorMsg != null) {
+            switch (errorMsg) {
+                case "noAccess":
+                    model.addAttribute("message", "У Вас нет доступа к этой странице.");
+                case "authErr":
+                    model.addAttribute("message", "Попробуйте ввести данные снова");
+                case "roleNull":
+                    model.addAttribute("message", "Недостаточно прав доступа");
+            }
+        }
+        return "login";
     }
 }

@@ -1,28 +1,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<table class="table table-bordered users-table">
-    <thead class="table-dark">
-    <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Theme</th>
-        <th scope="col">Subject</th>
-        <th scope="col">Teacher</th>
-        <th scope="col">Group</th>
-        <th scope="col">Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="lesson" items="${lessons}">
+<div class="col-md-9">
+    <table class="table table-responsive">
+        <thead class="table-dark table-bordered">
         <tr>
-            <th scope="row">${lesson.id}</th>
-            <td>${lesson.theme}</td>
-            <td>${lesson.subject.name}</td>
-            <td>
-                <a href="${pageContext.request.contextPath}/users/${lesson.teacher.id}"> ${lesson.teacher.fullName}</a>
-            </td>
-            <td>${lesson.group.groupName}</td>
-            <td>${lesson.date}</td>
+            <th class="d-sm-table-cell" scope="col">Id</th>
+            <th class="d-sm-table-cell" scope="col">Theme</th>
+            <th class="d-sm-table-cell" scope="col">Subject</th>
+            <th class="d-sm-table-cell" scope="col">Teacher</th>
+            <th class="d-sm-table-cell" scope="col">Group</th>
+            <th class="d-sm-table-cell" scope="col">Date</th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody class="table-bordered">
+        <c:forEach var="lesson" items="${lessons}">
+            <tr>
+                <th scope="row">${lesson.id}</th>
+                <td class="d-sm-table-cell" >${lesson.theme}</td>
+                <td class="d-sm-table-cell" >${lesson.subject.name}</td>
+                <td class="d-sm-table-cell" >
+                    <a href="${pageContext.request.contextPath}/users/${lesson.teacher.id}"> ${lesson.teacher.fullName}</a>
+                </td>
+                <td class="d-sm-table-cell" >${lesson.group.groupName}</td>
+                <td class="d-sm-table-cell" >${lesson.date}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>

@@ -11,24 +11,17 @@
 <%@include file="../containers/head.jsp" %>
 <title>Регистрация пользователя</title>
 <body>
+<%@include file="../containers/header.jsp" %>
 
-<div class="container">
-
-    <%@include file="../containers/header.jsp" %>
-
-    <div class="row">
-        <%@include file="../containers/sidebar.jsp" %>
-        <div class="col-9">
-            <main class="content">
-                <%@include file="../containers/errorMessage.jsp" %>
-                <%@include file="../containers/registration.jsp" %>
-                <br>
-            </main>
-        </div>
-
+    <%@include file="../containers/sidebar.jsp" %>
+    <div class="col-9">
+        <main class="content">
+            <%@include file="../containers/errorMessage.jsp" %>
+            <%@include file="../containers/registration.jsp" %>
+            <br>
+        </main>
     </div>
 
-</div>
 <%@include file="../containers/footer.jsp" %>
 </body>
 </html>
