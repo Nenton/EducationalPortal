@@ -10,7 +10,9 @@
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
             <main class="content">
-                <jsp:include page="../pages/studentgroup/blockMessegUser.jsp"/>
+                <c:if test="${message != null}">
+                    <%@include file="../containers/message.jsp" %>
+                </c:if>
                 <jsp:include page="../pages/studentgroup/blockAddstudentGroup.jsp"/>
                 <jsp:include page="../pages/studentgroup/blockTablestudentgroup.jsp"/>
 

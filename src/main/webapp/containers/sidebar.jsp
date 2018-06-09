@@ -21,6 +21,7 @@
         <a href="${pageContext.request.contextPath}/users">Users</a><br />
         <a href="${pageContext.request.contextPath}/groups">Groups</a><br />
         <a href="${pageContext.request.contextPath}/roles">Roles</a><br />
+        <a href="${pageContext.request.contextPath}/journal">Journal</a><br/>
     </c:if>
 
     <a href="${pageContext.request.contextPath}/info">Information</a><br />
