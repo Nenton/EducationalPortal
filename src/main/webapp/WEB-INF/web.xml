@@ -11,7 +11,27 @@
 
     <servlet-mapping>
         <servlet-name>main</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/users</url-pattern>
+        <url-pattern>/user</url-pattern>
+        <url-pattern>/info</url-pattern>
+        <url-pattern>/dashboard</url-pattern>
+        <url-pattern>/roles</url-pattern>
+        <url-pattern>/roleAdd</url-pattern>
+        <url-pattern>/roleDelete</url-pattern>
+        <url-pattern>/teachers</url-pattern>
+        <url-pattern>/students</url-pattern>
+        <url-pattern>/registration</url-pattern>
+        <url-pattern>/lessons</url-pattern>
+        <url-pattern>/lessonAdd</url-pattern>
+        <url-pattern>/lessonDelete</url-pattern>
+        <url-pattern>/groups</url-pattern>
+        <url-pattern>/groups/create</url-pattern>
+        <url-pattern>/groups/delete</url-pattern>
+        <url-pattern>/studentgroup</url-pattern>
+        <url-pattern>/studentgroup/addstudentgroup</url-pattern>
+        <url-pattern>/studentgroup/getstudentgroup</url-pattern>
+        <url-pattern>/studentgroup/delete</url-pattern>
+        <url-pattern>/studentgroup/add</url-pattern>
 
     </servlet-mapping>
 

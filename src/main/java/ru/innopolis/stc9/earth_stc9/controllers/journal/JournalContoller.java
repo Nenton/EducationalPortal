@@ -26,11 +26,10 @@ public class JournalContoller {
     @Autowired
     private IGroupService service;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getindex(Model model) {
         return "index";
-
-    }
+    }*/
 
 
     /*
