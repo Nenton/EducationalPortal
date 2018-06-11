@@ -22,7 +22,7 @@ public class GroupService implements IGroupService {
     private IGroupDao groupDao;
 
     @Override
-    public boolean createGroup(Group group){
+    public boolean createGroup(Group group) {
         try {
             return groupDao.addGroup(group);
         } catch (SQLException e) {
@@ -32,7 +32,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public boolean updateGroup(Group group){
+    public boolean updateGroup(Group group) {
         try {
             return groupDao.updateGroup(group);
         } catch (SQLException e) {
@@ -42,7 +42,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public boolean deleteGroup(int id){
+    public boolean deleteGroup(int id) {
         try {
             return groupDao.deleteGroup(id);
         } catch (SQLException e) {
@@ -52,7 +52,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public Group getGroupById(int id){
+    public Group getGroupById(int id) {
         try {
             return groupDao.getGroupById(id);
         } catch (SQLException e) {
@@ -62,7 +62,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public List<Group> getGroups(){
+    public List<Group> getGroups() {
         try {
             return groupDao.getGroups();
         } catch (SQLException e) {

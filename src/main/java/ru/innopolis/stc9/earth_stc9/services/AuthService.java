@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.innopolis.stc9.earth_stc9.db.dao.IRoleDao;
 import ru.innopolis.stc9.earth_stc9.db.dao.IUserDao;
-import ru.innopolis.stc9.earth_stc9.db.dao.RoleDao;
-import ru.innopolis.stc9.earth_stc9.db.dao.UserDao;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
 
