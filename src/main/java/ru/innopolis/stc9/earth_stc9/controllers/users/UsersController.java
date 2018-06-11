@@ -11,6 +11,7 @@ import ru.innopolis.stc9.earth_stc9.pojo.Role;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
 import ru.innopolis.stc9.earth_stc9.services.IUsersService;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -19,14 +20,16 @@ public class UsersController {
     private IUsersService service;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String getUsers(Model model) {
+    public String showUsers(HttpSession session, Model model) {
+        model.addAttribute("role", session.getAttribute("role"));
+        return getUsers(model);
+    }
+
+    private String getUsers(Model model) {
         List<User> users = service.getUsers();
         if (users != null) {
-            model.addAttribute("usersList", users);
+            model.addAttribute("users", users);
         }
-//        model.addAttribute("role", request.getSession().getAttribute("role"));
-        model.addAttribute("role", 1);
-        // TODO: 11.06.2018 надо убирать с расчетом на security
         return "users";
     }
 

@@ -3,8 +3,8 @@
 <table class="table table-bordered users-table">
     <thead class="table-dark">
     <tr class="users-row">
-        <th class="col-1">Id</th>
-        <th class="col-2">Login</th>
+        <%--<th class="col-1">Id</th>--%>
+        <th class="col-3">Login</th>
         <th class="col-3">Name</th>
         <th class="col-2">Role</th>
         <th class="col users-row">
@@ -15,10 +15,10 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="user" items="${usersList}">
+    <c:forEach var="user" items="${users}">
         <tr class="users-row">
-            <th scope="row" class="col-1">${user.id}</th>
-            <td class="col-2">${user.login}</td>
+                <%--<th scope="row" class="col-1">${user.id}</th>--%>
+            <td class="col-3">${user.login}</td>
             <td class="col-3">
                 <a href="${pageContext.request.contextPath}/users/${user.id}"> ${user.fullName}</a>
             </td>
