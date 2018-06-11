@@ -12,6 +12,11 @@ public class GroupStudents {
         this.groupIdGS = groupIdGS;
     }
 
+    public GroupStudents(int studentIdGS, int groupIdGS) {
+        this.studentIdGS = studentIdGS;
+        this.groupIdGS = groupIdGS;
+    }
+
     public int getIdGS() {
         return idGS;
     }

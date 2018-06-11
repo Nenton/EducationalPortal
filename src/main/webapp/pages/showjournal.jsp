@@ -10,11 +10,8 @@
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
             <main class="content">
-                <div class="alert alert-info" role="alert">
-                    Список групп
-                </div>
-                <jsp:include page="studentgroup/blockGETstudentGroup.jsp"/>
-
+                <jsp:include page="journals/blockADDJournal.jsp"/>
+                <jsp:include page="journals/blockTableJournal.jsp"/>
             </main>
         </div>
     </div>

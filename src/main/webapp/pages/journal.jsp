@@ -13,7 +13,12 @@
                 <div class="alert alert-info" role="alert">
                     Список групп
                 </div>
-                <jsp:include page="studentgroup/blockGETstudentGroup.jsp"/>
+                <div class="alert alert-secondary" role="alert">
+                    <h class="text-center">
+                        <p class="text-primary">Для просмотра предметов нажмите на имя группы</p>
+                    </h>
+                </div>
+                <jsp:include page="journals/blockGETgroupListForJournal.jsp"/>
 
             </main>
         </div>

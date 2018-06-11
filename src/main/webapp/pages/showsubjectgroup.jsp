@@ -9,12 +9,14 @@
     <div class="row">
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
+            <div class="alert alert-info" role="alert">
+                Список предметов
+            </div>
             <main class="content">
-                <div class="alert alert-info" role="alert">
-                    Список групп
-                </div>
-                <jsp:include page="studentgroup/blockGETstudentGroup.jsp"/>
-
+                <c:if test="${message != null}">
+                    <%@include file="../containers/message.jsp" %>
+                </c:if>
+                <jsp:include page="journals/blockGetsubjectgroup.jsp"/>
             </main>
         </div>
     </div>

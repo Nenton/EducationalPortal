@@ -32,6 +32,7 @@
         <url-pattern>/studentgroup/getstudentgroup</url-pattern>
         <url-pattern>/studentgroup/delete</url-pattern>
         <url-pattern>/studentgroup/add</url-pattern>
+
     </servlet-mapping>
 
     <servlet-mapping>

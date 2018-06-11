@@ -51,10 +51,9 @@ public class GroupsStudentsDAO implements IGroupsStudentsDAO {
         }
         try (Connection connection = conManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO group_students " +
-                    "(id, student_id, group_id ) VALUES (?, ?, ?)");
-            statement.setInt(1, groupStudents.getIdGS());
-            statement.setInt(2, groupStudents.getStudentIdGS());
-            statement.setInt(3, groupStudents.getGroupIdGS());
+                    "(student_id, group_id ) VALUES ( ?, ?)");
+            statement.setInt(1, groupStudents.getStudentIdGS());
+            statement.setInt(2, groupStudents.getGroupIdGS());
             return statement.execute();
         }
 
@@ -85,7 +84,8 @@ public class GroupsStudentsDAO implements IGroupsStudentsDAO {
             return false;
         }
         try (Connection connection = conManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM group_students WHERE id=?");
+            PreparedStatement statement = connection.prepareStatement
+                    ("DELETE FROM group_students s WHERE s.student_id=?");
             statement.setInt(1, id);
             return statement.execute();
         }
