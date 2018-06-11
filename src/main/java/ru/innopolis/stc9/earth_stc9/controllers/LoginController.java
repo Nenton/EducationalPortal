@@ -6,13 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
-import ru.innopolis.stc9.earth_stc9.services.AuthService;
 import ru.innopolis.stc9.earth_stc9.services.IAuthService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -21,7 +18,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController extends AbstractController {
     @Autowired
-    private IAuthService authService = new AuthService();
+    private IAuthService authService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String doGet(HttpSession httpSession, Model model, @RequestAttribute(name = "exit") String exit, @RequestAttribute(name = "login") String login, @RequestAttribute(name = "password") String password) {
@@ -37,15 +34,15 @@ public class LoginController extends AbstractController {
                     case Roles.ADMIN_ROLE_ID:
                         model.addAttribute("role", Integer.toString(Roles.ADMIN_ROLE_ID));
                         httpSession.setAttribute("role", Roles.ADMIN_ROLE_ID);
-                        return "dashboard";
+                        break;
                     case Roles.STUDENT_ROLE_ID:
                         model.addAttribute("role", Integer.toString(Roles.STUDENT_ROLE_ID));
                         httpSession.setAttribute("role", Roles.STUDENT_ROLE_ID);
-                        return "dashboard";
+                        break;
                     case Roles.TEACHER_ROLE_ID:
                         model.addAttribute("role", Integer.toString(Roles.TEACHER_ROLE_ID));
                         httpSession.setAttribute("role", Roles.TEACHER_ROLE_ID);
-                        return "dashboard";
+                        break;
                     default:
                         model.addAttribute("errorMsg", "roleNull");
                         return "login";
@@ -54,6 +51,7 @@ public class LoginController extends AbstractController {
                 model.addAttribute("errorMsg", "authErr");
                 return "login";
             }
+            return "dashboard";
         }
     }
 
@@ -63,10 +61,15 @@ public class LoginController extends AbstractController {
             switch (errorMsg) {
                 case "noAccess":
                     model.addAttribute("message", "У Вас нет доступа к этой странице.");
+                    break;
                 case "authErr":
                     model.addAttribute("message", "Попробуйте ввести данные снова");
+                    break;
                 case "roleNull":
                     model.addAttribute("message", "Недостаточно прав доступа");
+                    break;
+                default:
+
             }
         }
         return "login";

@@ -14,9 +14,9 @@ import java.sql.SQLException;
 @Service
 public class AuthService implements IAuthService {
     @Autowired
-    private IUserDao userDao = new UserDao();
+    private IUserDao userDao;
     @Autowired
-    private IRoleDao roleDao = new RoleDao();
+    private IRoleDao roleDao;
 
     @Override
     public boolean checkAuth(String login, String password) {
