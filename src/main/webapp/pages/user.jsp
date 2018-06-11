@@ -4,11 +4,7 @@
 <html>
 <%@include file="../containers/head.jsp" %>
 <body>
-
-<div class="container">
-
     <%@include file="../containers/header.jsp" %>
-
     <div class="row">
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
@@ -16,10 +12,7 @@
                 No implemented
             </main><!-- .content -->
         </div><!-- .container-->
-
-    </div><!-- .middle-->
-
-</div><!-- .wrapper -->
+    </div>
 <%@include file="../containers/footer.jsp" %>
 </body>
 </html>

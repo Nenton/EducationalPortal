@@ -2,12 +2,8 @@
 <!DOCTYPE html>
 <html>
 <%@include file="../containers/head.jsp" %>
-<body>
-
-<div class="container">
-
+    <body>
     <%@include file="../containers/header.jsp" %>
-
     <div class="row">
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
@@ -15,10 +11,7 @@
                 <strong>Content:</strong> Страница с информацией
             </main>
         </div><!-- .container-->
-
-    </div><!-- .middle-->
-
-</div><!-- .wrapper -->
-<%@include file="../containers/footer.jsp" %>
-</body>
+    </div>
+    <%@include file="../containers/footer.jsp" %>
+    </body>
 </html>

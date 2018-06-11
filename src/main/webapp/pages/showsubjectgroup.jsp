@@ -4,7 +4,6 @@
 <html>
 <%@include file="../containers/head.jsp" %>
 <body>
-<div class="container">
     <%@include file="../containers/header.jsp" %>
     <div class="row">
         <%@include file="../containers/sidebar.jsp" %>
@@ -20,7 +19,6 @@
             </main>
         </div>
     </div>
-</div>
 <%@include file="../containers/footer.jsp" %>
 </body>
 </html>
