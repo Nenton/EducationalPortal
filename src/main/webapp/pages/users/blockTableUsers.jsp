@@ -8,7 +8,7 @@
         <th class="col-3">Name</th>
         <th class="col-2">Role</th>
         <th class="col users-row">
-            <form action="${pageContext.request.contextPath}/users" name="create" method="get">
+            <form action="${pageContext.request.contextPath}/userCreate" name="create" method="get">
                 <input type="submit" name="create" value="Создать" class="btn btn-success">
             </form>
         </th>
@@ -25,14 +25,12 @@
             <td class="col-2">${user.role.name}<br></td>
             <c:if test="${role == 1}">
                 <td class="col users-row">
-                    <form action="${pageContext.request.contextPath}/users" name="update" method="get">
+                    <form action="${pageContext.request.contextPath}/userEdit/${user.id}" name="update" method="get">
                         <input type="submit" name="update" value="Изменить" class="btn btn-warning">
-                        <input hidden name="userId" value="${user.id}">
                     </form>
-                    <form action="${pageContext.request.contextPath}/users" name="delete" method="post"
+                    <form action="${pageContext.request.contextPath}/userDelete/${user.id}" name="delete" method="post"
                           class="users-margin">
                         <input type="submit" name="delete" value="Удалить" class="btn btn-danger">
-                        <input hidden name="userId" value="${user.id}">
                     </form>
                 </td>
             </c:if>

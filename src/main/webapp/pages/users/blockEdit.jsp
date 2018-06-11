@@ -1,11 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<form action="${pageContext.request.contextPath}/users" name="editUser" method="post" class="users-row">
-    <input type="text" placeholder="Id" disabled value="${user.id}"
-           class="form-control col-1">
-    <input type="hidden" name="userId" value="${user.id}">
+<form action="${pageContext.request.contextPath}/userEdit/${user.id}" name="editUser" method="post" class="users-row">
     <input type="text" name="nameUser" placeholder="Имя" value="${user.fullName}"
-           class="form-control col-2 users-margin">
+           class="form-control col-3 users-margin">
     <input type="text" name="loginUser" placeholder="Логин" value="${user.login}"
            class="form-control col-2 users-margin">
     <input type="password" name="passwordUser" value="${user.passwordHash}"
