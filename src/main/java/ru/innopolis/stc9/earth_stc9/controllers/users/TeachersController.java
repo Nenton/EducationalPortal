@@ -11,7 +11,6 @@ import ru.innopolis.stc9.earth_stc9.pojo.Role;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
 import ru.innopolis.stc9.earth_stc9.services.IUsersService;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,8 +23,7 @@ public class TeachersController {
     }
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
-    public String showTeachers(HttpSession session, Model model) {
-        model.addAttribute("role", session.getAttribute("role"));
+    public String showTeachers(Model model) {
         return getTeachers(model);
     }
 
@@ -54,8 +52,8 @@ public class TeachersController {
     }
 
     @RequestMapping(value = "/teacherEdit/{id}", method = RequestMethod.GET)
-    public String editTeacherShowBlock(@PathVariable(value = "id") String id, Model model) {
-        User userById = service.getUserById(Integer.parseInt(id));
+    public String editTeacherShowBlock(@PathVariable(value = "id") int id, Model model) {
+        User userById = service.getUserById(id);
         model.addAttribute("user", userById);
         model.addAttribute("update", "Изменить");
         List<Role> roles = service.getRoles();
@@ -66,18 +64,17 @@ public class TeachersController {
     }
 
     @RequestMapping(value = "/teacherEdit/{id}", method = RequestMethod.POST)
-    public String editTeacher(@PathVariable(value = "id") String id, @RequestAttribute String nameTeacher,
+    public String editTeacher(@PathVariable(value = "id") int id, @RequestAttribute String nameTeacher,
                               @RequestAttribute String loginTeacher, @RequestAttribute String passwordTeacher,
                               @RequestAttribute String roleTeacher, Model model) {
-        User user = new User(Integer.parseInt(id), loginTeacher, passwordTeacher, Integer.parseInt(roleTeacher), nameTeacher);
+        User user = new User(id, loginTeacher, passwordTeacher, Integer.parseInt(roleTeacher), nameTeacher);
         service.updateUser(user);
         return getTeachers(model);
     }
 
     @RequestMapping(value = "/teacherDelete/{id}", method = RequestMethod.POST)
-    public String deleteTeacher(@PathVariable(value = "id") String id, Model model) {
-        int idUser = Integer.parseInt(id);
-        service.deleteUserById(idUser);
+    public String deleteTeacher(@PathVariable(value = "id") int id, Model model) {
+        service.deleteUserById(id);
         return getTeachers(model);
     }
 }
