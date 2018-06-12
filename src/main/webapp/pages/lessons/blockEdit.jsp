@@ -44,15 +44,15 @@
         </p>
 
         <p class="col-12">
+            <c:if test="${editLesson == null}">
+                <input type="submit" name="lessons/create" value="Создать" class="btn btn-success col-2"
+                       formaction="${pageContext.request.contextPath}/lessons/add" formmethod="POST">
+                <input type="reset" name="clearLesson" value="Очистить" class="btn btn-secondary col-2">
+            </c:if>
             <c:if test="${editLesson != null}">
                 <input type="submit" name="findLesson" value="Сохранить" class="btn btn-primary col-2"
                        formaction="${pageContext.request.contextPath}/lessons/save" formmethod="POST">
             </c:if>
-            <c:if test="${editLesson == null}">
-                <input type="submit" name="lessons/create" value="Создать" class="btn btn-success col-2"
-                       formaction="${pageContext.request.contextPath}/lessons/add" formmethod="POST">
-            </c:if>
-            <input type="reset" name="clearLesson" value="Очистить" class="btn btn-secondary col-2">
         </p>
         <input hidden name="editLessonId" value="${editLesson.id}">
     </form>

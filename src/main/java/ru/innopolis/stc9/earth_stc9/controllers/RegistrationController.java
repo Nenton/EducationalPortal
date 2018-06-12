@@ -33,7 +33,7 @@ public class RegistrationController {
         }
 
         if (usersService.createUser(user)) {
-            model.addAttribute("message", "Пользователь успешно зарегистрирован! Ведите логин и пароль!");
+            return "redirect:/login";
         }
 
         return "registration";
