@@ -8,6 +8,9 @@
 <div class="row">
     <%@include file="../containers/sidebar.jsp" %>
     <div class="col-9">
+        <c:if test="${message != null}">
+            <%@include file="../containers/message.jsp" %>
+        </c:if>
         <c:if test="${role == 1 && create != null}">
             <jsp:include page="../pages/users/blockAddUser.jsp"/>
         </c:if>

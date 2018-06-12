@@ -65,13 +65,13 @@ public class UsersControllerTest {
         User user = Mockito.mock(User.class);
         try {
             PowerMockito.whenNew(User.class)
-                    .withArguments("User", "Login", "Pass", Integer.parseInt("1"))
+                    .withArguments("User", "Login", "Pass", 0)
                     .thenReturn(user);
         } catch (Exception e) {
             Assert.fail();
         }
 
-        String page = controller.addUser("User", "Login", "Pass", "1", model);
+        String page = controller.addUser("User", "Login", "Pass", 0, model);
 
         Mockito.verify(service, Mockito.times(1)).getUsers();
         Mockito.verify(service, Mockito.times(1)).createUser(user);
@@ -103,13 +103,13 @@ public class UsersControllerTest {
         User user = Mockito.mock(User.class);
         try {
             PowerMockito.whenNew(User.class)
-                    .withArguments(15, "Login", "Pass", Integer.parseInt("1"), "User")
+                    .withArguments(15, "Login", "Pass", 0, "User")
                     .thenReturn(user);
         } catch (Exception e) {
             Assert.fail();
         }
 
-        String page = controller.editUser(15, "User", "Login", "Pass", "1", model);
+        String page = controller.editUser(15, "User", "Login", "Pass", 0, model);
 
         Mockito.verify(service, Mockito.times(1)).getUsers();
         Mockito.verify(service, Mockito.times(1)).updateUser(user);

@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"../../../resources/main-servlet-test.xml"})
 @WebAppConfiguration
-public class UsersControllerTest {
+public class StudentsControllerTest {
     @Autowired
     private WebApplicationContext context;
     private MockMvc mockMvc;
@@ -36,7 +36,7 @@ public class UsersControllerTest {
     @Test
     public void showUsersTest() {
         try {
-            mockMvc.perform(get("/users"))
+            mockMvc.perform(get("/students"))
                     .andExpect(status().isOk());
         } catch (Exception e) {
             Assert.fail();
@@ -46,7 +46,7 @@ public class UsersControllerTest {
     @Test
     public void addUserShowBlockTest() {
         try {
-            mockMvc.perform(get("/userCreate"))
+            mockMvc.perform(get("/studentCreate"))
                     .andExpect(status().isOk());
         } catch (Exception e) {
             Assert.fail();
@@ -56,7 +56,7 @@ public class UsersControllerTest {
     @Test
     public void addUserTest() {
         try {
-            mockMvc.perform(post("/userCreate"))
+            mockMvc.perform(post("/studentCreate"))
                     .andExpect(status().isOk());
         } catch (Exception e) {
             Assert.fail();
@@ -66,7 +66,7 @@ public class UsersControllerTest {
     @Test
     public void editUserShowBlockTest() {
         try {
-            mockMvc.perform(get("/userEdit/0"))
+            mockMvc.perform(get("/studentEdit/0"))
                     .andExpect(status().isOk());
 
         } catch (Exception e) {
@@ -77,7 +77,7 @@ public class UsersControllerTest {
     @Test
     public void editUserTest() {
         try {
-            mockMvc.perform(post("/userEdit/0"))
+            mockMvc.perform(post("/studentEdit/0"))
                     .andExpect(status().isOk());
         } catch (Exception e) {
             Assert.fail();
@@ -87,7 +87,7 @@ public class UsersControllerTest {
     @Test
     public void deleteUserTest() {
         try {
-            mockMvc.perform(post("/userDelete/0"))
+            mockMvc.perform(post("/studentDelete/0"))
                     .andExpect(status().isOk());
         } catch (Exception e) {
             Assert.fail();
