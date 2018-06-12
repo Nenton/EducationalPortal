@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * Controller for login operations
  */
 @Controller
-public class LoginController extends AbstractController {
+public class LoginController {
     @Autowired
     private IAuthService authService;
 

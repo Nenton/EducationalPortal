@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 
-public class HomeController extends AbstractController {
+public class HomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getPage() {
