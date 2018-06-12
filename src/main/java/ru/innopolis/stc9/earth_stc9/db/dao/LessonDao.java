@@ -71,8 +71,16 @@ public class LessonDao implements ILessonDao {
         if (lesson == null) {
             return false;
         }
-        String sql = "update lessons " +
-                "set subject = ?, student = ?, teacher = ?, mark = ?, attendance = ? where id = ?";
+        String sql = "UPDATE \n" +
+                "  public.lessons \n" +
+                "SET \n" +
+                "  theme = ?,\n" +
+                "  less_date = ?,\n" +
+                "  subject_id = ?,\n" +
+                "  teacher_id = ?,\n" +
+                "  group_id = ?\n" +
+                "WHERE \n" +
+                "  id = ? ;\n";
         try (Connection connection = conManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             setParamsIntoStatement(statement, lesson);
@@ -104,8 +112,18 @@ public class LessonDao implements ILessonDao {
         if (id == 0 || count == 0) {
             return Collections.emptyList();
         }
-        String sql = "select lessons.* from lessons\n" +
-                "where lessons.teacher_id = ? order by lessons.id desc limit ?";
+        String sql = "SELECT \n" +
+                "  L.*\n" +
+                "FROM LESSONS L,\n" +
+                "     GROUPS G,\n" +
+                "     SUBJECTS S,\n" +
+                "     USERS U\n" +
+                "WHERE L.GROUP_ID = G.ID AND\n" +
+                "      L.SUBJECT_ID = S.ID AND\n" +
+                "      L.TEACHER_ID = U.ID AND\n" +
+                "      L.TEACHER_ID = ?      \n" +
+                "ORDER BY L.LESS_DATE\n" +
+                "LIMIT ?";
         return getLessonsFromDb(sql, id, count);
     }
 
@@ -113,10 +131,40 @@ public class LessonDao implements ILessonDao {
         if (id == 0 || count == 0) {
             return Collections.emptyList();
         }
-        String sql = "select lessons.* from lessons\n" +
-                "  inner join group_students g on g.group_id = lessons.group_id\n" +
-                "where g.student_id = ? order by lessons.id desc limit ?";
+        String sql = "SELECT \n" +
+                "  L.*\n" +
+                "FROM LESSONS L,\n" +
+                "     GROUPS G,\n" +
+                "     SUBJECTS S,\n" +
+                "     USERS U,\n" +
+                "     GROUP_STUDENTS GS\n" +
+                "WHERE L.GROUP_ID = G.ID AND\n" +
+                "      L.SUBJECT_ID = S.ID AND\n" +
+                "      L.TEACHER_ID = U.ID AND\n" +
+                "      L.GROUP_ID = GS.GROUP_ID AND \n" +
+                "      GS.STUDENT_ID = ?\n" +
+                "ORDER BY L.LESS_DATE\n" +
+                "LIMIT ?";
         return getLessonsFromDb(sql, id, count);
+    }
+
+    @Override
+    public boolean existsInJournal(int id) throws SQLException {
+        if (id == 0) {
+            return false;
+        }
+        try (Connection connection = conManager.getConnection()) {
+            String sql = "select * from journal j where j.lesson_id = ?";
+            try (final PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, id);
+                try (ResultSet set = statement.executeQuery()) {
+                    if (set.next()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private List<Lesson> getLessonsFromDb(String sql, int id, int count) throws SQLException {

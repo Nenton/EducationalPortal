@@ -8,12 +8,6 @@ import ru.innopolis.stc9.earth_stc9.pojo.User;
 import java.util.List;
 
 public interface ILessonService {
-
-    /**
-     * Get user by login
-     */
-    User getUserByLogin(String login);
-
     /**
      * Get all subjects
      */
@@ -40,6 +34,11 @@ public interface ILessonService {
     List<Lesson> getLessonsByTeacherId(int id, int count);
 
     /**
+     * Get lesson by id
+     */
+    Lesson getById(int id);
+
+    /**
      * Get lessons by student id. Count is size list
      */
     List<Lesson> getLessonsByStudentId(int id, int count);
@@ -55,6 +54,11 @@ public interface ILessonService {
     boolean createLesson(Lesson lesson);
 
     /**
+     * Change lesson entity
+     */
+    boolean changeLesson(Lesson lesson);
+
+    /**
      * Delete lesson entity
      */
     boolean deleteLessonById(int idLesson);
@@ -63,4 +67,9 @@ public interface ILessonService {
      * Get all created groups
      */
     List<Group> getGroups();
+
+    /**
+     * Check lesson in journal
+     */
+    boolean existsInJournal(int id);
 }

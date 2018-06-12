@@ -30,19 +30,6 @@ public class LessonService implements ILessonService {
     private IGroupDao groupDao;
 
     @Override
-    public User getUserByLogin(String login) {
-        if (login == null || login.isEmpty()) {
-            return null;
-        }
-        try {
-            return userDao.getUserByLogin(login);
-        } catch (SQLException e) {
-            logger.warn("Ошибка получения пользователя", e);
-        }
-        return null;
-    }
-
-    @Override
     public List<Subject> getSubjects() {
         try {
             return subjectDao.getSubjects();
@@ -99,6 +86,17 @@ public class LessonService implements ILessonService {
     }
 
     @Override
+    public Lesson getById(int id) {
+        Lesson lesson = null;
+        try {
+            lesson = lessonDao.getLessonById(id);
+        } catch (SQLException e) {
+            logger.warn("Ошибка получения занятия с id - " + id, e);
+        }
+        return lesson;
+    }
+
+    @Override
     public List<Lesson> getLessonsByStudentId(int id, int count) {
         if (id == 0 || count == 0) {
             return Collections.emptyList();
@@ -138,6 +136,19 @@ public class LessonService implements ILessonService {
     }
 
     @Override
+    public boolean changeLesson(Lesson lesson) {
+        if (lesson == null) {
+            return false;
+        }
+        try {
+            return lessonDao.updateLesson(lesson);
+        } catch (SQLException e) {
+            logger.warn("Ошибка изменения занятия", e);
+        }
+        return false;
+    }
+
+    @Override
     public boolean deleteLessonById(int idLesson) {
         if (idLesson == 0) {
             return false;
@@ -158,6 +169,19 @@ public class LessonService implements ILessonService {
             logger.warn("Ошибка получения списка групп", e);
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public boolean existsInJournal(int id) {
+        if (id == 0) {
+            return false;
+        }
+        try {
+            return lessonDao.existsInJournal(id);
+        } catch (SQLException e) {
+            logger.warn("Ошибка проверки занятия в журнале с id - " + id, e);
+        }
+        return false;
     }
 
     public void setLessonDao(ILessonDao lessonDao) {

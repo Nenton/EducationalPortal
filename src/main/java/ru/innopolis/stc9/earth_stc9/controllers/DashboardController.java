@@ -11,6 +11,7 @@ import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 import ru.innopolis.stc9.earth_stc9.pojo.Lesson;
 import ru.innopolis.stc9.earth_stc9.pojo.User;
 import ru.innopolis.stc9.earth_stc9.services.ILessonService;
+import ru.innopolis.stc9.earth_stc9.services.IUsersService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -23,6 +24,8 @@ public class DashboardController {
     private static final Logger logger = Logger.getLogger(DashboardController.class);
     @Autowired
     private ILessonService service;
+    @Autowired
+    private IUsersService usersService;
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String doGet(HttpServletRequest req, Model model) {
@@ -30,7 +33,7 @@ public class DashboardController {
         String login = ((String) req.getSession().getAttribute("login"));
         List<Lesson> lessons = null;
         if (login != null && !login.isEmpty()) {
-            User user = service.getUserByLogin(login);
+            User user = usersService.getUserByLogin(login);
             switch (user.getRole().getId()) {
                 case Roles.STUDENT_ROLE_ID:
                     lessons = service.getLessonsByStudentId(user.getId(), 10);

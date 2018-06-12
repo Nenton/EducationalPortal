@@ -12,10 +12,7 @@
         <input type="text" name="userName" title="user" class="form-control"/><br>
         <input type="password" name="userPassword" title="password" class="form-control"/><br>
         <input type="submit" name="login" title="Login" value="Войти" class="btn btn-primary"/>
-    </form>
-    &nbsp;
-    <form action="${pageContext.request.contextPath}/registration" method="get">
-        <input type="submit" name="registration" title="Регистрация пользователя" value="Регистрация"
-               class="btn btn-secondary"/>
+        <input type="submit" name="reg" class="btn btn-secondary" value="Регистрация" formaction="registration"
+               formmethod="GET"/>
     </form>
 </c:if>
