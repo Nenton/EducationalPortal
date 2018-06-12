@@ -8,10 +8,10 @@
         <th class="col-2">idgroup</th>
         <th class="col-2">name</th>
         <th class="col-2">descr</th>
-
     </tr>
     </thead>
     <tbody>
+
     <c:forEach var="user" items="${studentgrop}">
         <tr class="users-row">
             <th scope="row" class="col-1">${user.id}</th>

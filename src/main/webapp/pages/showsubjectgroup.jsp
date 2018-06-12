@@ -8,10 +8,16 @@
     <div class="row">
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
+            <div class="alert alert-info" role="alert">
+                Список предметов
+            </div>
             <main class="content">
-                No implemented
-            </main><!-- .content -->
-        </div><!-- .container-->
+                <c:if test="${message != null}">
+                    <%@include file="../containers/message.jsp" %>
+                </c:if>
+                <jsp:include page="journals/blockGetsubjectgroup.jsp"/>
+            </main>
+        </div>
     </div>
 <%@include file="../containers/footer.jsp" %>
 </body>

@@ -11,6 +11,7 @@ section .section-title {
 }
 
 #tabs {
+    padding: 10px 30px;
     background: #007b5e;
     color: #eee;
 }
