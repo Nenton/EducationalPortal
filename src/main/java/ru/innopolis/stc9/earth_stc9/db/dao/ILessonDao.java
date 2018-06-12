@@ -65,4 +65,12 @@ public interface ILessonDao {
      * @param count Count lessons in array
      */
     List<Lesson> getLessonsByStudent(int id, int count) throws SQLException;
+
+    /**
+     * Проверка использования записи о занятии в журнале
+     *
+     * @param id - занятие
+     * @return true при использовании записи в журнале, иначе false
+     */
+    boolean existsInJournal(int id) throws SQLException;
 }

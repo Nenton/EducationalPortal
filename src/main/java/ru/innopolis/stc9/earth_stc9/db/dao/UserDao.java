@@ -64,7 +64,7 @@ public class UserDao implements IUserDao {
         try (Connection connection = conManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             setParamsIntoStatement(statement, user);
-            return statement.execute();
+            return (statement.executeUpdate() > 0 ? true : false);
         }
     }
 
