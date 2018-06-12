@@ -158,13 +158,10 @@ public class LessonDao implements ILessonDao {
             try (final PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, id);
                 try (ResultSet set = statement.executeQuery()) {
-                    if (set.next()) {
-                        return true;
-                    }
+                    return set.next();
                 }
             }
         }
-        return false;
     }
 
     private List<Lesson> getLessonsFromDb(String sql, int id, int count) throws SQLException {

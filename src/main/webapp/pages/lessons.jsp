@@ -12,7 +12,8 @@
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
             <main class="content">
-                <%@include file="../containers/tableLessons.jsp" %>
+                <%@include file="lessons/blockEdit.jsp" %>
+                <%@include file="lessons/tableLessons.jsp" %>
             </main><!-- .content -->
         </div><!-- .container-->
 

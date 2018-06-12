@@ -26,17 +26,14 @@ public class RegistrationController {
 
         if (!password.equals(confirmpassword)) {
             model.addAttribute("message", "Пароль и подтверждение не совпадают!");
-            return "registration";
         }
 
         if (usersService.getUserByLogin(login) != null) {
             model.addAttribute("message", "Пользователь с логином " + login + " уже зарегистрирован!");
-            return "registration";
         }
 
         if (usersService.createUser(user)) {
             model.addAttribute("message", "Пользователь успешно зарегистрирован! Ведите логин и пароль!");
-            return "registration";
         }
 
         return "registration";
