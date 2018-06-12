@@ -4,20 +4,20 @@
 <html>
 <%@include file="../containers/head.jsp" %>
 <body>
-<div class="container">
     <%@include file="../containers/header.jsp" %>
     <div class="row">
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
             <main class="content">
-                <jsp:include page="../pages/studentgroup/blockMessegUser.jsp"/>
+                <c:if test="${message != null}">
+                    <%@include file="../containers/message.jsp" %>
+                </c:if>
                 <jsp:include page="../pages/studentgroup/blockAddstudentGroup.jsp"/>
                 <jsp:include page="../pages/studentgroup/blockTablestudentgroup.jsp"/>
 
             </main>
         </div>
     </div>
-</div>
 <%@include file="../containers/footer.jsp" %>
 </body>
 </html>

@@ -1,21 +1,29 @@
 package ru.innopolis.stc9.earth_stc9.controllers;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Controller for home page
  */
-@WebServlet("/")
+@Controller
+
 public class HomeController extends AbstractController {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        logger.info("doGet" + this.getClass().getName());
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-        req.getRequestDispatcher("/pages/index.jsp").forward(req, resp);
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String getPage() {
+        return "index";
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public String checkAuthentication(Model model, HttpSession httpSession) {
+        if (!httpSession.getAttribute("login").toString().isEmpty()) {
+            model.addAttribute("login", httpSession.getAttribute("login").toString());
+        }
+        return "index";
     }
 }

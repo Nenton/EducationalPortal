@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * Connection for PostgreSQL
  */
-public class ConnectionManagerJDBCImpl implements ConnectionManager {
+public class   ConnectionManagerJDBCImpl implements ConnectionManager {
     private static Logger logger = Logger.getLogger(ConnectionManagerJDBCImpl.class);
 
     private static ConnectionManager connectionManager;

@@ -15,6 +15,7 @@ import java.io.IOException;
 /**
  * Filter for admin role. Access is granted only admin
  */
+
 @WebFilter(urlPatterns = {"/users", "/roles", "/groups",})
 public class AdminFilter extends AuthFilter {
     @Override

@@ -9,9 +9,10 @@
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
             <main class="content">
-                No implemented
-            </main><!-- .content -->
-        </div><!-- .container-->
+                <jsp:include page="journals/blockADDJournal.jsp"/>
+                <jsp:include page="journals/blockTableJournal.jsp"/>
+            </main>
+        </div>
     </div>
 <%@include file="../containers/footer.jsp" %>
 </body>
