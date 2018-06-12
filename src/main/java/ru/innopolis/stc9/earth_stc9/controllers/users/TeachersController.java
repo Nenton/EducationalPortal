@@ -16,8 +16,12 @@ import java.util.List;
 
 @Controller
 public class TeachersController {
+    private final IUsersService service;
+
     @Autowired
-    private IUsersService service;
+    public TeachersController(IUsersService service) {
+        this.service = service;
+    }
 
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(HttpSession session, Model model) {
