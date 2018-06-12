@@ -25,11 +25,24 @@ public class TeachersController {
         this.service = service;
     }
 
+    /**
+     * Метод отображает начальную страницу с преподавателями
+     * В виде таблицы с параметрами преподавателей
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public String showTeachers(Model model) {
         return getTeachers(model);
     }
 
+    /**
+     * Дефолтный метод получения всех преподавателей и внесение их в модель
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     private String getTeachers(Model model) {
         try {
             model.addAttribute("createRole", Roles.TEACHER_ROLE_ID);
@@ -44,12 +57,28 @@ public class TeachersController {
         return "teachers";
     }
 
+    /**
+     * Метод отображает блок добавления преподавателя
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/teacherCreate", method = RequestMethod.GET)
     public String addTeacherShowBlock(Model model) {
         model.addAttribute("create", "Создать");
         return getTeachers(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на добавление преподавателя
+     *
+     * @param nameTeacher     - имя преподавателя
+     * @param loginTeacher    - логин преподавателя
+     * @param passwordTeacher - пароль преподавателя
+     * @param roleTeacher     - роль преподавателя
+     * @param model           - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/teacherCreate", method = RequestMethod.POST)
     public String addTeacher(@RequestAttribute String nameTeacher, @RequestAttribute String loginTeacher,
                              @RequestAttribute String passwordTeacher, @RequestAttribute Integer roleTeacher,
@@ -69,6 +98,13 @@ public class TeachersController {
         return getTeachers(model);
     }
 
+    /**
+     * Метод отображает блок изменения данных преподавателя
+     *
+     * @param id    - идентификатор преподавателя
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/teacherEdit/{id}", method = RequestMethod.GET)
     public String editTeacherShowBlock(@PathVariable(value = "id") int id, Model model) {
         try {
@@ -89,6 +125,17 @@ public class TeachersController {
         return getTeachers(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на изменение данных преподавателя
+     *
+     * @param id              - идентификатор преподавателя
+     * @param nameTeacher     - имя преподавателя
+     * @param loginTeacher    - логин преподавателя
+     * @param passwordTeacher - пароль преподавателя
+     * @param roleTeacher     - роль преподавателя
+     * @param model           - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/teacherEdit/{id}", method = RequestMethod.POST)
     public String editTeacher(@PathVariable(value = "id") int id, @RequestAttribute String nameTeacher,
                               @RequestAttribute String loginTeacher, @RequestAttribute String passwordTeacher,
@@ -109,6 +156,13 @@ public class TeachersController {
         return getTeachers(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на удаление преподавателя
+     *
+     * @param id    - идентификатор преподавателя
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/teacherDelete/{id}", method = RequestMethod.POST)
     public String deleteTeacher(@PathVariable(value = "id") int id, Model model) {
         try {
@@ -123,6 +177,12 @@ public class TeachersController {
         return getTeachers(model);
     }
 
+    /**
+     * Метод добавляет сообщение в модель
+     *
+     * @param model   - модель данных на выходе
+     * @param message - текст сообщения
+     */
     private void showMessage(Model model, String message) {
         model.addAttribute("message", message);
     }

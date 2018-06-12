@@ -25,11 +25,24 @@ public class StudentsController {
         this.service = service;
     }
 
+    /**
+     * Метод отображает начальную страницу с студентами
+     * В виде таблицы с параметрами студентов
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public String showStudents(Model model) {
         return getStudents(model);
     }
 
+    /**
+     * Дефолтный метод получения всех студентов и внесение их в модель
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     private String getStudents(Model model) {
         try {
             model.addAttribute("createRole", Roles.STUDENT_ROLE_ID);
@@ -44,12 +57,28 @@ public class StudentsController {
         return "students";
     }
 
+    /**
+     * Метод отображает блок добавления студента
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/studentCreate", method = RequestMethod.GET)
     public String addStudentShowBlock(Model model) {
         model.addAttribute("create", "Создать");
         return getStudents(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на добавление студента
+     *
+     * @param nameStudent     - имя студента
+     * @param loginStudent    - логин студента
+     * @param passwordStudent - пароль студента
+     * @param roleStudent     - роль студента
+     * @param model           - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/studentCreate", method = RequestMethod.POST)
     public String addStudent(@RequestAttribute String nameStudent, @RequestAttribute String loginStudent,
                              @RequestAttribute String passwordStudent, @RequestAttribute Integer roleStudent,
@@ -70,6 +99,13 @@ public class StudentsController {
         return getStudents(model);
     }
 
+    /**
+     * Метод отображает блок изменения данных студента
+     *
+     * @param id    - идентификатор студента
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/studentEdit/{id}", method = RequestMethod.GET)
     public String editStudentShowBlock(@PathVariable(value = "id") int id, Model model) {
         try {
@@ -90,6 +126,17 @@ public class StudentsController {
         return getStudents(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на изменение данных студента
+     *
+     * @param id              - идентификатор студента
+     * @param nameStudent     - имя студента
+     * @param loginStudent    - логин студента
+     * @param passwordStudent - пароль студента
+     * @param roleStudent     - роль студента
+     * @param model           - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/studentEdit/{id}", method = RequestMethod.POST)
     public String editStudent(@PathVariable(value = "id") int id, @RequestAttribute String nameStudent,
                               @RequestAttribute String loginStudent, @RequestAttribute String passwordStudent,
@@ -110,6 +157,13 @@ public class StudentsController {
         return getStudents(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на удаление студента
+     *
+     * @param id    - идентификатор студента
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/studentDelete/{id}", method = RequestMethod.POST)
     public String deleteStudent(@PathVariable(value = "id") int id, Model model) {
         try {
@@ -124,6 +178,12 @@ public class StudentsController {
         return getStudents(model);
     }
 
+    /**
+     * Метод добавляет сообщение в модель
+     *
+     * @param model   - модель данных на выходе
+     * @param message - текст сообщения
+     */
     private void showMessage(Model model, String message) {
         model.addAttribute("message", message);
     }

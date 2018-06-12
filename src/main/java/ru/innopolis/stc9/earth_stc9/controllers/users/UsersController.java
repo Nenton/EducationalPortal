@@ -25,11 +25,24 @@ public class UsersController {
         this.service = service;
     }
 
+    /**
+     * Метод отображает начальную страницу с пользователями
+     * В виде таблицы с параметрами пользователей
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String showUsers(Model model) {
         return getUsers(model);
     }
 
+    /**
+     * Дефолтный метод получения всех пользователей и внесение их в модель
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     private String getUsers(Model model) {
         try {
             List<User> users = service.getUsers();
@@ -43,6 +56,12 @@ public class UsersController {
         return "users";
     }
 
+    /**
+     * Метод отображает блок добавления пользователя
+     *
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/userCreate", method = RequestMethod.GET)
     public String addUserShowBlock(Model model) {
         try {
@@ -59,6 +78,16 @@ public class UsersController {
         return getUsers(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на добавление пользователя
+     *
+     * @param nameUser     - имя пользователя
+     * @param loginUser    - логин пользователя
+     * @param passwordUser - пароль пользователя
+     * @param role         - роль пользователя
+     * @param model        - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/userCreate", method = RequestMethod.POST)
     public String addUser(@RequestAttribute String nameUser, @RequestAttribute String loginUser,
                           @RequestAttribute String passwordUser, @RequestAttribute Integer role,
@@ -78,6 +107,13 @@ public class UsersController {
         return getUsers(model);
     }
 
+    /**
+     * Метод отображает блок изменения данных пользователя
+     *
+     * @param id    - идентификатор пользователя
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/userEdit/{id}", method = RequestMethod.GET)
     public String editUserShowBlock(@PathVariable(value = "id") int id, Model model) {
         try {
@@ -98,6 +134,17 @@ public class UsersController {
         return getUsers(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на изменение данных пользователя
+     *
+     * @param id           - идентификатор пользователя
+     * @param nameUser     - имя пользователя
+     * @param loginUser    - логин пользователя
+     * @param passwordUser - пароль пользователя
+     * @param role         - роль пользователя
+     * @param model        - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/userEdit/{id}", method = RequestMethod.POST)
     public String editUser(@PathVariable(value = "id") int id, @RequestAttribute String nameUser,
                            @RequestAttribute String loginUser, @RequestAttribute String passwordUser,
@@ -117,6 +164,13 @@ public class UsersController {
         return getUsers(model);
     }
 
+    /**
+     * Метод отправляет запрос в сервис на удаление пользователя
+     *
+     * @param id    - идентификатор пользователя
+     * @param model - модель данных на выходе
+     * @return - имя jsp файла
+     */
     @RequestMapping(value = "/userDelete/{id}", method = RequestMethod.POST)
     public String deleteUser(@PathVariable(value = "id") int id, Model model) {
         try {
@@ -131,6 +185,12 @@ public class UsersController {
         return getUsers(model);
     }
 
+    /**
+     * Метод добавляет сообщение в модель
+     *
+     * @param model   - модель данных на выходе
+     * @param message - текст сообщения
+     */
     private void showMessage(Model model, String message) {
         model.addAttribute("message", message);
     }

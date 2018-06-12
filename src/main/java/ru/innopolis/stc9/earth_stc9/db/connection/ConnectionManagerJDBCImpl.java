@@ -9,20 +9,20 @@ import java.sql.SQLException;
 /**
  * Connection for PostgreSQL
  */
-public class   ConnectionManagerJDBCImpl implements ConnectionManager {
+public class ConnectionManagerJDBCImpl implements ConnectionManager {
     private static Logger logger = Logger.getLogger(ConnectionManagerJDBCImpl.class);
 
     private static ConnectionManager connectionManager;
+
+    private ConnectionManagerJDBCImpl() {
+
+    }
 
     public static ConnectionManager getInstance() {
         if (connectionManager == null) {
             connectionManager = new ConnectionManagerJDBCImpl();
         }
         return connectionManager;
-    }
-
-    private ConnectionManagerJDBCImpl() {
-
     }
 
     @Override

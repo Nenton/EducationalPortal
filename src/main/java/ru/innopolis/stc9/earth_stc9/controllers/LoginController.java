@@ -56,7 +56,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String getPage(Model model, @RequestAttribute (name = "errorMsg") String errorMsg) {
+    public String getPage(Model model, @RequestAttribute(name = "errorMsg") String errorMsg) {
         if (errorMsg != null) {
             switch (errorMsg) {
                 case "noAccess":
