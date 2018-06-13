@@ -10,8 +10,12 @@ import java.util.List;
 
 public interface IGroupService {
     boolean createGroup(Group group);
+
     boolean updateGroup(Group group);
+
     boolean deleteGroup(int id);
+
     Group getGroupById(int id);
+
     List<Group> getGroups();
 }

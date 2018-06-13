@@ -1,5 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.controllers.filters;
 
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ru.innopolis.stc9.earth_stc9.controllers.users.Roles;
 
 import javax.servlet.FilterChain;
@@ -17,6 +18,7 @@ import java.io.IOException;
  */
 
 @WebFilter(urlPatterns = {"/users", "/roles", "/groups",})
+@EnableWebMvc
 public class AdminFilter extends AuthFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

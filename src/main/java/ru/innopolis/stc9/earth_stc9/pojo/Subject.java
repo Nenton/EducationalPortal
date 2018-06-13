@@ -9,6 +9,7 @@ public class Subject {
         this.name = name;
         this.namegroup = namegroup;
     }
+
     public Subject(int id, String name) {
         this.id = id;
         this.name = name;

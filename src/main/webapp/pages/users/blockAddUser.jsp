@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<form action="${pageContext.request.contextPath}/users" name="addUser" method="post" class="users-row">
+<form action="${pageContext.request.contextPath}/userCreate" name="addUser" method="post" class="users-row">
     <input type="text" name="nameUser" title="nameUser" placeholder="Имя"
            class="form-control col-3">
     <input type="text" name="loginUser" title="loginUser" placeholder="Логин"

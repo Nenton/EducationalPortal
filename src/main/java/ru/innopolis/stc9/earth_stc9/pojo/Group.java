@@ -5,7 +5,7 @@ package ru.innopolis.stc9.earth_stc9.pojo;
  */
 
 public class Group {
-    private  int groupId;
+    private int groupId;
     private String groupName;
     private String groupDesc;
 

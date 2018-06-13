@@ -23,7 +23,6 @@ public class GroupStudentController {
     private IGroupService service;
 
 
-
     @RequestMapping(value = "/studentgroup", method = RequestMethod.GET)
     public String getGroups(Model model) {
         logger.info("Method \"getGroups()\" from GroupController done " + this.getClass().getName());
@@ -35,10 +34,10 @@ public class GroupStudentController {
     public String getStudentList(@RequestParam String id, Model model) {
         ArrayList<User> studentgrouplist = null;
         int idgroup = Integer.parseInt(id);
-            studentgrouplist = servicegroup.getStudentfromGroup(Integer.parseInt(id));
+        studentgrouplist = servicegroup.getStudentfromGroup(Integer.parseInt(id));
         logger.info("Successful getstudentgroup from the DB" + id);
-            model.addAttribute("studentgrop", studentgrouplist);
-            return "viewstudentgroup";
+        model.addAttribute("studentgrop", studentgrouplist);
+        return "viewstudentgroup";
 
 
     }

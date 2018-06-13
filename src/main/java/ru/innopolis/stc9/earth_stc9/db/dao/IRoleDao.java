@@ -1,4 +1,5 @@
 package ru.innopolis.stc9.earth_stc9.db.dao;
+
 import ru.innopolis.stc9.earth_stc9.pojo.Role;
 
 import java.sql.SQLException;

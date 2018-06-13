@@ -4,16 +4,22 @@
 <html>
 <%@include file="../containers/head.jsp" %>
 <body>
-    <%@include file="../containers/header.jsp" %>
-    <div class="row">
-        <%@include file="../containers/sidebar.jsp" %>
-        <div class="col-9">
-            <main class="content">
-                <jsp:include page="../pages/users/blockAddStudent.jsp"/>
-                <jsp:include page="../pages/users/blockTableStudents.jsp"/>
-            </main>
-        </div>
+<%@include file="../containers/header.jsp" %>
+<div class="row">
+    <%@include file="../containers/sidebar.jsp" %>
+    <div class="col-9">
+        <c:if test="${message != null}">
+            <%@include file="../containers/message.jsp" %>
+        </c:if>
+        <c:if test="${role == 1 && create != null}">
+            <jsp:include page="../pages/users/blockAddStudent.jsp"/>
+        </c:if>
+        <c:if test="${role == 1 && update != null}">
+            <jsp:include page="../pages/users/blockEditStudent.jsp"/>
+        </c:if>
+        <jsp:include page="../pages/users/blockTableStudents.jsp"/>
     </div>
-    <%@include file="../containers/footer.jsp" %>
+</div>
+<%@include file="../containers/footer.jsp" %>
 </body>
 </html>
