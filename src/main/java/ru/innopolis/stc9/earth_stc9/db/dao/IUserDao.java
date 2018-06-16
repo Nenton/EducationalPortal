@@ -10,9 +10,10 @@ public interface IUserDao {
     String COLUMN_FULL_NAME = "fullName";
     String COLUMN_LOGIN = "login";
     String COLUMN_PASSWORD = "password";
-    String COLUMN_ROLE = "role_id";
+    String COLUMN_ROLE_ID = "role_id";
     String COLUMN_DATE_REG = "date_reg";
     String COLUMN_DATE_LAST = "date_last";
+    String COLUMN_IS_ENABLED = "enabled";
 
     /**
      * Get user from DB by user login

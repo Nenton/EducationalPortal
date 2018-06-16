@@ -2,6 +2,7 @@ package ru.innopolis.stc9.earth_stc9.controllers;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -16,6 +17,7 @@ import ru.innopolis.stc9.earth_stc9.services.ILessonService;
 import ru.innopolis.stc9.earth_stc9.services.IUsersService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,61 +35,57 @@ public class LessonsController {
     private IUsersService serviceUser;
 
     @RequestMapping(value = "/lessons", method = RequestMethod.GET)
-    public String doGet(HttpServletRequest req, Model model) {
-        String login = ((String) req.getSession().getAttribute("login"));
-        setLessons(login, model);
-        setFields(login, model);
+    public String doGet(Authentication authentication, Principal principal, Model model) {
+        setLessons(authentication, principal, model);
+        setFields(authentication, principal, model);
         return "lessons";
     }
 
-    private void setLessons(String login, Model model) {
-        List<Lesson> lessons = null;
-        if (login != null && !login.isEmpty()) {
-            User userByLogin = serviceUser.getUserByLogin(login);
-            switch (userByLogin.getRole().getId()) {
-                case Roles.ADMIN_ROLE_ID:
-                    lessons = serviceLesson.getLessonsLast(100);
+    private void setLessons(Authentication authentication, Principal principal, Model model) {
+        User userByLogin = serviceUser.getUserByLogin(principal.getName());
+        authentication.getAuthorities().stream().forEach(role -> {
+            switch ((role.getAuthority())) {
+                case "ROLE_ADMIN":
+                    model.addAttribute("lessons", serviceLesson.getLessonsLast(100));
                     break;
-                case Roles.STUDENT_ROLE_ID:
-                    lessons = serviceLesson.getLessonsByStudentId(userByLogin.getId(), 100);
+                case "ROLE_STUDENT":
+                    model.addAttribute("lessons", serviceLesson.getLessonsByStudentId(userByLogin.getId(), 100));
                     break;
-                case Roles.TEACHER_ROLE_ID:
-                    lessons = serviceLesson.getLessonsByTeacherId(userByLogin.getId(), 100);
+                case "ROLE_TEACHER":
+                    model.addAttribute("lessons", serviceLesson.getLessonsByTeacherId(userByLogin.getId(), 100));
                     break;
                 default:
                     break;
             }
-        }
-        model.addAttribute("lessons", lessons);
+        });
     }
 
-    private void setFields(String login, Model model) {
-
-        List<User> teachers = new ArrayList<>();
+    private void setFields(Authentication authentication, Principal principal, Model model) {
         List<Subject> subjects = serviceLesson.getSubjects();
-        List<Group> groups = serviceLesson.getGroups();
+        model.addAttribute("subjects", subjects);
 
-        if (login != null && !login.isEmpty()) {
-            User userByLogin = serviceUser.getUserByLogin(login);
+        List<Group> groups = serviceLesson.getGroups();
+        model.addAttribute("groups", groups);
+
+        authentication.getAuthorities().stream().forEach(role -> {
+            List<User> teachers = new ArrayList<>();
+            User userByLogin = serviceUser.getUserByLogin(principal.getName());
             switch (userByLogin.getRole().getId()) {
                 case Roles.ADMIN_ROLE_ID:
                     teachers = serviceLesson.getTeachers();
                     break;
                 case Roles.TEACHER_ROLE_ID:
-                    teachers.add(serviceUser.getUserByLogin(login));
+                    teachers.add(userByLogin);
                     break;
                 default:
                     break;
             }
-        }
-
-        model.addAttribute("subjects", subjects);
-        model.addAttribute("teachers", teachers);
-        model.addAttribute("groups", groups);
+            model.addAttribute("teachers", teachers);
+        });
     }
 
     @RequestMapping(value = "/lessons/add", method = RequestMethod.POST)
-    public String addLesson(HttpServletRequest req, Model model,
+    public String addLesson(Authentication authentication, Principal principal, HttpServletRequest req, Model model,
                             @RequestAttribute String subject, @RequestAttribute String teacher,
                             @RequestAttribute String theme, @RequestAttribute String group,
                             @RequestAttribute String lessDate) {
@@ -110,11 +108,11 @@ public class LessonsController {
         } catch (Exception e) {
             logger.warn("Add lesson", e);
         }
-        return doGet(req, model);
+        return doGet(authentication, principal, model);
     }
 
     @RequestMapping(value = "/lessons/save", method = RequestMethod.POST)
-    public String saveLesson(HttpServletRequest req, Model model,
+    public String saveLesson(Authentication authentication, Principal principal, HttpServletRequest req, Model model,
                              @RequestAttribute String subject, @RequestAttribute String teacher,
                              @RequestAttribute String theme, @RequestAttribute String group,
                              @RequestAttribute String lessDate, @RequestAttribute String editLessonId) {
@@ -130,11 +128,11 @@ public class LessonsController {
         } catch (Exception e) {
             logger.warn("Changed lesson saving", e);
         }
-        return doGet(req, model);
+        return doGet(authentication, principal, model);
     }
 
     @RequestMapping(value = "/lessons/delete", method = RequestMethod.POST)
-    public String deleteLesson(HttpServletRequest req, Model model, @RequestAttribute String lessonId) {
+    public String deleteLesson(Authentication authentication, Principal principal, HttpServletRequest req, Model model, @RequestAttribute String lessonId) {
         try {
             int idLesson = Integer.parseInt(lessonId);
             if (serviceLesson.existsInJournal(idLesson)) {
@@ -146,11 +144,11 @@ public class LessonsController {
         } catch (Exception e) {
             logger.warn("Delete lesson", e);
         }
-        return doGet(req, model);
+        return doGet(authentication, principal, model);
     }
 
     @RequestMapping(value = "/lessons/change", method = RequestMethod.POST)
-    public String changeLesson(HttpServletRequest req, Model model,
+    public String changeLesson(Authentication authentication, Principal principal, HttpServletRequest req, Model model,
                                String lessonId) {
         try {
             Lesson editLesson = null;
@@ -164,6 +162,6 @@ public class LessonsController {
         } catch (Exception e) {
             logger.warn("Change lesson begin", e);
         }
-        return doGet(req, model);
+        return doGet(authentication, principal, model);
     }
 }

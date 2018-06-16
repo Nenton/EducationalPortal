@@ -14,9 +14,9 @@
         <th scope="col">Тема</th>
         <th scope="col">Преподаватель</th>
         <th scope="col">Группа</th>
-        <c:if test="${role == 1 || role == 3}">
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')">
             <th scope="col">Действия</th>
-        </c:if>
+        </sec:authorize>
     </tr>
     </thead>
     <tbody>
@@ -29,7 +29,7 @@
                 <a href="${pageContext.request.contextPath}/users/${lesson.teacher.id}"> ${lesson.teacher.fullName}</a>
             </td>
             <td>${lesson.group.groupName}</td>
-            <c:if test="${role == 1 || role == 3}">
+            <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')">
                 <td>
                     <form>
                         <input type="submit" name="changeBtn" value="Изменить" class="btn btn-primary btn-sm"
@@ -39,7 +39,7 @@
                         <input hidden name="lessonId" value="${lesson.id}">
                     </form>
                 </td>
-            </c:if>
+            </sec:authorize>
         </tr>
     </c:forEach>
     </tbody>

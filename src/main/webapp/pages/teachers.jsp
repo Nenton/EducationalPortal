@@ -11,12 +11,14 @@
         <c:if test="${message != null}">
             <%@include file="../containers/message.jsp" %>
         </c:if>
-        <c:if test="${role == 1 && create != null}">
-            <jsp:include page="../pages/users/blockAddTeacher.jsp"/>
-        </c:if>
-        <c:if test="${role == 1 && update != null}">
-            <jsp:include page="../pages/users/blockEditTeacher.jsp"/>
-        </c:if>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <c:if test="${create != null}">
+                <jsp:include page="../pages/users/blockAddTeacher.jsp"/>
+            </c:if>
+            <c:if test="${update != null}">
+                <jsp:include page="../pages/users/blockEditTeacher.jsp"/>
+            </c:if>
+        </sec:authorize>
         <jsp:include page="../pages/users/blockTableTeachers.jsp"/>
     </div>
 </div>

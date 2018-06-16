@@ -7,7 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${role == 1}">
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
     <form action="${pageContext.request.contextPath}/journal/add" name="addGroup" method="post" class="form-row">
         <input type="text" name="studentId" placeholder="Номер студента" class="form-control col-2 users-row">
         <br/>
@@ -33,4 +34,4 @@
         </div>
         <input type="submit" name="createJournal" value="Создать" class="btn btn-success col-2 users-margin">
     </form>
-</c:if>
+</sec:authorize>

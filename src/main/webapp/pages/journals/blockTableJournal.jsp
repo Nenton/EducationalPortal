@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <table class="table table-bordered studenjournal-table">
     <thead class="table-dark">
     <tr class="users-row">
@@ -29,7 +30,7 @@
             <td class="col-1">${userforjournal.mark}</td>
             <td class="col-1">${userforjournal.attendance}
             </td>
-            <c:if test="${role == 1}">
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <td class="col-2 users-row">
                     <form action="${pageContext.request.contextPath}/journal/delete" method="post"
                           class="users-margin">
@@ -43,7 +44,7 @@
                         <input hidden name="userId" value="${userforjournal.id}">
                     </form>
                 </td>
-            </c:if>
+            </sec:authorize>
         </tr>
     </c:forEach>
     </tbody>

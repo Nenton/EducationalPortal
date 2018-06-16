@@ -3,9 +3,6 @@
 <html>
 <%@include file="../containers/head.jsp" %>
 <body>
-
-<div class="container">
-
     <%@include file="../containers/header.jsp" %>
 
     <div class="row">
@@ -18,8 +15,6 @@
         </div><!-- .container-->
 
     </div><!-- .middle-->
-
-</div><!-- .wrapper -->
 <%@include file="../containers/footer.jsp" %>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${role == 1 || role == 3}">
+<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')">
     <form action="" name="createLesson" method="post" class="users-row">
         <p class="col-12">
             <input type="date" name="lessDate" value="${editLesson.date}" pattern="[0-9]{2}\.[0-9]{2}\.[0-9]{4}"
@@ -19,21 +19,21 @@
                       required maxlength="100">${editLesson.theme}</textarea>
         </p>
         <p class="col-12">
-            <c:if test="${role == 1}">
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <select name="teacher" class="col-6 form-control">
                     <c:forEach var="teacher" items="${teachers}">
                         <option value="${teacher.id}" ${teacher.id == editLesson.teacherId ? 'selected="selected"' : ''}>${teacher.fullName}</option>
                     </c:forEach>
                 </select>
-            </c:if>
+            </sec:authorize>
 
-            <c:if test="${role == 3}">
+            <sec:authorize access="hasRole('ROLE_TEACHER')">
                 <select name="teacher" class="col-6 form-control">
                     <c:forEach var="teacher" items="${teachers}">
                         <option value="${teacher.id}" ${teacher.id == editLesson.teacherId ? 'selected="selected"' : ''}>${teacher.fullName}</option>
                     </c:forEach>
                 </select>
-            </c:if>
+            </sec:authorize>
         </p>
         <p class="col-12">
             <select name="group" class="col-3 form-control">
@@ -56,4 +56,4 @@
         </p>
         <input hidden name="editLessonId" value="${editLesson.id}">
     </form>
-</c:if>
+</sec:authorize>
