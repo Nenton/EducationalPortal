@@ -15,15 +15,14 @@
                 <a href="${pageContext.request.contextPath}/studentgroup/${group.groupId}"> ${group.groupName}</a></td>
             </td>
             <td class="col-3">${group.groupDesc}</td>
-            <c:if test="${role == 1}">
-                <td class="col-3 users-row">
+
+            <td class="col-3 users-row">
                     <form action="${pageContext.request.contextPath}/groups/delete" name="delete" class="users-margin"
                           method="post">
                         <input hidden name="groupId" value="${group.groupId}">
                         <input type="submit" name="delete" value="Удалить" class="btn btn-primary">
                     </form>
                 </td>
-            </c:if>
         </tr>
     </c:forEach>
     </tbody>

@@ -37,7 +37,7 @@ public class GroupController {
             service.createGroup(new Group(0, nameGroup, descriptionGroup));
         }
         model.addAttribute("groups", service.getGroups());
-        return "groups";
+        return "studentgroup";
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.POST)
@@ -50,7 +50,7 @@ public class GroupController {
             service.deleteGroup(Integer.parseInt(groupId));
         }
         model.addAttribute("groups", service.getGroups());
-        return "groups";
+        return "studentgroup";
     }
 }
 

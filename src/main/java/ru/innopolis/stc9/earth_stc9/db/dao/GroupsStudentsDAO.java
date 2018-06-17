@@ -22,36 +22,38 @@ public class GroupsStudentsDAO implements IGroupsStudentsDAO {
     @Override
     public List<User> getGroupsStudents(int groupname) {
         List<User> result = new ArrayList<>();
-        Connection connection = conManager.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT users.id, users.fullName," +
-                " student.group_id ,g.name, g.descr\n" +
-                "FROM users INNER JOIN group_students student " +
-                "on users.id = student.student_id\n" +
-                "  INNER JOIN groups g on student.group_id = g.id WHERE g.id=?")) {
-            statement.setInt(1, groupname);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    User user = new User(resultSet.getInt("id"),
-                            resultSet.getString("fullName"),
-                            resultSet.getInt("group_id"),
-                            resultSet.getString("name"),
-                            resultSet.getString("descr"));
-                    result.add(user);
+        try {
+            try (Connection connection = conManager.getConnection()) {
+                try (PreparedStatement statement = connection.prepareStatement("SELECT users.id, users.fullName," +
+                        " student.group_id ,g.name, g.descr\n" +
+                        "FROM users INNER JOIN group_students student " +
+                        "on users.id = student.student_id\n" +
+                        "  INNER JOIN groups g on student.group_id = g.id WHERE g.id=?")) {
+                    statement.setInt(1, groupname);
+                    try (ResultSet resultSet = statement.executeQuery()) {
+                        while (resultSet.next()) {
+                            User user = new User(resultSet.getInt("id"),
+                                    resultSet.getString("fullName"),
+                                    resultSet.getInt("group_id"),
+                                    resultSet.getString("name"),
+                                    resultSet.getString("descr"));
+                            result.add(user);
+                        }
+                    }
                 }
+
+
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
-
         }
-
         return result;
     }
 
 
     @Override
     public boolean addStudentGroup(GroupStudents groupStudents) {
-        try {
-            try (Connection connection = conManager.getConnection()) {
+        try (Connection connection = conManager.getConnection()) {
                 try (PreparedStatement statement = connection.prepareStatement("INSERT INTO group_students " +
                         "(student_id, group_id ) VALUES ( ?, ?)")) {
                     statement.setInt(1, groupStudents.getStudentIdGS());
@@ -59,7 +61,6 @@ public class GroupsStudentsDAO implements IGroupsStudentsDAO {
                     logger.info("Add student in group" + groupStudents.toString());
                     return statement.execute();
                 }
-            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
             return false;
@@ -91,15 +92,14 @@ public class GroupsStudentsDAO implements IGroupsStudentsDAO {
 
     @Override
     public boolean deleteStudentGroup(int id) {
-        try {
-            try (Connection connection = conManager.getConnection()) {
+        try (Connection connection = conManager.getConnection()) {
                 try (PreparedStatement statement = connection.prepareStatement
                         ("DELETE FROM group_students s WHERE s.student_id=?")) {
                     statement.setInt(1, id);
                     logger.info("Deleted student from group" + id);
                     return statement.execute();
                 }
-            }
+
         } catch (SQLException e) {
             logger.error(e.getMessage());
             return false;

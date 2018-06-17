@@ -70,7 +70,8 @@ public class GroupStudentController {
     }
 
     /**
-     * Добавление студента в группу
+     *
+     *  Добавление студента в группу
      */
 
     @RequestMapping(value = "/studentgroup/add", method = RequestMethod.POST)
@@ -83,5 +84,6 @@ public class GroupStudentController {
 
 
     }
+
 }
 

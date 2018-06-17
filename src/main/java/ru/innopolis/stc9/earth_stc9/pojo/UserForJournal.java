@@ -43,6 +43,7 @@ public class UserForJournal {
         this.namegroup = namegroup;
     }
 
+
     public int getIdJournal() {
         return idJournal;
     }

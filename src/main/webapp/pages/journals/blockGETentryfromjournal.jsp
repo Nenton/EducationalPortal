@@ -27,18 +27,20 @@
 
     <p class="col-12">
         <label>Дата</label>
-        <input type="text" name="datemark" placeholder="Тема" value="${userforjournal.mark_date}"
+        <input type="text" name="datemark" placeholder="Дата" value="${userforjournal.mark_date}"
                class="form-control col-5" required>
     </p>
     <p class="col-12">
         <label> Успеваемость </label>
-        <input type="text" name="mark" placeholder="Дата" value="${userforjournal.mark}"
+        <input type="number" pattern="\d [0-1]" name="mark" placeholder="Успеваемость" value="${userforjournal.mark}"
+               pattern="\d [0-1]"
                class="form-control col-5" required>
     </p>
     <p class="col-12">
         <label> Посещаемость</label>
-        <input type="text" name="attendance" placeholder="Успеваемость" value="${userforjournal.attendance}"
-               class="form-control col-5   require">
+        <input type="number" name="attendance" placeholder="Успеваемость" value="${userforjournal.attendance}"
+               pattern="\d [2-5]"
+               class="form-control col-5" required>
     </p>
     <p class="col-12">
         <input type="submit" name="editUser" value="Сохранить"

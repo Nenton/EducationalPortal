@@ -52,7 +52,7 @@
         </p>
         <input type="submit" name="createJournal" value="Создать" class="btn btn-success col-5 users-margin">
         <c:forEach var="user" items="${group}" end="0">
-            <input hidden name="namegroup" value="${user.groupsName}">
+            <input hidden name="namegroup" value="${userforjournal.groupsName}">
         </c:forEach>
         <c:forEach var="lesson" items="${subject}" end="0">
             <input hidden name="namesubject" value="${lesson.namesubject}">

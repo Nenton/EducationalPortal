@@ -16,5 +16,4 @@
     </p>
     <input type="submit" name="createJournal" value="Создать" class="btn btn-success col-5 users-margin">
     <input hidden name="namegroup" value="${group.groupId}">
-
 </form>

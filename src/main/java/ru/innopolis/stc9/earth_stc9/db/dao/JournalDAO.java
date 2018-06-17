@@ -158,26 +158,25 @@ public class JournalDAO implements IJournalDAO {
     @Override
     public List<User> getStudentsFromGroup(String groupname) {
         List<User> result = new ArrayList<>();
-        Connection connection = connectionManager.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT users.id, users.fullName," +
-                " student.group_id ,g.name, g.descr" +
-                "" +
-                "\n" +
-                "FROM users INNER JOIN group_students student " +
-                "on users.id = student.student_id\n" +
-                "  INNER JOIN groups g on student.group_id = g.id WHERE g.name=?")) {
-            statement.setString(1, groupname);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    User user = new User(resultSet.getInt("id"),
-
-                            resultSet.getString("fullName"), resultSet.getString("name"));
-                    result.add(user);
+        try (Connection connection = connectionManager.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT users.id, users.fullName," +
+                    " student.group_id ,g.name, g.descr" +
+                    "" +
+                    "\n" +
+                    "FROM users INNER JOIN group_students student " +
+                    "on users.id = student.student_id\n" +
+                    "  INNER JOIN groups g on student.group_id = g.id WHERE g.name=?")) {
+                statement.setString(1, groupname);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        User user = new User(resultSet.getInt("id"),
+                                resultSet.getString("fullName"), resultSet.getString("name"));
+                        result.add(user);
+                    }
                 }
             }
         } catch (SQLException e) {
             logger.error(e.getMessage());
-
         }
         return result;
     }
@@ -185,19 +184,20 @@ public class JournalDAO implements IJournalDAO {
     @Override
     public List<Lesson> getThemeFromSubject(String subjectname) {
         List<Lesson> result = new ArrayList<>();
-        Connection connection = connectionManager.getConnection();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT lessons.id, lessons.theme, s2.name FROM lessons\n" +
-                "INNER JOIN subjects s2 on lessons.subject_id = s2.id\n" +
-                "WHERE s2.name=?")) {
-            statement.setString(1, subjectname);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Lesson lesson = new Lesson(resultSet.getInt(1), resultSet.getString(2),
-                            resultSet.getString(3));
-                    result.add(lesson);
+        try (Connection connection = connectionManager.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT lessons.id, lessons.theme, s2.name FROM lessons\n" +
+                    "INNER JOIN subjects s2 on lessons.subject_id = s2.id\n" +
+                    "WHERE s2.name=?")) {
+                statement.setString(1, subjectname);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Lesson lesson = new Lesson(resultSet.getInt(1), resultSet.getString(2),
+                                resultSet.getString(3));
+                        result.add(lesson);
+                    }
                 }
-            }
 
+            }
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
@@ -207,8 +207,7 @@ public class JournalDAO implements IJournalDAO {
     @Override
     public UserForJournal getEntryFromJournal(int idJournal) {
         UserForJournal userForJournal = null;
-        Connection connection = connectionManager.getConnection();
-        try {
+        try (Connection connection = connectionManager.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("SELECT j.id, users.fullname, users.id, s2.name, l.theme, " +
                     "l.id, j.mark_date, j.mark, j.attendance, g.name\n" +
                     "                    FROM users\n" +
@@ -236,7 +235,6 @@ public class JournalDAO implements IJournalDAO {
 
         return userForJournal;
     }
-
 
 }
 

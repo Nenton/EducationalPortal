@@ -15,8 +15,8 @@
 <div class="row">
     <%@include file="../containers/sidebar.jsp" %>
     <div class="col-9">
+        <jsp:include page="../containers/errorMessage.jsp"/>
         <jsp:include page="../pages/journals/blockGETentryfromjournal.jsp"/>
-
     </div>
 </div>
 <%@include file="../containers/footer.jsp" %>
