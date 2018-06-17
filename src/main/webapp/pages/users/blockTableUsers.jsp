@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <table class="table table-bordered users-table">
     <thead class="table-dark">
     <tr class="users-row">
@@ -23,7 +24,7 @@
                 <a href="${pageContext.request.contextPath}/users/${user.id}"> ${user.fullName}</a>
             </td>
             <td class="col-2">${user.role.name}<br></td>
-            <c:if test="${role == 1}">
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <td class="col users-row">
                     <form action="${pageContext.request.contextPath}/userEdit/${user.id}" name="update" method="get">
                         <input type="submit" name="update" value="Изменить" class="btn btn-warning">
@@ -33,7 +34,7 @@
                         <input type="submit" name="delete" value="Удалить" class="btn btn-danger">
                     </form>
                 </td>
-            </c:if>
+            </sec:authorize>
         </tr>
     </c:forEach>
     </tbody>

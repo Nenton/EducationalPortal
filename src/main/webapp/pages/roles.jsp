@@ -11,9 +11,9 @@
             <c:if test="${message != null}">
                 <%@include file="../containers/message.jsp" %>
             </c:if>
-            <c:if test="${role == 1}">
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <%@include file="../pages/roles/blockAddRole.jsp" %>
-            </c:if>
+            </sec:authorize>
 
             <%@include file="../pages/roles/blockTableRoles.jsp" %>
         </main><!-- .content -->

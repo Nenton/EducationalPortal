@@ -8,20 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<%@include file="../containers/head.jsp" %>
-<title>Регистрация пользователя</title>
-<body>
-<%@include file="../containers/header.jsp" %>
-
-    <%@include file="../containers/sidebar.jsp" %>
-    <div class="col-9">
-        <main class="content">
-            <%@include file="../containers/errorMessage.jsp" %>
-            <%@include file="../containers/registration.jsp" %>
-            <br>
-        </main>
-    </div>
-
-<%@include file="../containers/footer.jsp" %>
-</body>
+    <%@include file="../containers/head.jsp" %>
+    <title>Регистрация пользователя</title>
+    <body>
+        <%@include file="../containers/header.jsp" %>
+        <%@include file="../containers/registration.jsp" %>
+        <%@include file="../containers/footer.jsp" %>
+    </body>
 </html>

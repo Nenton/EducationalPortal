@@ -48,7 +48,7 @@ public class UserDao implements IUserDao {
         try (ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 IRoleDao roleDao = new RoleDao();
-                Role role = roleDao.getRoleById(resultSet.getInt(COLUMN_ROLE));
+                Role role = roleDao.getRoleById(resultSet.getInt(COLUMN_ROLE_ID));
                 return getUserFromResultSet(resultSet, role);
             }
         }
@@ -60,7 +60,7 @@ public class UserDao implements IUserDao {
         if (user == null) {
             return false;
         }
-        String sql = "insert into users(login, password, role_id, fullName) values (?, ?, ?, ?)";
+        String sql = "insert into users(login, password, role_id, fullName, enabled) values (?, ?, ?, ?, ?)";
         try (Connection connection = conManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             setParamsIntoStatement(statement, user);
@@ -87,11 +87,11 @@ public class UserDao implements IUserDao {
         if (user == null) {
             return false;
         }
-        String sql = "update users set login = ?, password = ?, role_id = ?, fullName = ? where id = ?";
+        String sql = "update users set login = ?, password = ?, role_id = ?, fullName = ?, enabled = ? where id = ?";
         try (Connection connection = conManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             setParamsIntoStatement(statement, user);
-            statement.setInt(5, user.getId());
+            statement.setInt(6, user.getId());
             statement.executeUpdate();
             return true;
         }
@@ -138,7 +138,7 @@ public class UserDao implements IUserDao {
         try (ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 IRoleDao roleDao = new RoleDao();
-                Role role = roleDao.getRoleById(resultSet.getInt(COLUMN_ROLE));
+                Role role = roleDao.getRoleById(resultSet.getInt(COLUMN_ROLE_ID));
                 result.add(getUserFromResultSet(resultSet, role));
             }
         }
@@ -150,7 +150,7 @@ public class UserDao implements IUserDao {
      */
     private User getUserFromResultSet(ResultSet resultSet, Role role) throws SQLException {
         return new User(resultSet.getInt(COLUMN_ID), resultSet.getString(COLUMN_LOGIN),
-                resultSet.getString(COLUMN_PASSWORD), role, resultSet.getString(COLUMN_FULL_NAME));
+                resultSet.getString(COLUMN_PASSWORD), role, resultSet.getString(COLUMN_FULL_NAME), resultSet.getInt(COLUMN_IS_ENABLED));
     }
 
     /**
@@ -161,5 +161,6 @@ public class UserDao implements IUserDao {
         statement.setString(2, user.getPasswordHash());
         statement.setInt(3, user.getRole().getId());
         statement.setString(4, user.getFullName());
+        statement.setInt(5, user.getEnabled());
     }
 }

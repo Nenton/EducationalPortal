@@ -9,12 +9,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <%@include file="../containers/head.jsp" %>
+    <title>Вход в систему</title>
     <body>
         <%@include file="../containers/header.jsp" %>
-            <section>
-                <%@include file="../containers/errorMessage.jsp" %>
-                <%@include file="../containers/login.jsp" %>
-            </section>
+        <%@include file="../containers/login.jsp" %>
         <%@include file="../containers/footer.jsp" %>
     </body>
 </html>

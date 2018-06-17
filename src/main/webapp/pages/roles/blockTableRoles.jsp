@@ -12,14 +12,14 @@
         <tr>
             <th scope="row">${roles.id}</th>
             <td>${roles.name}</td>
-            <c:if test="${role == 1}">
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <td>
                     <form action="${pageContext.request.contextPath}/roleDelete" method="post">
                         <input type="submit" value="Удалить" class="btn btn-primary">
                         <input hidden name="roleId" value="${roles.id}">
                     </form>
                 </td>
-            </c:if>
+            </sec:authorize>
         </tr>
     </c:forEach>
     </tbody>

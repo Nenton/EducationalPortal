@@ -1,16 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
     <%@include file="../containers/head.jsp" %>
     <body>
         <%@include file="../containers/header.jsp" %>
-        <c:if test="${login != null}">
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_STUDENT', 'ROLE_TEACHER')">
             <div class="row">
                 <%@include file="../containers/sidebar.jsp" %>
             </div>
-        </c:if>
-        <c:if test="${login == null}">
+        </sec:authorize>
+        <sec:authorize access="!hasAnyRole('ROLE_ADMIN', 'ROLE_STUDENT', 'ROLE_TEACHER')">
             <section class="aboutus bg-dark text-white py-5" id="aboutus">
                 <div class="container py-5 my-5">
                     <div class="row">
@@ -27,7 +28,7 @@
                     </div>
                 </div>
             </section>
-        </c:if>
+        </sec:authorize>
         <%@include file="../containers/footer.jsp" %>
     </body>
 </html>
