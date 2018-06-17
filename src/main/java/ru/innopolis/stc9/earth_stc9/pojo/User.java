@@ -53,7 +53,9 @@ public class User {
         this.groupIdGS = groupIdGS;
         this.groupsName = groupsName;
         this.groupsDesc = groupsDesc;
+
     }
+
 
     public int getId() {
         return id;
@@ -117,13 +119,5 @@ public class User {
 
     public void setGroupsDesc(String groupsDesc) {
         this.groupsDesc = groupsDesc;
-    }
-
-    public int getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(int enabled) {
-        this.enabled = enabled;
     }
 }

@@ -15,8 +15,8 @@
         <th class="col-2">Предмет</th>
         <th class="col-2">Тема</th>
         <th class="col-2">Дата</th>
-        <th class="col-1">Посещ-сть</th>
         <th class="col-1">Успев-ость</th>
+        <th class="col-1">Посещ-сть</th>
         <th class="col-2">Действия</th>
     </tr>
     </thead>
@@ -39,9 +39,9 @@
                         <input hidden name="subject" value="${userforjournal.name}">
                         <input hidden name="group" value="${userforjournal.namegroup}">
                     </form>
-                    <form action="${pageContext.request.contextPath}/journal/update" name="update" method="get">
+                    <form action="${pageContext.request.contextPath}/journal/edit" name="edit" method="get">
                         <input type="submit" name="update" value="Изменить" class="btn btn-warning">
-                        <input hidden name="userId" value="${userforjournal.id}">
+                        <input hidden name="id" value="${userforjournal.id}">
                     </form>
                 </td>
             </sec:authorize>

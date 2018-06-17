@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.innopolis.stc9.earth_stc9.pojo.Journal;
-import ru.innopolis.stc9.earth_stc9.pojo.Subject;
-import ru.innopolis.stc9.earth_stc9.pojo.UserForJournal;
+import ru.innopolis.stc9.earth_stc9.pojo.*;
 import ru.innopolis.stc9.earth_stc9.services.IGroupService;
 import ru.innopolis.stc9.earth_stc9.services.IJournalService;
 
@@ -26,10 +24,6 @@ public class JournalContoller {
     @Autowired
     private IGroupService service;
 
-   /* @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getindex(Model model) {
-        return "index";
-    }*/
 
 
     /*
@@ -47,12 +41,12 @@ public class JournalContoller {
      * Получение списка предметов одной группы
      *
      */
+
     @RequestMapping(value = "/journal/{groupname}", method = RequestMethod.GET)
     public String get1SubjectforJournalany(@PathVariable("groupname") String groupname, Model model) {
         logger.info("Method getSubjectforJournal" + this.getClass().getName());
         List<Subject> result = serviceJournal.getSubjectforJournal(groupname);
         model.addAttribute("subject", result);
-        model.addAttribute("message", "Пожалуйста, введите значения параметров");
         return "showsubjectgroup";
     }
 
@@ -62,34 +56,19 @@ public class JournalContoller {
      *
      */
 
-
     @RequestMapping(value = "/journal/add", method = RequestMethod.POST)
-    public String getFirstPage(@RequestParam String studentId, @RequestParam String lessonId,
+    public String getFirstPage(@RequestParam String student, @RequestParam String lesson,
                                @RequestParam String markDate, @RequestParam String mark, @RequestParam
-                                       String attendance, Model model) {
-        if (studentId == null && lessonId == null) {
-            model.addAttribute("message", "Пожалуйста, введите значения параметров");
-            return "showjournal";
-        }
-        try {
-            int studentid = Integer.parseInt(studentId);
-            int lessonid = Integer.parseInt(lessonId);
-            Date markdate = Date.valueOf(markDate);
-            int Mark = Integer.parseInt(mark);
-            int Attendance = Integer.parseInt(mark);
-            if (serviceJournal.addJournal(new Journal(studentid, lessonid, markdate, Mark, Attendance))) {
-                logger.info("Successful add in DB" + studentId + lessonId + markDate + mark);
-                // model.addAttribute("message", "Запись успешно добавлена в журнал");
-                return "redirect:/journal/showjournal";
-            } else {
-                model.addAttribute("message", "Запись не добавлена в журнал");
-                logger.info("Do not Successful add in DB" + studentId + lessonId + markDate + mark);
-                return "journal";
-            }
-        } catch (NumberFormatException e) {
-            model.addAttribute("message", "Пожалуйста, введите корретное значение");
-            return "journal";
-        }
+                                       String attendance, @RequestParam String namesubject, @RequestParam String namegroup,
+                               Model model) {
+        int studentid = Integer.parseInt(student);
+        int lessonid = Integer.parseInt(lesson);
+        Date markdate = Date.valueOf(markDate);
+        Integer markstudent = Integer.parseInt(mark);
+        Integer attendancestudent = Integer.parseInt(attendance);
+        serviceJournal.addJournal(new Journal(studentid, lessonid, markdate, markstudent, attendancestudent));
+        logger.info("Successful add in DB" + student + lesson + markDate + mark);
+        return getJournal(namegroup, namesubject, model);
 
     }
 
@@ -97,23 +76,44 @@ public class JournalContoller {
      * Получение журнала по группе и предмету
      *
      */
+
     @RequestMapping(value = "/journal/showjournal", method = RequestMethod.POST)
     public String getJournal(@RequestParam String namegroup, String namesubject, Model model) {
         List<UserForJournal> result = serviceJournal.showJournal(namegroup, namesubject);
+        List<Lesson> subject = serviceJournal.getThemeFromSubject(namesubject);
+        List<User> group = serviceJournal.getStudentsFromGroup(namegroup);
         logger.info("Successful get in DB" + namegroup + namesubject);
         model.addAttribute("studentjournal", result);
+        model.addAttribute("subject", subject);
+        model.addAttribute("group", group);
         return "showjournal";
     }
 
-    @RequestMapping(value = "/journal/delete", method = RequestMethod.POST)
-    public String deleteStudentGroup(@RequestParam String id, @RequestParam String subject,
-                                     @RequestParam String group, Model model) {
-        serviceJournal.deleteJournal(Integer.parseInt(id));
-        logger.info("Successful deleted from the DB" + id);
-        return getJournal(group, subject, model);
-
+    /*
+     *  Получение конкретной записи для редактирования
+     */
+    @RequestMapping(value = "/journal/edit", method = RequestMethod.GET)
+    public String getEntryForIdit(@RequestParam String id, Model model) {
+        UserForJournal userforjournal = serviceJournal.getEntryFromJournal(Integer.valueOf(id));
+        model.addAttribute("userforjournal", userforjournal);
+        return "editentryfromjournal";
     }
 
+    /*
+     * Обновление записи в журнале
+     *
+     */
+    @RequestMapping(value = "/journal/update", method = RequestMethod.POST)
+    public String updateJournal(@RequestParam String journalid, @RequestParam String studentid, @RequestParam String lessonid,
+                                @RequestParam String datemark, @RequestParam String mark,
+                                @RequestParam String attendance, @RequestParam String groupname, @RequestParam String subjectname, Model model) {
+        serviceJournal.updateJournal(new Journal(Integer.parseInt(journalid), Integer.parseInt(studentid),
+                Integer.parseInt(lessonid), Date.valueOf(datemark), Integer.parseInt(mark),
+                Integer.parseInt(attendance)));
+        logger.info("Successful update in the DB" + journalid);
+        return getJournal(groupname, subjectname, model);
+
+    }
     /*
      * Удаление из журнала
      *
@@ -127,7 +127,6 @@ public class JournalContoller {
 
     }
 }
-
 
 
 

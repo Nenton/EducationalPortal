@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Azat
+  Date: 15.06.2018
+  Time: 17:54
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -8,15 +15,11 @@
 <div class="row">
     <%@include file="../containers/sidebar.jsp" %>
     <div class="col-9">
-        <h3 class="accordion">Список предметов</h3><br>
-        <main class="content">
-            <c:if test="${message != null}">
-                <%@include file="../containers/message.jsp" %>
-            </c:if>
-            <jsp:include page="journals/blockGetsubjectgroup.jsp"/>
-        </main>
+        <jsp:include page="../pages/journals/blockGETentryfromjournal.jsp"/>
+
     </div>
 </div>
 <%@include file="../containers/footer.jsp" %>
 </body>
 </html>
+
