@@ -24,8 +24,6 @@ public class JournalContoller {
     @Autowired
     private IGroupService service;
 
-
-
     /*
      * Получение списка групп
      *
