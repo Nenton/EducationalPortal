@@ -103,4 +103,19 @@ public class SubjectDao implements ISubjectDao {
         return new Subject(set.getInt(COLUMN_ID),
                 set.getString(COLUMN_SUBJECT_NAME));
     }
+
+    @Override
+    public int getCountSubjects() throws SQLException {
+        String sql = "select count(*) from subjects";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("count");
+                } else {
+                    return 0;
+                }
+            }
+        }
+    }
 }

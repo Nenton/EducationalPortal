@@ -13,12 +13,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"../../../resources/main-servlet-test.xml"})
+@ContextConfiguration({"../../../resources/main-servlet-test.xml", "../../../resources/security-context.xml"})
 @WebAppConfiguration
 public class StudentsControllerTest {
     @Autowired
@@ -30,15 +33,36 @@ public class StudentsControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
+                .apply(springSecurity())
                 .build();
     }
 
     @Test
     public void showUsersTest() {
         try {
-            mockMvc.perform(get("/students"))
+            mockMvc.perform(get("/students")
+                    .with(user("user").roles("ADMIN")))
+                    .andExpect(status().isOk());
+            mockMvc.perform(get("/students")
+                    .with(user("user").roles("TEACHER")))
+                    .andExpect(status().isOk());
+            mockMvc.perform(get("/students")
+                    .with(user("user").roles("STUDENT")))
                     .andExpect(status().isOk());
         } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notShowUsersTest() {
+        try {
+            mockMvc.perform(get("/students")
+                    .with(anonymous()))
+                    .andExpect(status().isFound());
+        } catch (Exception e) {
+            e.printStackTrace();
             Assert.fail();
         }
     }
@@ -46,9 +70,35 @@ public class StudentsControllerTest {
     @Test
     public void addUserShowBlockTest() {
         try {
-            mockMvc.perform(get("/studentCreate"))
+            mockMvc.perform(get("/studentCreate")
+                    .with(user("user").roles("ADMIN")))
                     .andExpect(status().isOk());
         } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notAccessAddUserShowBlockTest() {
+        try {
+            mockMvc.perform(get("/studentCreate")
+                    .with(user("user").roles("TEACHER", "STUDENT")))
+                    .andExpect(status().isForbidden());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notAddUserShowBlockTest() {
+        try {
+            mockMvc.perform(get("/studentCreate")
+                    .with(anonymous()))
+                    .andExpect(status().isFound());
+        } catch (Exception e) {
+            e.printStackTrace();
             Assert.fail();
         }
     }
@@ -56,9 +106,35 @@ public class StudentsControllerTest {
     @Test
     public void addUserTest() {
         try {
-            mockMvc.perform(post("/studentCreate"))
+            mockMvc.perform(post("/studentCreate")
+                    .with(user("admin").roles("ADMIN")))
                     .andExpect(status().isOk());
         } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notAccessAddUserTest() {
+        try {
+            mockMvc.perform(post("/studentCreate")
+                    .with(user("user").roles("TEACHER", "STUDENT")))
+                    .andExpect(status().isForbidden());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notAddUserTest() {
+        try {
+            mockMvc.perform(post("/studentCreate")
+                    .with(anonymous()))
+                    .andExpect(status().isFound());
+        } catch (Exception e) {
+            e.printStackTrace();
             Assert.fail();
         }
     }
@@ -66,10 +142,35 @@ public class StudentsControllerTest {
     @Test
     public void editUserShowBlockTest() {
         try {
-            mockMvc.perform(get("/studentEdit/0"))
+            mockMvc.perform(get("/studentEdit/0")
+                    .with(user("admin").roles("ADMIN")))
                     .andExpect(status().isOk());
-
         } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notAccessEditUserShowBlockTest() {
+        try {
+            mockMvc.perform(get("/studentEdit/0")
+                    .with(user("user").roles("TEACHER", "STUDENT")))
+                    .andExpect(status().isForbidden());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notEditUserShowBlockTest() {
+        try {
+            mockMvc.perform(get("/studentEdit/0")
+                    .with(anonymous()))
+                    .andExpect(status().isFound());
+        } catch (Exception e) {
+            e.printStackTrace();
             Assert.fail();
         }
     }
@@ -77,9 +178,35 @@ public class StudentsControllerTest {
     @Test
     public void editUserTest() {
         try {
-            mockMvc.perform(post("/studentEdit/0"))
+            mockMvc.perform(post("/studentEdit/0")
+                    .with(user("admin").roles("ADMIN")))
                     .andExpect(status().isOk());
         } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notAccessEditUserTest() {
+        try {
+            mockMvc.perform(post("/studentEdit/0")
+                    .with(user("user").roles("TEACHER", "STUDENT")))
+                    .andExpect(status().isForbidden());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notEditUserTest() {
+        try {
+            mockMvc.perform(post("/studentEdit/0")
+                    .with(anonymous()))
+                    .andExpect(status().isFound());
+        } catch (Exception e) {
+            e.printStackTrace();
             Assert.fail();
         }
     }
@@ -87,9 +214,35 @@ public class StudentsControllerTest {
     @Test
     public void deleteUserTest() {
         try {
-            mockMvc.perform(post("/studentDelete/0"))
+            mockMvc.perform(post("/studentDelete/0")
+                    .with(user("admin").roles("ADMIN")))
                     .andExpect(status().isOk());
         } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notAccessDeleteUserTest() {
+        try {
+            mockMvc.perform(post("/studentDelete/0")
+                    .with(user("user").roles("TEACHER", "STUDENT")))
+                    .andExpect(status().isForbidden());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void notDeleteUserTest() {
+        try {
+            mockMvc.perform(post("/studentDelete/0")
+                    .with(anonymous()))
+                    .andExpect(status().isFound());
+        } catch (Exception e) {
+            e.printStackTrace();
             Assert.fail();
         }
     }

@@ -54,4 +54,6 @@ public interface IUserDao {
      * Get all users from DB
      */
     List<User> getUsers() throws SQLException;
+
+    int getCountUsersByRoleName(String roleName) throws SQLException;
 }
