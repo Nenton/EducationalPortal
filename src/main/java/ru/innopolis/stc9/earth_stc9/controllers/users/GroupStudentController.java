@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,7 +13,7 @@ import ru.innopolis.stc9.earth_stc9.pojo.User;
 import ru.innopolis.stc9.earth_stc9.services.IGroupService;
 import ru.innopolis.stc9.earth_stc9.services.IGroupStudentService;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class GroupStudentController {
@@ -22,6 +23,9 @@ public class GroupStudentController {
     @Autowired
     private IGroupService service;
 
+    /**
+     * Страница со списком всех групп
+     */
 
     @RequestMapping(value = "/studentgroup", method = RequestMethod.GET)
     public String getGroups(Model model) {
@@ -30,48 +34,56 @@ public class GroupStudentController {
         return "studentgroup";
     }
 
-    @RequestMapping(value = "/studentgroup/getstudentgroup", method = RequestMethod.GET)
-    public String getStudentList(@RequestParam String id, Model model) {
-        ArrayList<User> studentgrouplist = null;
-        int idgroup = Integer.parseInt(id);
-        studentgrouplist = servicegroup.getStudentfromGroup(Integer.parseInt(id));
-        logger.info("Successful getstudentgroup from the DB" + id);
-        model.addAttribute("studentgrop", studentgrouplist);
+    /**
+     * Страница со списком студентов конкретной группы
+     */
+
+    @RequestMapping(value = "/studentgroup/{groupname}", method = RequestMethod.GET)
+    public String getStudentList(@PathVariable("groupname") Integer groupname, Model model) {
+        List<User> studentgrouplist = null;
+        studentgrouplist = servicegroup.getStudentfromGroup(groupname);
+        logger.info("Successful getstudentgroup from the DB" + groupname);
+        model.addAttribute("studentgroup", studentgrouplist);
+        model.addAttribute("studentnotgroup", getStudentnotGroup());
+        model.addAttribute("group", service.getGroupById(groupname));
         return "viewstudentgroup";
 
-
     }
+
+    /**
+     * Получение списка студентов не включенных в группы
+     */
+    private List<User> getStudentnotGroup() {
+        return servicegroup.getStudentnotGroup();
+    }
+
+    /**
+     * Удаление студента из группы
+     */
 
     @RequestMapping(value = "/studentgroup/delete", method = RequestMethod.POST)
     public String deleteStudentGroup(@RequestParam String id, @RequestParam String idgroup, Model model) {
         servicegroup.deleteStudentInGroup(Integer.parseInt(id));
         logger.info("Successful deleted from the DB" + id);
-        return getStudentList(idgroup, model);
+        return getStudentList(Integer.parseInt(idgroup), model);
 
     }
 
+    /**
+     *
+     *  Добавление студента в группу
+     */
 
     @RequestMapping(value = "/studentgroup/add", method = RequestMethod.POST)
-    public String addStudentGroup(@RequestParam String studentId, @RequestParam String groupId, Model model) {
-        if (studentId.isEmpty() && groupId.isEmpty()) {
-            model.addAttribute("message", "Необходимо заполнить оба значения");
-            return "viewstudentgroup";
-        }
-        try {
-            int studentID = Integer.parseInt(studentId);
-            int groupID = Integer.parseInt(groupId);
-            servicegroup.addStudentInGroup(new GroupStudents(studentID, groupID));
-            logger.info("Successful add in DB" + studentId + groupID);
-            return getStudentList(groupId, model);
-        } catch (NumberFormatException e) {
-            model.addAttribute("message", "Пожалуйста, введите корретное значение");
-            return "viewstudentgroup";
-        }
+    public String addStudentGroup(@RequestParam String studentnotgroup, @RequestParam String namegroup, Model model) {
+        int studentID = Integer.parseInt(studentnotgroup);
+        int groupID = Integer.parseInt(namegroup);
+        servicegroup.addStudentInGroup(new GroupStudents(studentID, groupID));
+        logger.info("Successful add in DB" + studentnotgroup + groupID);
+        return getStudentList(groupID, model);
 
 
     }
 
-
 }
-
 

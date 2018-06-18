@@ -9,6 +9,22 @@ public class User {
     private int groupIdGS;
     private String groupsName;
     private String groupsDesc;
+
+    /*
+     ** User for studentnotgroup query
+     */
+    public User(int id, String fullName) {
+        this.id = id;
+        this.fullName = fullName;
+
+    }
+
+    public User(int id, String fullName, String groupsName) {
+        this.id = id;
+        this.fullName = fullName;
+        this.groupsName = groupsName;
+    }
+
     private int enabled;
 
     public User(int id, String login, String passwordHash, Role role, String fullName, int enabled) {
@@ -53,7 +69,17 @@ public class User {
         this.groupIdGS = groupIdGS;
         this.groupsName = groupsName;
         this.groupsDesc = groupsDesc;
+
     }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
 
     public int getId() {
         return id;
@@ -117,13 +143,5 @@ public class User {
 
     public void setGroupsDesc(String groupsDesc) {
         this.groupsDesc = groupsDesc;
-    }
-
-    public int getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(int enabled) {
-        this.enabled = enabled;
     }
 }

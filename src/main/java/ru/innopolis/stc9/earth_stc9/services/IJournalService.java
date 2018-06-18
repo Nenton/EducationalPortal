@@ -1,8 +1,6 @@
 package ru.innopolis.stc9.earth_stc9.services;
 
-import ru.innopolis.stc9.earth_stc9.pojo.Journal;
-import ru.innopolis.stc9.earth_stc9.pojo.Subject;
-import ru.innopolis.stc9.earth_stc9.pojo.UserForJournal;
+import ru.innopolis.stc9.earth_stc9.pojo.*;
 
 import java.util.List;
 
@@ -20,4 +18,10 @@ public interface IJournalService {
     boolean deleteJournal(int id);
 
     List<Subject> getSubjectforJournal(String nameGroup);
+
+    public List<User> getStudentsFromGroup(String groupname);
+
+    public List<Lesson> getThemeFromSubject(String subjectname);
+
+    public UserForJournal getEntryFromJournal(int id);
 }

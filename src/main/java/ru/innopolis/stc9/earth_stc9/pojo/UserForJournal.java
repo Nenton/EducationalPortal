@@ -7,6 +7,8 @@ import java.sql.Date;
  */
 public class UserForJournal {
 
+    private int idJournal;
+    private int idLesson;
     private int id;
     private String fullname;
     private String name;
@@ -28,6 +30,36 @@ public class UserForJournal {
         this.namegroup = namegroup;
     }
 
+    public UserForJournal(int idJournal, String fullname, int id, String name, String theme, int idLesson, Date mark_date, int mark, int attendance, String namegroup) {
+        this.idJournal = idJournal;
+        this.fullname = fullname;
+        this.id = id;
+        this.name = name;
+        this.theme = theme;
+        this.idLesson = idLesson;
+        this.mark_date = mark_date;
+        this.mark = mark;
+        this.attendance = attendance;
+        this.namegroup = namegroup;
+    }
+
+
+    public int getIdJournal() {
+        return idJournal;
+    }
+
+    public void setIdJournal(int idJournal) {
+        this.idJournal = idJournal;
+    }
+
+    public int getIdLesson() {
+        return idLesson;
+    }
+
+    public void setIdLesson(int idLesson) {
+        this.idLesson = idLesson;
+    }
+
     public int getId() {
         return id;
     }
@@ -35,7 +67,6 @@ public class UserForJournal {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getFullname() {
         return fullname;

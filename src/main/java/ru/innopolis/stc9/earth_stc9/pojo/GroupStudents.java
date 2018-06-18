@@ -5,17 +5,18 @@ public class GroupStudents {
     private int studentIdGS;
     private int groupIdGS;
 
-    public GroupStudents(int idGS, int studentIdGS, int groupIdGS) {
-
-        this.idGS = idGS;
-        this.studentIdGS = studentIdGS;
-        this.groupIdGS = groupIdGS;
-    }
 
     public GroupStudents(int studentIdGS, int groupIdGS) {
         this.studentIdGS = studentIdGS;
         this.groupIdGS = groupIdGS;
     }
+
+    public GroupStudents(int idGS, int studentIdGS, int groupIdGS) {
+        this.idGS = idGS;
+        this.studentIdGS = studentIdGS;
+        this.groupIdGS = groupIdGS;
+    }
+
 
     public int getIdGS() {
         return idGS;

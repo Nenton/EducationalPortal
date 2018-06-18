@@ -4,19 +4,18 @@
 <html>
 <%@include file="../containers/head.jsp" %>
 <body>
-    <%@include file="../containers/header.jsp" %>
-    <div class="row">
-        <%@include file="../containers/sidebar.jsp" %>
-        <div class="col-9">
-            <main class="content">
-                <div class="alert alert-info" role="alert">
-                    Список групп
-                </div>
-                <jsp:include page="studentgroup/blockGETstudentGroup.jsp"/>
+<%@include file="../containers/header.jsp" %>
+<div class="row">
+    <%@include file="../containers/sidebar.jsp" %>
+    <div class="col-9">
+        <main class="content">
+            <h3 class="accordion">Список групп</h3><br>
+            <jsp:include page="groups/blockAddGroup.jsp"/>
+            <jsp:include page="studentgroup/blockGETstudentGroup.jsp"/>
 
-            </main>
-        </div>
+        </main>
     </div>
+</div>
 <%@include file="../containers/footer.jsp" %>
 </body>
 </html>

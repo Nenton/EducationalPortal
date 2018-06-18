@@ -12,6 +12,7 @@ public class Lesson {
     private int teacherId;
     private Group group;
     private int groupId;
+    private String namesubject;
 
 
     public Lesson(int id, String theme, Date date, Subject subject, int subjectId, User teacher, int teacherId,
@@ -43,6 +44,14 @@ public class Lesson {
         this.teacherId = teacherId;
         this.groupId = groupId;
     }
+
+    public Lesson(int id, String theme, String namesubject) {
+        this.id = id;
+        this.theme = theme;
+        this.namesubject = namesubject;
+    }
+
+
 
     public int getId() {
         return id;
@@ -78,5 +87,13 @@ public class Lesson {
 
     public int getGroupId() {
         return groupId;
+    }
+
+    public String getNamesubject() {
+        return namesubject;
+    }
+
+    public void setNamesubject(String namesubject) {
+        this.namesubject = namesubject;
     }
 }
