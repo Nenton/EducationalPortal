@@ -7,9 +7,7 @@
     <div class="row">
         <%@include file="../containers/sidebar.jsp" %>
         <div class="col-9">
-            <main class="content">
-                <strong>Content:</strong> Страница с информацией
-            </main>
+            <%@include file="info/blockInfo.jsp" %>
         </div><!-- .container-->
     </div>
     <%@include file="../containers/footer.jsp" %>

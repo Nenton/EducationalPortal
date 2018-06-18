@@ -73,4 +73,12 @@ public interface ILessonDao {
      * @return true при использовании записи в журнале, иначе false
      */
     boolean existsInJournal(int id) throws SQLException;
+
+    /**
+     * Получение общего числа занятий в системе
+     *
+     * @return - количество занятий
+     * @throws SQLException
+     */
+    int getCountLessons() throws SQLException;
 }

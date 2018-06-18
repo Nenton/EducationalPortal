@@ -163,4 +163,23 @@ public class UserDao implements IUserDao {
         statement.setString(4, user.getFullName());
         statement.setInt(5, user.getEnabled());
     }
+
+    @Override
+    public int getCountUsersByRoleName(String roleName) throws SQLException {
+        if (roleName == null || roleName.isEmpty()) {
+            return 0;
+        }
+        String sql = "select count(*) from users inner join roles r on users.role_id = r.id where r.name = ?";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, roleName);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("count");
+                } else {
+                    return 0;
+                }
+            }
+        }
+    }
 }
