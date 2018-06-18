@@ -164,6 +164,7 @@ public class LessonDao implements ILessonDao {
         }
     }
 
+
     private List<Lesson> getLessonsFromDb(String sql, int id, int count) throws SQLException {
         try (Connection connection = conManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -243,5 +244,20 @@ public class LessonDao implements ILessonDao {
                 set.getInt(COLUMN_TEACHER),
                 set.getInt(COLUMN_GROUP)
         );
+    }
+
+    @Override
+    public int getCountLessons() throws SQLException {
+        String sql = "select count(*) from lessons";
+        try (Connection connection = conManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("count");
+                } else {
+                    return 0;
+                }
+            }
+        }
     }
 }

@@ -33,4 +33,12 @@ public interface ISubjectDao {
      * Get all subjects from DB
      */
     List<Subject> getSubjects() throws SQLException;
+
+    /**
+     * Получает общее количество предметов в системе
+     *
+     * @return - количество предметов
+     * @throws SQLException
+     */
+    int getCountSubjects() throws SQLException;
 }
