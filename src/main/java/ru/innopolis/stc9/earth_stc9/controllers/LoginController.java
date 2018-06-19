@@ -1,10 +1,13 @@
 package ru.innopolis.stc9.earth_stc9.controllers;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.security.Principal;
 
 
 /**
@@ -21,13 +24,9 @@ public class LoginController {
             model.addAttribute("message", "Ошибка авторизации");
         }
         if (logout != null) {
-            model.addAttribute("message", "Вы успешно вышли из системы");
+            model.addAttribute("message",
+                     "Вы успешно вышли из системы");
         }
-        return "login";
-    }
-
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout() {
         return "login";
     }
 }
