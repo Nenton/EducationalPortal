@@ -2,59 +2,27 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Footer -->
 <section id="footer">
-    <div class="container">
-        <div class="row text-center text-xs-center text-sm-left text-md-left">
-            <div class="col-xs-12 col-sm-4 col-md-4">
-                <h5>Quick links</h5>
-                <ul class="list-unstyled quick-links">
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Videos</a></li>
-                </ul>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="https://github.com/mbiryukov/STC-9-earth" target="_blank"><i
+                                class="fa fa-github"></i>GitHub</a>
+                        </li>
+                    </ul>
+                </div>
+                </hr>
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4">
-                <h5>Quick links</h5>
-                <ul class="list-unstyled quick-links">
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Videos</a></li>
-                </ul>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 text-center text-white">
+                    <p class="h6">&copy Все права защищены.<a class="text-green ml-2"
+                                                              href="https://university.innopolis.ru/"
+                                                              target="_blank">Студенты университета Иннополис</a></p>
+                    <p class="h6">Проект Земля</p>
+                </div>
+                </hr>
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4">
-                <h5>Quick links</h5>
-                <ul class="list-unstyled quick-links">
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-                    <li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-                    <li><a href="https://wwwe.sunlimetech.com" title="Design and developed by"><i
-                            class="fa fa-angle-double-right"></i>Imprint</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
-                <ul class="list-unstyled list-inline social text-center">
-                    <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
-                    <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
-                    <li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
-                    <li class="list-inline-item"><a href="javascript:void();" target="_blank"><i
-                            class="fa fa-envelope"></i></a></li>
-                </ul>
-            </div>
-            </hr>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
-                <p class="h6">&copy All right Reversed.<a class="text-green ml-2" href="https://github.com/ShRegi/"
-                                                          target="_blank">Innopolis Student</a></p>
-            </div>
-            </hr>
         </div>
     </div>
 </section>

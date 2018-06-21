@@ -1,16 +1,15 @@
 section {
-    padding: 60px 0;
+    padding: 10px 0;
 }
 
 section .section-title {
     text-align: center;
-    color: #007b5e;
-    margin-bottom: 50px;
+    color: #194f82;
     text-transform: uppercase;
 }
 
 #footer {
-    background: #007b5e !important;
+    background: #194f82 !important;
 }
 
 #footer h5 {

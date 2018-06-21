@@ -12,27 +12,28 @@
     <div class="navbar-collapse collapse flex-column sticky-top">
         <ul class="navbar-nav d-lg-block float-right">
             <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_STUDENT')">
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/teachers">Teachers</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/students">Students</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/lessons">Lessons</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/studentgroup">Studentgroup</a></li>
-            </sec:authorize>
-            <sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN')">
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/performance">Успеваемость</a>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/dashboard">Панель
+                    управления</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/teachers">Преподаватели</a>
                 </li>
-            </sec:authorize>
-            <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/journal">Journal</a>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/students">Студенты</a>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/lessons">Расписание
+                    занятий</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/studentgroup">Группы
+                    студентов</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/journal">Журнал
+                    успеваемости</a></li>
             </sec:authorize>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/users">Users</a></li>
-                <%--<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/groups">Groups</a></li>--%>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/roles">Roles</a></li>
+                <li class="nav-item"><a class="nav-link"
+                                        href="${pageContext.request.contextPath}/users">Пользователи</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/groups">Группы
+                    пользователей</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/roles">Роли</a></li>
             </sec:authorize>
         </ul>
-
+        <br/>
         <sec:authorize access="isAuthenticated()">
             <ul  class="navbar-nav d-lg-block">
                 <div class="logout">
