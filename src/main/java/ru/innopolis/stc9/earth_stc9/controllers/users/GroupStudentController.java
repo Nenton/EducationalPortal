@@ -18,10 +18,16 @@ import java.util.List;
 @Controller
 public class GroupStudentController {
     private static final Logger logger = Logger.getLogger(GroupStudentController.class);
+    private final IGroupStudentService servicegroup;
+    private final IGroupService service;
+
     @Autowired
-    public IGroupStudentService servicegroup;
-    @Autowired
-    private IGroupService service;
+    public GroupStudentController(IGroupStudentService servicegroup, IGroupService service) {
+        this.servicegroup = servicegroup;
+        this.service = service;
+    }
+
+
 
     /**
      * Страница со списком всех групп
@@ -61,9 +67,9 @@ public class GroupStudentController {
      * Удаление студента из группы
      */
 
-    @RequestMapping(value = "/studentgroup/delete", method = RequestMethod.POST)
-    public String deleteStudentGroup(@RequestParam String id, @RequestParam String idgroup, Model model) {
-        servicegroup.deleteStudentInGroup(Integer.parseInt(id));
+    @RequestMapping(value = "/studentgroupdelete/{id}", method = RequestMethod.POST)
+    public String deleteStudentGroup(@PathVariable("id") Integer id, @RequestParam String idgroup, Model model) {
+        servicegroup.deleteStudentInGroup(id);
         logger.info("Successful deleted from the DB" + id);
         return getStudentList(Integer.parseInt(idgroup), model);
 
@@ -74,11 +80,12 @@ public class GroupStudentController {
      *  Добавление студента в группу
      */
 
-    @RequestMapping(value = "/studentgroup/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/addstudentgroup", method = RequestMethod.POST)
     public String addStudentGroup(@RequestParam String studentnotgroup, @RequestParam String namegroup, Model model) {
         int studentID = Integer.parseInt(studentnotgroup);
         int groupID = Integer.parseInt(namegroup);
-        servicegroup.addStudentInGroup(new GroupStudents(studentID, groupID));
+        GroupStudents groupStudents = new GroupStudents(studentID, groupID);
+        servicegroup.addStudentInGroup(groupStudents);
         logger.info("Successful add in DB" + studentnotgroup + groupID);
         return getStudentList(groupID, model);
 

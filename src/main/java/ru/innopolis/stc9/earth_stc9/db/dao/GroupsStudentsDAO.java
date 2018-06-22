@@ -59,7 +59,8 @@ public class GroupsStudentsDAO implements IGroupsStudentsDAO {
                     statement.setInt(1, groupStudents.getStudentIdGS());
                     statement.setInt(2, groupStudents.getGroupIdGS());
                     logger.info("Add student in group" + groupStudents.toString());
-                    return statement.execute();
+                    statement.execute();
+                    return true;
                 }
         } catch (SQLException e) {
             logger.error(e.getMessage());
