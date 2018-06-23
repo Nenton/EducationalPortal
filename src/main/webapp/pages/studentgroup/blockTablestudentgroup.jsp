@@ -7,7 +7,9 @@
         <th class="col-3">ФИО студента</th>
         <th class="col-3">Группа</th>
         <th class="col-3">Описание группы</th>
-        <th class="col-3">Действие</th>
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')">
+            <th class="col-3">Действие</th>
+        </sec:authorize>
     </tr>
     </thead>
     <tbody>
@@ -17,9 +19,9 @@
             <td class="col-3">${user.fullName}</td>
             <td class="col-3">${user.groupsName}</td>
             <td class="col-3">${user.groupsDesc}<br></td>
-            <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')">
                 <td class="col users-row">
-                    <form action="${pageContext.request.contextPath}/studentgroup/delete" method="post"
+                    <form action="${pageContext.request.contextPath}/studentgroupdelete/${user.id}" method="post"
                           class="users-margin">
                         <input type="submit" name="delete" value="Удалить" class="btn btn-danger">
                         <input hidden name="id" value="${user.id}">

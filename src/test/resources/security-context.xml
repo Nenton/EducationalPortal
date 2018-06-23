@@ -14,8 +14,10 @@
         <security:intercept-url pattern="/teachers" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_STUDENT')"/>
         <security:intercept-url pattern="/students" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_STUDENT')"/>
         <security:intercept-url pattern="/lessons" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_STUDENT')"/>
+        <!--REGION STUDENTGROUP -->
         <security:intercept-url pattern="/studentgroup"
                                 access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_STUDENT')"/>
+        <security:intercept-url pattern="/addstudentgroup" access="hasRole('ROLE_ADMIN')"/>
         <!--REGION USERS -->
         <security:intercept-url pattern="/users" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_STUDENT')"/>
         <security:intercept-url pattern="/userCreate" access="hasRole('ROLE_ADMIN')"/>

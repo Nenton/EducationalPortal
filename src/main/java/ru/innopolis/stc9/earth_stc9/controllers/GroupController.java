@@ -22,6 +22,7 @@ public class GroupController {
     @Autowired
     private IGroupService service;
 
+
     @RequestMapping(method = RequestMethod.GET)
     public String getGroups(Model model) {
         logger.info("Method \"getGroups()\" from GroupController done " + this.getClass().getName());

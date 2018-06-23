@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<form action="${pageContext.request.contextPath}/studentgroup/add" method="post" class="users-row">
+
+
+<form action="${pageContext.request.contextPath}/addstudentgroup" method="post" class="users-row">
     <p class="col-12">
         <label>Студент</label>
         <select name="studentnotgroup" class="col-6 form-control">
@@ -9,7 +11,6 @@
             </c:forEach>
         </select>
     </p>
-
     <p class="col-12">
         <label>Группа</label>
         <input type="text" placeholder="group" disabled value="${group.groupName}">
