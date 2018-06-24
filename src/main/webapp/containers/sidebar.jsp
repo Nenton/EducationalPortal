@@ -18,11 +18,18 @@
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/lessons">Lessons</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/studentgroup">Studentgroup</a></li>
             </sec:authorize>
+            <sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN')">
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/performance">Успеваемость</a>
+                </li>
+            </sec:authorize>
+            <sec:authorize access="hasAnyRole('ROLE_TEACHER', 'ROLE_ADMIN')">
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/journal">Journal</a>
+                </li>
+            </sec:authorize>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/users">Users</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/groups">Groups</a></li>
+                <%--<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/groups">Groups</a></li>--%>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/roles">Roles</a></li>
-                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/journal">Journal</a></li>
             </sec:authorize>
         </ul>
 
