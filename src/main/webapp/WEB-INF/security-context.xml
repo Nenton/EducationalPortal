@@ -41,7 +41,7 @@
         <security:intercept-url pattern="/roles" access="hasRole('ROLE_ADMIN')"/>
         <security:intercept-url pattern="/journal" access="hasRole('ROLE_ADMIN')"/>
 
-        <security:intercept-url pattern="/info" access="denyAll()"/>
+        <security:intercept-url pattern="/info" access="permitAll()"/>
 
         <security:access-denied-handler error-page="/pages/403.jsp"/>
         <security:form-login
@@ -69,8 +69,7 @@
                                         users-by-username-query=
                                                 "select login, password, enabled from users where login = ?"
                                         authorities-by-username-query=
-                                                "select u.login, r.name  from users u, roles r where login=? and u.role_id=r.id"
-            />
+                                                "select u.login, r.name  from users u, roles r where login=? and u.role_id=r.id"/>
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>

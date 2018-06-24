@@ -3,3 +3,4 @@
 *.iml
 out/
 build/
+src/main/webapp/WEB-INF/security-db.xml
