@@ -33,13 +33,13 @@
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/roles">Роли</a></li>
             </sec:authorize>
             <sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN')">
-            <li class="nav-item"><a class="nav-link"
-                                    href="${pageContext.request.contextPath}/performance">Успеваемость</a>
-                </sec:authorize>
+                <li class="nav-item"><a class="nav-link"
+                                        href="${pageContext.request.contextPath}/performance">Успеваемость</a></li>
+            </sec:authorize>
         </ul>
         <br/>
         <sec:authorize access="isAuthenticated()">
-            <ul  class="navbar-nav d-lg-block">
+            <ul class="navbar-nav d-lg-block">
                 <div class="logout">
                     <form action="${pageContext.request.contextPath}/logout" method="post">
                         <input type="submit" name="exit" title="exit" value="Выход" class="btn btn-warning">
