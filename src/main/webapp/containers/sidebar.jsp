@@ -32,6 +32,10 @@
                     пользователей</a></li>
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/roles">Роли</a></li>
             </sec:authorize>
+            <sec:authorize access="hasAnyRole('ROLE_STUDENT', 'ROLE_ADMIN')">
+            <li class="nav-item"><a class="nav-link"
+                                    href="${pageContext.request.contextPath}/performance">Успеваемость</a>
+                </sec:authorize>
         </ul>
         <br/>
         <sec:authorize access="isAuthenticated()">
