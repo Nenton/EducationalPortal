@@ -5,14 +5,14 @@ section {
 
 section .section-title {
     text-align: center;
-    color: #007b5e;
+    color: #194f82;
     margin-bottom: 50px;
     text-transform: uppercase;
 }
 
 #tabs {
     padding: 10px 30px;
-    background: #007b5e;
+    background: #194f82;
     color: #eee;
 }
 

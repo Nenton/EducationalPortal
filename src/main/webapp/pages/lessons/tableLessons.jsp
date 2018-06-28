@@ -32,10 +32,15 @@
             <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')">
                 <td>
                     <form>
-                        <input type="submit" name="changeBtn" value="Изменить" class="btn btn-primary btn-sm"
-                               formaction="${pageContext.request.contextPath}/lessons/change" formmethod="POST">
-                        <input type="submit" name="deleteBtn" value="Удалить" class="btn btn-danger btn-sm"
-                               formaction="${pageContext.request.contextPath}/lessons/delete" formmethod="POST">
+                        <button type="submit" name="changeBtn" title="Изменить" class="btn btn-primary btn-sm"
+                                formaction="${pageContext.request.contextPath}/lessons/change" formmethod="POST">
+                            <i class="fa fa-pencil-square-o fa-lg"></i>
+                        </button>
+                        <button type="submit" name="deleteBtn" title="Удалить" class="btn btn-danger btn-sm"
+                                formaction="${pageContext.request.contextPath}/lessons/delete" formmethod="POST">
+                            <i class="fa fa-times fa-lg"></i>
+                        </button>
+
                         <input hidden name="lessonId" value="${lesson.id}">
                     </form>
                 </td>

@@ -1,30 +1,90 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="col-md-9">
-    <table class="table table-responsive">
-        <thead class="table-dark table-bordered">
-        <tr>
-            <th class="d-sm-table-cell" scope="col">Id</th>
-            <th class="d-sm-table-cell" scope="col">Theme</th>
-            <th class="d-sm-table-cell" scope="col">Subject</th>
-            <th class="d-sm-table-cell" scope="col">Teacher</th>
-            <th class="d-sm-table-cell" scope="col">Group</th>
-            <th class="d-sm-table-cell" scope="col">Date</th>
-        </tr>
-        </thead>
-        <tbody class="table-bordered">
-        <c:forEach var="lesson" items="${lessons}">
-            <tr>
-                <th scope="row">${lesson.id}</th>
-                <td class="d-sm-table-cell" >${lesson.theme}</td>
-                <td class="d-sm-table-cell" >${lesson.subject.name}</td>
-                <td class="d-sm-table-cell" >
-                    <a href="${pageContext.request.contextPath}/users/${lesson.teacher.id}"> ${lesson.teacher.fullName}</a>
-                </td>
-                <td class="d-sm-table-cell" >${lesson.group.groupName}</td>
-                <td class="d-sm-table-cell" >${lesson.date}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    <div class="row">
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_STUDENT')">
+            <div class="col-3 mt-3">
+                <div class="card text-center">
+                    <a href="${pageContext.request.contextPath}/teachers" class="nav-link">
+                        <img src="img/teachers.png" alt="Преподаватели"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Преподаватели</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-3 mt-3">
+                <div class="card text-center">
+                    <a href="${pageContext.request.contextPath}/students" class="nav-link">
+                        <img src="img/students.png" alt="Студенты"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Студенты</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-3 mt-3">
+                <div class="card text-center">
+                    <a href="${pageContext.request.contextPath}/lessons" class="nav-link">
+                        <img src="img/lessons.png" alt="Расписание занятий"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Расписание занятий</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-3 mt-3">
+                <div class="card text-center">
+                    <a href="${pageContext.request.contextPath}/studentgroup" class="nav-link">
+                        <img src="img/studentgroups.png" alt="Группы студентов"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Группы студентов</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-3 mt-3">
+                <div class="card text-center">
+                    <a href="${pageContext.request.contextPath}/journal" class="nav-link">
+                        <img src="img/journal.png" alt="Журнал"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Журнал успеваемости</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <div class="col-3 mt-3">
+                <div class="card text-center">
+                    <a href="${pageContext.request.contextPath}/users" class="nav-link">
+                        <img src="img/users.png" alt="Пользователи"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Пользователи</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-3 mt-3">
+                <div class="card text-center">
+                    <a href="${pageContext.request.contextPath}/groups" class="nav-link">
+                        <img src="img/groups.png" alt="Группы"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Группы</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-3 mt-3">
+                <div class="card text-center">
+                    <a href="${pageContext.request.contextPath}/roles" class="nav-link">
+                        <img src="img/roles.png" alt="Роли"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Роли</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </sec:authorize>
+    </div>
 </div>

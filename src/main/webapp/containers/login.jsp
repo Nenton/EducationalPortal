@@ -40,8 +40,6 @@
                                                 <div class="col-sm-6 col-sm-offset-3">
                                                     <input type="submit" name="login-submit" id="login-submit" tabindex="4"
                                                            class="form-control btn btn-primary center" value="Log In">
-                                                    <input type="submit" name="reg" class="btn btn-secondary d-inline"
-                                                           value="Регистрация" formaction="registration" formmethod="GET"/>
                                                 </div>
                                             </div>
                                         </div>
